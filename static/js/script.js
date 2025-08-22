@@ -642,6 +642,9 @@ function updateQuestionNavigation() {
 
     // Função para iniciar prova
     function startExam() {
+    // libera navegação e botão
+    document.getElementById("question-nav").classList.remove("nav-disabled");
+    document.getElementById("finalize-block-btn").disabled = false;
         if (isExamStarted) return;
 
         examStartTime = new Date();
