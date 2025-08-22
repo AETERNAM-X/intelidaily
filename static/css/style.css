@@ -1,0 +1,644 @@
+/* Exemplo de estilos básicos - você precisará ajustar */
+body {
+    font-family: 'Inter', sans-serif; /* Use a fonte que você preferir */
+    background-color: #f0f2f5;
+    margin: 0;
+    color: #444;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #e5e7eb; /* To define the horizontal space */
+}
+.logo {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #005a9c;
+}
+.timer-container {
+    text-align: center;
+}
+.timer-label {
+    font-size: 0.9em;
+    color: #888;
+}
+.timer-value {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+.button-primary {
+    background-color: #005a9c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* ... e mais estilos para os círculos, botões, containers ... */
+
+/* Estilos personalizados para o Sistema de Vestibular */
+
+/* Animações de transição suaves */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Estilo para botões de questão ativos */
+.question-btn.active {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para questões respondidas */
+.question-btn.answered {
+    background-color: #3B4151 !important;
+    color: white !important;
+}
+
+/* Estilo para questões puladas */
+.question-btn.skipped {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Estilo para questão atual */
+.question-btn.current {
+    border: 2px solid #FF3B3B;
+    box-shadow: 0 0 0 2px rgba(255, 59, 59, 0.3);
+}
+
+/* Hover effects para botões de navegação */
+.question-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para opções de resposta selecionadas */
+.answer-option input[type="radio"]:checked + span {
+    background-color: #E3F2FD;
+    border-color: #2196F3;
+}
+
+/* Estilo para o timer quando está acabando */
+.timer-warning {
+    color: #FF3B3B !important;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Estilo para o botão de finalizar bloco */
+.finalize-btn {
+    background: linear-gradient(135deg, #FF3B3B 0%, #e03232 100%);
+    transition: all 0.3s ease;
+}
+
+.finalize-btn:hover {
+    background: linear-gradient(135deg, #e03232 0%, #c02929 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(255, 59, 59, 0.3);
+}
+
+/* Estilo para o botão de iniciar prova */
+.start-btn {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Estilo para a barra de progresso */
+.progress-bar {
+    background: linear-gradient(90deg, #FF3B3B 0%, #FF6B6B 100%);
+    transition: width 0.3s ease;
+}
+
+/* Estilo para mensagens de carregamento */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilo para questões com texto longo */
+.question-text {
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Estilo para opções de resposta */
+.answer-option {
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.answer-option:hover {
+    background-color: #F8F9FA;
+    transform: translateX(4px);
+}
+
+/* Estilo para o cabeçalho da prova */
+.exam-header {
+    background: linear-gradient(135deg, #F8F8F8 0%, #E9ECEF 100%);
+    border-bottom: 2px solid #DEE2E6;
+}
+
+/* Estilo para o contador de questões */
+.question-counter {
+    background: linear-gradient(135deg, #3B4151 0%, #495057 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+
+/* Estilo para botões de navegação */
+.nav-btn {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.nav-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilo para o footer */
+.exam-footer {
+    background: linear-gradient(135deg, #F8F8F8 0%, #E9ECEF 100%);
+    border-top: 1px solid #DEE2E6;
+}
+
+/* Estilo para o botão de pular questão */
+.skip-question-btn {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.skip-question-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+    border-color: #f59e0b;
+}
+
+.skip-question-btn:disabled {
+    background-color: #f3f4f6 !important;
+    color: #9ca3af !important;
+    border-color: #d1d5db;
+}
+
+/* Toggle Switch Styles */
+#toggle-skip-btn {
+    transition: background-color 0.2s ease-in-out;
+}
+
+#toggle-skip-btn span {
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Question and Answer Sections */
+#question-content,
+#answer-section {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Blur Effect */
+.blur-content {
+    filter: blur(2px);
+    pointer-events: none;
+    position: relative;
+}
+
+/* Results Modal */
+#results-modal {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Question Navigation Buttons */
+.question-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Answered Count Container */
+#answered-count-container.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilo para o container da pergunta - exatamente como na imagem */
+#question-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 1.5rem auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Efeito embaçado quando a prova não foi iniciada */
+#question-content.blur-content {
+    filter: blur(3px);
+    pointer-events: none;
+    user-select: none;
+}
+
+#question-content h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.75rem;
+    padding: 0;
+}
+
+#question-content p {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: #4b5563;
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Estilo para a seção de respostas - exatamente como na imagem */
+#answer-section {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 1.5rem auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Efeito embaçado quando a prova não foi iniciada */
+#answer-section.blur-content {
+    filter: blur(3px);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Estilo para o formulário de respostas */
+#answer-form {
+    width: 100%;
+}
+
+#answer-form label {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+#answer-form label:hover {
+    background-color: transparent;
+    border-color: transparent;
+    transform: none;
+}
+
+#answer-form input[type="radio"] {
+    margin-right: 0.75rem;
+    width: auto;
+    height: auto;
+    accent-color: #3B4151;
+}
+
+.answer-option input[type="radio"] {
+    width: 20px; /* Ajuste o tamanho conforme necessário */
+    height: 20px; /* Ajuste o tamanho conforme necessário */
+}
+
+#answer-form span {
+    font-size: 1rem;  /* Aumentei o tamanho da fonte */
+    color: #374151;
+    font-weight: normal;
+}
+
+/* Estilo para o modal de resultados */
+#results-modal {
+    transition: opacity 0.3s ease;
+}
+
+#results-modal.show {
+    display: flex !important;
+}
+
+#results-modal .bg-white {
+    animation: slideIn 0.3s ease;
+    width: 80%;
+    max-width: 1200px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Estilo para notificações */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    z-index: 1001;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification.success {
+    background-color: #10b981;
+    border-left: 4px solid #059669;
+}
+
+.notification.error {
+    background-color: #ef4444;
+    border-left: 4px solid #dc2626;
+}
+
+.notification.warning {
+    background-color: #f59e0b;
+    border-left: 4px solid #d97706;
+    color: #1f2937;
+}
+
+.notification.info {
+    background-color: #3b82f6;
+    border-left: 4px solid #2563eb;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Estilo para o indicador de bloco atual */
+.block-indicator {
+    background: #FF3B3B;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo para o tempo restante quando está acabando */
+.time-warning {
+    color: #FF3B3B;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .question-navigation {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    .question-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 10px;
+    }
+    
+    .exam-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .timer-section {
+        text-align: center;
+    }
+    
+    #question-content {
+        padding: 1rem;
+        margin: 0 0.5rem 1.5rem 0.5rem;
+    }
+    
+    #answer-section {
+        padding: 1rem;
+        margin: 0 0.5rem 1.5rem 0.5rem;
+    }
+}
+
+/* Estilo para o container principal */
+.max-w-\[900px\] {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Estilo para os botões de navegação */
+#next-btn {
+    min-width: 120px;
+    justify-content: center;
+}
+
+/* Estilo para o botão de finalizar bloco */
+#finalize-block-btn {
+    white-space: nowrap;
+    min-width: 140px;
+}
+
+/* Estilo para o contador de questões respondidas */
+#answered-count {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Estilo para o container do contador de questões respondidas quando desabilitado */
+#answered-count-container.disabled {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+/* Estilo para o spinner de carregamento */
+.fa-spinner {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilo para mensagens de carregamento */
+.text-center.text-gray-500.py-8 {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* Estilo para o container de navegação das questões */
+#question-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Estilo para os botões de questão individuais */
+.question-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilo para questões respondidas */
+.question-btn.answered {
+    background-color: #3B4151 !important;
+    color: white !important;
+}
+
+/* Estilo para questões puladas */
+.question-btn.skipped {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+/* Estilo para questão atual */
+.question-btn.current {
+    border: 2px solid #FF3B3B;
+    box-shadow: 0 0 0 2px rgba(255, 59, 59, 0.3);
+}
+
+/* Estilo para botões de questão desabilitados */
+.question-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+.question-btn.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .max-w-4xl {
+        max-width: 95vw;
+    }
+    
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Skip Choice Modal */
+#skip-choice-modal {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Wrong Answers Section */
+#wrong-answers-section {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+}
+
+#wrong-answers-list .bg-red-50 {
+    transition: all 0.2s ease-in-out;
+}
+
+#wrong-answers-list .bg-red-50:hover {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+}
+
+/* Estilo para o toggle desabilitado */
+.toggle-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilo para label de pulo quando pulada */
+.skipped-label {
+    background-color: #fffbeb;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Estilo para details in results */
+details summary {
+    cursor: pointer;
+}
+
+/* Melhor alinhamento para block-indicators */
+.block-indicators .flex > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;

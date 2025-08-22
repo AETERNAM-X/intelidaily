@@ -1,0 +1,528 @@
+QUESTÃO 1
+A) LTERNATIVA CORRETA: C
+B) 120.
+C) 625.
+D) 1 024.
+E) 15 000.
+GABARITO: C
+
+QUESTÃO 2
+A) LTERNATIVA CORRETA: E
+B) ݕൌെݔ
+C) ݕൌെ
+D) ݕൌ
+E) ݕൌ
+GABARITO: E
+
+QUESTÃO 3
+A) LTERNATIVA CORRETA: E
+B) 6.
+C) 17.
+D) 18.
+E) 19.
+GABARITO: E
+
+QUESTÃO 4
+A) LTERNATIVA CORRETA: B
+B) 909.
+C) 920.
+D) 925.
+E) 933.
+GABARITO: B
+
+QUESTÃO 5
+A) LTERNATIVA CORRETA: E
+B) ݕൌെ͵ݔെͳ
+C) ݕൌʹݔଶ൅ͷݔെͳ
+D) ݕൌെ
+E) ݕൌʹݔଶെͷݔെͳ
+GABARITO: E
+
+QUESTÃO 6
+A) LTERNATIVA CORRETA: C
+B) 9.
+C) 12.
+D) 13,5.
+E) 144.
+GABARITO: C
+
+QUESTÃO 7
+A) LTERNATIVA CORRETA: E
+B) 2 176 cm3
+C) 2 168 cm3
+D) 2 144 cm3
+E) 2 112 cm3
+GABARITO: E
+
+QUESTÃO 8
+A) LTERNATIVA CORRETA: D
+B) 3 equipes por segundo.
+C) 12 equipes por segundo.
+D) 14 equipes por segundo.
+E) 84 equipes por segundo.
+GABARITO: D
+
+QUESTÃO 9
+A) LTERNATIVA CORRETA: C
+B) R$ 6,66.
+C) R$ 6,67.
+D) R$ 6,70.
+E) R$ 6,73.
+GABARITO: C
+
+QUESTÃO 10
+A) LTERNATIVA CORRETA: B
+B) 3 950.
+C) 5 225.
+D) 7 450.
+E) 7 675.
+GABARITO: B
+
+QUESTÃO 11
+A) LTERNATIVA CORRETA: B
+B) ʹξͳͲͻ.
+C) ʹξͳͳ͹.
+D) ʹξͳͺͳ.
+E) ͳͲξͳ͵.
+GABARITO: B
+
+QUESTÃO 12
+A) LTERNATIVA CORRETA: B
+B) 1 400.
+C) 14 000.
+D) 140 000.
+E) 14 000 000.
+GABARITO: B
+
+QUESTÃO 13
+A) LTERNATIVA CORRETA: E
+B) F, 11, 12, 13, 14, 15.
+C) F, 1F, 2F, 3F, 4F, 5F.
+D) F, F1, F2, F3, F4, F5.
+E) F, 10, 11, 12, 13, 14.
+GABARITO: E
+
+QUESTÃO 14
+A) LTERNATIVA CORRETA: D
+B) em situação irregular, com área de drenagem aproximadamente igual a 13,83%.
+C) em situação regular, com área de drenagem aproximadamente igual a 14,22%.
+D) em situação regular, com área de drenagem aproximadamente igual a 14,81%.
+E) em situação regular, com área de drenagem aproximadamente igual a 20,31%.
+GABARITO: D
+
+QUESTÃO 15
+A) LTERNATIVA CORRETA: A
+B) FEED.
+C) DEUS.
+D) RITO.
+E) TRIO.
+GABARITO: A
+
+QUESTÃO 16
+A) LTERNATIVA CORRETA: B
+B) 225 minutos.
+C) 275 minutos.
+D) 337,4 minutos.
+E) 441 minutos.
+GABARITO: B
+
+QUESTÃO 17
+A) LTERNATIVA CORRETA: B
+B) 3.
+C) 4.
+D) 6.
+E) 24.
+GABARITO: B
+
+QUESTÃO 18
+A) LTERNATIVA CORRETA: E
+B) 40 Mbps.
+C) 42 Mbps.
+D) 48 Mbps.
+E) 50 Mbps.
+GABARITO: E
+
+QUESTÃO 19
+A) LTERNATIVA CORRETA: D
+B) ͳ െሺͲǡͻͷሻସǤ
+C) ሺͲǡͲͷሻସ.
+D) ͳ െሺͲǡͲͷሻସǤ
+E) Ͷ ൉ሺͲǡͻͷሻ.
+GABARITO: D
+
+QUESTÃO 20
+A) LTERNATIVA CORRETA: D
+B) 48 minutos.
+C) 1 hora e 12 minutos.
+D) 1 hora e 15 minutos.
+E) 1 hora e 25 minutos.
+GABARITO: D
+
+QUESTÃO 21
+A) LTERNATIVA CORRETA: A
+B) ቄܺ൅ܻൌʹ
+C) ቄܺ൅ܻൌʹͷͲ
+D) ቄܺ൅ܻൌʹ
+E) ቊ
+GABARITO: A
+
+QUESTÃO 22
+A) LTERNATIVA CORRETA: E
+B) 530.
+C) 531.
+D) 540.
+E) 541.
+GABARITO: E
+
+QUESTÃO 23
+A) LTERNATIVA CORRETA: E
+B) 2 000.
+C) 20 000.
+D) 180 000.
+E) 200 000.
+GABARITO: E
+
+QUESTÃO 24
+A) LTERNATIVA CORRETA: B
+B) 5 possibilidades.
+C) 22 possibilidades.
+D) 23 possibilidades.
+E) 41 possibilidades.
+GABARITO: A
+
+QUESTÃO 25
+A) LTERNATIVA CORRETA: E
+B) 41.
+C) 50.
+D) 82.
+E) 100.
+GABARITO: C
+
+QUESTÃO 26
+A) LTERNATIVA CORRETA: D
+B) 144 ETH.
+C) 158 ETH.
+D) 170 ETH.
+E) 200 ETH.
+GABARITO: D
+
+QUESTÃO 27
+A) LTERNATIVA CORRETA: D
+B) 38.
+C) omparação da velocidade de download no 4G e no 5G
+D) isponível em: https://olhardigital.com.br/2020/08/27/noticias/com-media-de-50-mbps-conexao-5g-
+E) 232.
+GABARITO: D
+
+QUESTÃO 28
+A) LTERNATIVA CORRETA: B
+B) 12 dias.
+C) 28 dias.
+D) 278 dias.
+E) 11 574 dias.
+GABARITO: A
+
+QUESTÃO 29
+A) LTERNATIVA CORRETA: E
+B) 
+C) D
+D) 
+E) Página | 11
+GABARITO: E
+
+QUESTÃO 30
+A) 480,42.
+B) 2 402,10.
+C) 4 804,20.
+D) 7 065,00.
+E) 14 130,00.
+GABARITO: C
+
+QUESTÃO 31
+A) LTERNATIVA CORRETA: D
+B) 132,0 kWh.
+C) 134,8 kWh.
+D) 143,0 kWh.
+E) 260,0 kWh.
+GABARITO: B
+
+QUESTÃO 32
+A) LTERNATIVA CORRETA: D
+B) 
+C) 
+D) 
+E) 
+GABARITO: D
+
+QUESTÃO 33
+A) LTERNATIVA CORRETA: C
+B) 40% da demanda energética da região Norte em 2014.
+C) 400% da demanda energética da região Norte em 2014.
+D) 4 000% da demanda energética da região Norte em 2014.
+E) 40 000% da demanda energética da região Norte em 2014.
+GABARITO: B
+
+QUESTÃO 34
+A) LTERNATIVA CORRETA: A
+B) 2%.
+C) 2,22%.
+D) 88,2%.
+E) 92%.
+GABARITO: A
+
+QUESTÃO 35
+A) LTERNATIVA CORRETA: E
+B) 2 .
+C) 4 .
+D) isponível em: https://www.bbc.com/portuguese/geral-50133350. Acesso: 29 mar. 2022.
+E) m teste de laboratórios, a nova tecnologia foi usada para corrigir mutações que causam doenças.
+GABARITO: E
+
+QUESTÃO 36
+A) geometria fractal para o desenvolvimento de antenas tem recebido grande atenção do campo da
+B) ARROS, Rafael Costa. MINIATURIZAÇÃO DE ANTENAS ATRAVÉS DO USO DA GEOMETRIA
+C) 410.
+D) 3 · 410.
+E) 39.
+GABARITO: B
+
+QUESTÃO 37
+A) 12 343.
+B) 45 000.
+C) 67 200.
+D) 84 000.
+E) 105 000.
+GABARITO: C
+
+QUESTÃO 38
+A) LTERNATIVA CORRETA: A
+B) 
+C) N .
+D) N .
+E) RESOLUÇÃO
+GABARITO: E
+
+QUESTÃO 39
+A) cesso: 16 mar. 2022.
+B) 12 000,00.
+C) 27 437,07.
+D) isponível em: https://www.infomoney.com.br/guias/terrenos-no-metaverso/.
+E) 1 392 000,00.
+GABARITO: B
+
+QUESTÃO 40
+A) LTERNATIVA CORRETA: C
+B) 2,5.
+C) 25.
+D) 250.
+E) 2500.
+GABARITO: C
+
+QUESTÃO 41
+A) LTERNATIVA CORRETA: C
+B) 6 dígitos.
+C) 7 dígitos.
+D) 8 dígitos.
+E) 40 dígitos.
+GABARITO: C
+
+QUESTÃO 42
+A) LTERNATIVA CORRETA: E
+B) 1000 80000 1 000 000 000
+C) N 80A
+D) A 100 000 2N
+E) A 100 000 2N
+GABARITO: E
+
+QUESTÃO 43
+A) LTERNATIVA CORRETA: C
+B) 120.
+C) 240.
+D) 380.
+E) 720.
+GABARITO: C
+
+QUESTÃO 44
+A) LTERNATIVA CORRETA: A
+B) 999 630.
+C) 999 900.
+D) 999 936.
+E) 1 000 000.
+GABARITO: A
+
+QUESTÃO 45
+A) LTERNATIVA CORRETA: D
+B) 72.
+C) 70.
+D) 42.
+E) 6.
+GABARITO: D
+
+QUESTÃO 46
+A) LTERNATIVA CORRETA: B
+B) 7 horas e 12 minutos.
+C) 8 horas.
+D) 10 horas e 50 minutos.
+E) 16 horas e 48 minutos.
+GABARITO: B
+
+QUESTÃO 47
+A) LTERNATIVA CORRETA: D
+B) 222 milhões.
+C) 229 milhões.
+D) 230 milhões.
+E) 260 milhões.
+GABARITO: D
+
+QUESTÃO 48
+A) LTERNATIVA CORRETA: B
+B) 3 000 dias.
+C) 4 500 dias.
+D) 5 200 dias.
+E) 6 300 dias.
+GABARITO: B
+
+QUESTÃO 49
+A) LTERNATIVA CORRETA: D
+B) 2 700.
+C) 3 000.
+D) 3 700.
+E) 9 000.
+GABARITO: D
+
+QUESTÃO 50
+A) LTERNATIVA CORRETA: B
+B) (10, 4).
+C) (2, 2).
+D) (9, 7).
+E) (6, 0).
+GABARITO: B
+
+QUESTÃO 51
+A) LTERNATIVA CORRETA: E
+B) um quadrado, limitado por
+C) um triângulo equilátero, com baricentro em (8,0) e vértices que obedecem a
+D) um círculo, limitado por
+E) um círculo, limitado por
+GABARITO: E
+
+QUESTÃO 52
+A) LTERNATIVA CORRETA: E
+B) 12,56 cm3.
+C) 6,11 cm3.
+D) 4,15 cm3.
+E) 2,13 cm3.
+GABARITO: E
+
+QUESTÃO 53
+A) LTERNATIVA CORRETA: B
+B) 1 210 km.
+C) 1 267 km.
+D) 1 390 km.
+E) 1 419 km.
+GABARITO: B
+
+QUESTÃO 54
+A) LTERNATIVA CORRETA: B
+B) (10, 11).
+C) (12, 13).
+D) (16, 20).
+E) (8, 20).
+GABARITO: B
+
+QUESTÃO 55
+A) LTERNATIVA CORRETA: C
+B) 91%.
+C) 110%.
+D) 182%.
+E) 210%.
+GABARITO: C
+
+QUESTÃO 56
+A) LTERNATIVA CORRETA: C
+B) + 20% em relação à precificação catalogada.
+C) + 16% em relação à precificação catalogada.
+D) – 20% em relação à precificação catalogada.
+E) – 24% em relação à precificação catalogada.
+GABARITO: C
+
+QUESTÃO 57
+A) LTERNATIVA CORRETA: B
+B) 14,06%.
+C) 37,50%.
+D) 56,00%.
+E) 75,00%.
+GABARITO: B
+
+QUESTÃO 58
+A) LTERNATIVA CORRETA: D
+B) 
+C) 
+D) 
+E) 
+GABARITO: D
+
+QUESTÃO 59
+A) LTERNATIVA CORRETA: C
+B) 1 000 operações.
+C) meio milhão de operações.
+D) um milhão de operações.
+E) meio bilhão de operações.
+GABARITO: C
+
+QUESTÃO 60
+A) LTERNATIVA CORRETA: C
+B) 32 segundos para a Rua A e 16 segundos para a Rua B.
+C) 38 segundos para a Rua A e 22 segundos para a Rua B.
+D) 40 segundos para a Rua A e 20 segundos para a Rua B.
+E) 45 segundos para a Rua A e 15 segundos para a Rua B.
+GABARITO: C
+
+QUESTÃO 61
+A) LTERNATIVA CORRETA: D
+B) 81,76.
+C) 37,50.
+D) 22,50.
+E) 0,37.
+GABARITO: D
+
+QUESTÃO 62
+A) LTERNATIVA CORRETA: B
+B) 7 segundos.
+C) 12 segundos.
+D) 15 minutos.
+E) 133 minutos.
+GABARITO: B
+
+QUESTÃO 63
+A) LTERNATIVA CORRETA: E
+B) 3 900 vezes maior que a Bíblia.
+C) 1 000 000 vezes maior que a Bíblia.
+D) 3 900 000 vezes maior que a Bíblia.
+E) 10 750 000 vezes maior que a Bíblia.
+GABARITO: E
+
+QUESTÃO 64
+A) LTERNATIVA CORRETA: A
+B) no máximo, 187,5 KB por segundo.
+C) no mínimo, 11 250 KB por segundo.
+D) no máximo, 11 250 KB por segundo.
+E) no mínimo, 200 KB por segundo.
+GABARITO: A
+
+QUESTÃO 65
+A) LTERNATIVA CORRETA: D
+B) (87, 35, 61).
+C) (87, 1214, 1510).
+D) (135, 206, 250).
+E) (152, 255, 102).
+GABARITO: D
+
+QUESTÃO 66
+A) LTERNATIVA CORRETA: C
+B) U$ 100,00.
+C) U$ 120,00.
+D) U$ 200,00.
+E) U$ 300,00.
+GABARITO: C
+
