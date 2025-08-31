@@ -1,0 +1,192 @@
+QUESTÃO 1
+A) 30.
+B) 120.
+C) 240.
+D) 380.
+E) 720.
+GABARITO: C
+----------------------------------------
+QUESTÃO 2
+A) 999 450.
+B) 999 630.
+C) 999 900.
+D) 999 936.
+E) 1 000 000.
+GABARITO: A
+----------------------------------------
+QUESTÃO 3
+A) 120.
+B) 72.
+C) 70.
+D) 42.
+E) 6.
+GABARITO: D
+----------------------------------------
+QUESTÃO 4
+A) 6 horas.
+B) 7 horas e 12 minutos.
+C) 8 horas.
+D) 10 horas e 50 minutos.
+E) 16 horas e 48 minutos.
+GABARITO: B
+----------------------------------------
+QUESTÃO 5
+A) 221 milhões.
+B) 222 milhões.
+C) 229 milhões.
+D) 230 milhões.
+E) 260 milhões.
+GABARITO: D
+----------------------------------------
+QUESTÃO 6
+A) 2 100 dias.
+B) 3 000 dias.
+C) 4 500 dias.
+D) 5 200 dias.
+E) 6 300 dias.
+GABARITO: B
+----------------------------------------
+QUESTÃO 7
+A) 900.
+B) 2 700.
+C) 3 000.
+D) 3 700.
+E) 9 000.
+GABARITO: D
+----------------------------------------
+QUESTÃO 8
+A) (2, 0).
+B) (10, 4).
+C) (2, 2).
+D) (9, 7).
+E) (6, 0).
+GABARITO: B
+----------------------------------------
+QUESTÃO 9
+A) um quadrado, limitado por $5 \leq x \leq 11$ e $-3 \leq y \leq 3$.
+B) um quadrado, limitado por $-1 \leq x \leq 17$ e $-9 \leq y \leq 9$.
+C) um triângulo equilátero, com baricentro em $(8,0)$ e vértices que obedecem a $\sqrt{(x-8)^2+y^2}=3$.
+D) um círculo, limitado por $(x-8)^2+y^2=9^2$.
+E) um círculo, limitado por $(x-8)^2+y^2=3^2$.
+GABARITO: E
+----------------------------------------
+QUESTÃO 10
+A) 20,97 cm³.
+B) 12,56 cm³.
+C) 6,11 cm³.
+D) 4,15 cm³.
+E) 2,13 cm³.
+GABARITO: E
+----------------------------------------
+QUESTÃO 11
+A) 1 075 km.
+B) 1 210 km.
+C) 1 267 km.
+D) 1 390 km.
+E) 1 419 km.
+GABARITO: B
+----------------------------------------
+QUESTÃO 12
+A) (8, 8).
+B) (10, 11).
+C) (12, 13).
+D) (16, 20).
+E) (8, 20).
+GABARITO: B
+----------------------------------------
+QUESTÃO 13
+A) 52%.
+B) 91%.
+C) 110%.
+D) 182%.
+E) 210%.
+GABARITO: C
+----------------------------------------
+QUESTÃO 14
+A) + 24% em relação à precificação catalogada.
+B) + 20% em relação à precificação catalogada.
+C) + 16% em relação à precificação catalogada.
+D) – 20% em relação à precificação catalogada.
+E) – 24% em relação à precificação catalogada.
+GABARITO: C
+----------------------------------------
+QUESTÃO 15
+A) 11,84%.
+B) 14,06%.
+C) 37,50%.
+D) 56,00%.
+E) 75,00%.
+GABARITO: B
+----------------------------------------
+QUESTÃO 16
+A) $0,4^3 \cdot 0,6^2$.
+B) $0,6^5+5 \cdot 0,4^1 \cdot 0,6^4+10 \cdot 0,4^2 \cdot 0,6^3+10 \cdot 0,4^3 \cdot 0,6^2$.
+C) $10 \cdot 0,4^3 \cdot 0,6^2$.
+D) $10 \cdot 0,4^3 \cdot 0,6^2+5 \cdot 0,4^4 \cdot 0,6^1+0,4^5$.
+E) $0,4 \cdot 3+0,6 \cdot 2$.
+GABARITO: D
+----------------------------------------
+QUESTÃO 17
+A) 55 operações.
+B) 1 000 operações.
+C) meio milhão de operações.
+D) um milhão de operações.
+E) meio bilhão de operações.
+GABARITO: C
+----------------------------------------
+QUESTÃO 18
+A) 20 segundos para a Rua A e 40 segundos para a Rua B.
+B) 32 segundos para a Rua A e 16 segundos para a Rua B.
+C) 38 segundos para a Rua A e 22 segundos para a Rua B.
+D) 40 segundos para a Rua A e 20 segundos para a Rua B.
+E) 45 segundos para a Rua A e 15 segundos para a Rua B.
+GABARITO: C
+----------------------------------------
+QUESTÃO 19
+A) 266,67.
+B) 81,76.
+C) 37,50.
+D) 22,50.
+E) 0,37.
+GABARITO: D
+----------------------------------------
+QUESTÃO 20
+A) 1 segundo.
+B) 7 segundos.
+C) 12 segundos.
+D) 15 minutos.
+E) 133 minutos.
+GABARITO: B
+----------------------------------------
+QUESTÃO 21
+A) 1 075 vezes maior que a Bíblia.
+B) 3 900 vezes maior que a Bíblia.
+C) 1 000 000 vezes maior que a Bíblia.
+D) 3 900 000 vezes maior que a Bíblia.
+E) 10 750 000 vezes maior que a Bíblia.
+GABARITO: E
+----------------------------------------
+QUESTÃO 22
+A) no mínimo, 187,5 KB por segundo.
+B) no máximo, 187,5 KB por segundo.
+C) no mínimo, 11 250 KB por segundo.
+D) no máximo, 11 250 KB por segundo.
+E) no mínimo, 200 KB por segundo.
+GABARITO: A
+----------------------------------------
+QUESTÃO 23
+A) (15, 26, 25).
+B) (87, 35, 61).
+C) (87, 1214, 1510).
+D) (135, 206, 250).
+E) (152, 255, 102).
+GABARITO: D
+----------------------------------------
+QUESTÃO 24
+A) U$ 80,00.
+B) U$ 100,00.
+C) U$ 120,00.
+D) U$ 200,00.
+E) U$ 300,00.
+GABARITO: C
+----------------------------------------

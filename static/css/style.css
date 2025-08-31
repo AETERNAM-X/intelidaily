@@ -84,6 +84,91 @@ body {
     border-color: #2196F3;
 }
 
+/* Estilos específicos para corrigir alinhamento das alternativas */
+.answer-alternative {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    min-height: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.answer-alternative:hover {
+    background-color: rgba(59, 65, 81, 0.05);
+    border-radius: 4px;
+}
+
+.answer-alternative input[type="radio"] {
+    margin-top: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.answer-alternative .alternative-label {
+    font-weight: 500;
+    min-width: 20px;
+    display: inline-block;
+    flex-shrink: 0;
+    margin-right: 4px;
+    line-height: 1;
+}
+
+.answer-alternative .alternative-content {
+    flex: 1;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    min-height: 1.4em;
+}
+
+.answer-alternative .alternative-content img {
+    margin-left: 8px;
+}
+
+/* Estilos para MathJax */
+.MathJax {
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+/* Estilos específicos para alternativas de texto */
+.alternative-text {
+    display: inline-block;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 100%;
+    vertical-align: baseline;
+}
+
+/* Estilos específicos para conteúdo MathJax */
+.mathjax-content {
+    display: inline-block;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 100%;
+    vertical-align: baseline;
+}
+
+/* Garantir que expressões matemáticas sejam exibidas corretamente */
+.alternative-text .MathJax,
+.mathjax-content .MathJax {
+    display: inline !important;
+    margin: 0 2px;
+    vertical-align: baseline;
+}
+
+/* Estilos para corrigir problemas de alinhamento com MathJax */
+.MathJax_Display {
+    margin: 0.5em 0 !important;
+}
+
+.MathJax_Display .MathJax {
+    text-align: center !important;
+}
+
 /* Estilo para o timer quando está acabando */
 .timer-warning {
     color: #FF3B3B !important;
@@ -233,15 +318,7 @@ body {
     position: relative;
 }
 
-/* Results Modal */
-#results-modal {
-    animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
+/* Results Modal - Removido - resultados agora são exibidos no dashboard */
 
 /* Question Navigation Buttons */
 .question-btn.disabled {
@@ -353,22 +430,7 @@ body {
     font-weight: normal;
 }
 
-/* Estilo para o modal de resultados */
-#results-modal {
-    transition: opacity 0.3s ease;
-}
-
-#results-modal.show {
-    display: flex !important;
-}
-
-#results-modal .bg-white {
-    animation: slideIn 0.3s ease;
-    width: 80%;
-    max-width: 1200px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
+/* Estilo para o modal de resultados - Removido - resultados agora são exibidos no dashboard */
 
 @keyframes slideIn {
     from {
@@ -604,20 +666,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Wrong Answers Section */
-#wrong-answers-section {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 1.5rem;
-}
-
-#wrong-answers-list .bg-red-50 {
-    transition: all 0.2s ease-in-out;
-}
-
-#wrong-answers-list .bg-red-50:hover {
-    background-color: #fef2f2;
-    border-color: #fecaca;
-}
+/* Wrong Answers Section - Removido - resultados agora são exibidos no dashboard */
 
 /* Estilo para o toggle desabilitado */
 .toggle-disabled {
@@ -642,3 +691,4 @@ details summary {
     display: flex;
     flex-direction: column;
     align-items: center;
+}

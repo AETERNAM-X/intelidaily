@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteliDaily - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <style>
+        :root {
+            --inteli-primary: #0066CC;
+            --inteli-secondary: #004499;
+            --inteli-accent: #FF6B35;
+            --inteli-light: #E6F3FF;
+            --inteli-dark: #003366;
+            --inteli-text: #1A1A1A;
+            --inteli-muted: #666666;
+            --inteli-border: #E0E0E0;
+            --inteli-success: #28A745;
+            --inteli-warning: #FFC107;
+            --inteli-danger: #DC3545;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            color: var(--inteli-text);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--inteli-primary) 0%, var(--inteli-secondary) 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 102, 204, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .exam-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .exam-card:hover {
+            border-color: var(--inteli-primary);
+            box-shadow: 0 8px 32px rgba(0, 102, 204, 0.2);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .exam-card.selected {
+            border-color: var(--inteli-primary);
+            background: rgba(230, 243, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--inteli-primary) 0%, var(--inteli-secondary) 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--inteli-secondary) 0%, var(--inteli-dark) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-outline-primary {
+            color: var(--inteli-primary);
+            border-color: var(--inteli-primary);
+            border-radius: 20px;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--inteli-primary);
+            border-color: var(--inteli-primary);
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 102, 204, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .progress {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .progress-bar {
+            border-radius: 10px;
+        }
+
+        .progress-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            color: var(--inteli-primary);
+            font-weight: 600;
+        }
+
+        .badge.bg-primary {
+            background-color: var(--inteli-primary) !important;
+        }
+
+        .text-primary {
+            color: var(--inteli-primary) !important;
+        }
+
+        .alert-info {
+            background-color: var(--inteli-light);
+            border-color: var(--inteli-primary);
+            color: var(--inteli-text);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--inteli-primary) 0%, var(--inteli-secondary) 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--inteli-primary);
+            border-color: var(--inteli-primary);
+        }
+
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Cards com glass morphism */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+        }
+
+        .card-body {
+            color: var(--inteli-text);
+        }
+
+        /* Texto branco para melhor contraste */
+        .text-white {
+            color: white !important;
+        }
+
+        /* Overlay para melhor legibilidade */
+        .glass-overlay {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        /* Controle de tamanho do gráfico */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .chart-container canvas {
+            max-height: 300px !important;
+            height: 300px !important;
+            width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="fas fa-graduation-cap me-3"></i>
+                        InteliDaily
+                    </h1>
+                    <p class="lead mb-4">Prepare-se para o processo seletivo da Inteli com simulados personalizados de provas anteriores.</p>
+                                         <p class="text-light mb-4" style="font-style: italic; font-size: 0.9rem;">
+                         <i class="fas fa-quote-left me-2"></i>
+                         Para alguns, bom o suficiente sempre será bom o suficiente, mas talvez não para você. Seja bem-vindo.
+                         <i class="fas fa-quote-right ms-2"></i>
+                     </p>
+                     <p class="text-light mb-4" style="font-size: 0.8rem; opacity: 0.8;">
+                         Por Juan Sales
+                     </p>
+                    <button class="btn btn-light btn-lg" onclick="showCreateSimulado()">
+                        <i class="fas fa-plus me-2"></i>Criar Novo Simulado
+                    </button>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fas fa-chart-line" style="font-size: 8rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Available Exams Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">
+                <i class="fas fa-file-alt me-2"></i>Provas Disponíveis
+            </h2>
+            <div class="row" id="examsContainer">
+                <!-- Exams will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Simulados Section -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">
+                <i class="fas fa-history me-2"></i>Simulados Recentes
+            </h2>
+            <div id="historyContainer">
+                <!-- History will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Simulado Modal -->
+    <div class="modal fade" id="createSimuladoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus me-2"></i>Criar Novo Simulado
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h6>1. Selecione as provas:</h6>
+                        <div id="examSelectionContainer" class="row">
+                            <!-- Exam selection will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h6>2. Configuração do simulado:</h6>
+                        
+                        <!-- Seletor de modo -->
+                        <div class="mb-3">
+                            <label class="form-label">Modo de seleção:</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="simuladoMode" id="modeRandom" value="random" checked>
+                                <label class="btn btn-outline-primary" for="modeRandom">
+                                    <i class="fas fa-random me-2"></i>Aleatório
+                                </label>
+                                
+                                <input type="radio" class="btn-check" name="simuladoMode" id="modeCustom" value="custom">
+                                <label class="btn btn-outline-primary" for="modeCustom">
+                                    <i class="fas fa-sliders-h me-2"></i>Personalizado
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Configuração aleatória -->
+                        <div id="randomConfig" class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>24 questões distribuídas em 4 blocos:</strong><br>
+                            • Bloco 1: 8 questões<br>
+                            • Bloco 2: 6 questões<br>
+                            • Bloco 3: 6 questões<br>
+                            • Bloco 4: 4 questões<br>
+                            <small class="text-muted">As questões serão selecionadas aleatoriamente das provas escolhidas.</small>
+                        </div>
+                        
+                        <!-- Configuração personalizada -->
+                        <div id="customConfig" class="alert alert-warning" style="display: none;">
+                            <i class="fas fa-cog me-2"></i>
+                            <strong>Distribuição personalizada:</strong><br>
+                            <div id="distributionContainer" class="mt-2">
+                                <!-- Distribuição será carregada aqui -->
+                            </div>
+                            <div class="mt-2">
+                                <strong>Total: <span id="distributionTotal" class="text-danger">0</span>/24 questões</span></strong>
+                            </div>
+                            <small class="text-muted">Total deve ser igual a 24 questões.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="createSimulado()">
+                        <i class="fas fa-play me-2"></i>Iniciar Simulado
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para detalhes do simulado -->
+    <div class="modal fade" id="simuladoDetailsModal" tabindex="-1" aria-labelledby="simuladoDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="simuladoDetailsModalLabel">Detalhes do Simulado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="simuladoDetailsModalBody">
+                    <!-- Conteúdo será preenchido dinamicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="repeatSimuladoFromDetailsModal()">
+                        <i class="fas fa-redo me-2"></i>Repetir Configuração
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='/test'">
+                        <i class="fas fa-play me-2"></i>Fazer Novo Simulado
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para resultados completos do simulado -->
+    <div class="modal fade" id="simuladoResultsModal" tabindex="-1" aria-labelledby="simuladoResultsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="simuladoResultsModalLabel">Resultados Completos do Simulado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="simuladoResultsModalBody">
+                    <!-- Conteúdo será preenchido dinamicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="repeatSimuladoFromResultsModal()">
+                        <i class="fas fa-redo me-2"></i>Repetir Configuração
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="position-fixed top-50 start-50 translate-middle" style="display: none; z-index: 9999;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let availableExams = [];
+        let selectedExams = [];
+
+        // Load dashboard data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+        });
+
+        async function loadDashboardData() {
+            showLoading(true);
+            try {
+                await Promise.all([
+                    loadAvailableExams(),
+                    loadSimuladosHistory()
+                ]);
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showAlert('Erro ao carregar dados do dashboard', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+
+
+        async function loadAvailableExams() {
+            const response = await fetch('/api/exams/available');
+            availableExams = await response.json();
+            
+            const examsContainer = document.getElementById('examsContainer');
+            if (availableExams.length === 0) {
+                examsContainer.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="bg-light rounded-3 p-5">
+                            <i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i>
+                            <h4 class="text-muted mb-3">Nenhuma prova disponível</h4>
+                            <p class="text-muted">Não foi possível carregar as provas disponíveis.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            examsContainer.innerHTML = availableExams.map(exam => `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="exam-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="mb-0">${exam.name}</h5>
+                            <span class="badge bg-primary">${exam.question_count} questões</span>
+                        </div>
+                        <p class="text-muted mb-3">Questões disponíveis para simulados</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-sm flex-fill" onclick="showCreateSimuladoWithExam('${exam.id}')">
+                                <i class="fas fa-plus me-1"></i>Criar Simulado
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="showExamDetails('${exam.id}')" title="Ver detalhes">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadSimuladosHistory() {
+            try {
+                const response = await fetch('/api/simulados/history');
+                const history = await response.json();
+                
+                const historyContainer = document.getElementById('historyContainer');
+                if (history.length === 0) {
+                    historyContainer.innerHTML = `
+                        <div class="text-center py-5">
+                            <div class="bg-light rounded-3 p-5">
+                                <i class="fas fa-rocket fa-4x text-primary mb-4"></i>
+                                <h4 class="text-muted mb-3">Nenhum simulado realizado ainda</h4>
+                                <p class="text-muted mb-4">Comece sua jornada de preparação criando seu primeiro simulado!</p>
+                                <button class="btn btn-primary btn-lg" onclick="showCreateSimulado()">
+                                    <i class="fas fa-plus me-2"></i>Criar Primeiro Simulado
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    return history;
+                }
+                
+                historyContainer.innerHTML = history.slice(0, 5).map(simulado => `
+                    <div class="history-item mb-4" data-simulado-id="${simulado.id}">
+                        <div class="row align-items-center">
+                            <!-- Cabeçalho do simulado -->
+                            <div class="col-md-5">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="me-3">
+                                        <div class="progress-circle" style="background-color: ${getProgressColor(simulado.percentual_acerto)}; color: white;">
+                                            ${simulado.percentual_acerto}%
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">
+                                            <i class="fas fa-file-alt me-2 text-primary"></i>
+                                            Simulado #${simulado.id}
+                                        </h5>
+                                        <p class="text-muted mb-1">
+                                            <i class="fas fa-calendar me-2"></i>
+                                            ${new Date(simulado.data_criacao).toLocaleDateString('pt-BR')}
+                                        </p>
+                                        <div class="d-flex gap-3 text-sm">
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check me-1"></i>${simulado.acertos} acertos
+                                            </span>
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-times me-1"></i>${simulado.erros} erros
+                                            </span>
+                                            <span class="badge bg-warning">
+                                                <i class="fas fa-forward me-1"></i>${simulado.puladas} puladas
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Configuração do simulado -->
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <i class="fas fa-cog text-primary me-2"></i>
+                                        <strong>Configuração</strong>
+                                    </div>
+                                    <div class="small">
+                                        ${simulado.provas_selecionadas && simulado.provas_selecionadas.length > 0 ? 
+                                            simulado.provas_selecionadas.map(prova => 
+                                                `<span class="badge bg-secondary me-1 mb-1">${prova}</span>`
+                                            ).join('') : 
+                                            '<span class="text-muted">N/A</span>'
+                                        }
+                                    </div>
+                                    <div class="mt-2">
+                                        <i class="fas fa-clock text-info me-1"></i>
+                                        <span class="text-info">${simulado.tempo_total || 'N/A'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Botões de ação -->
+                            <div class="col-md-3 text-end">
+                                <div class="d-flex flex-column gap-2">
+                                    <button class="btn btn-outline-success btn-sm btn-results" 
+                                            onclick="showSimuladoResults(${simulado.id})">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Ver resultados completos
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm btn-repeat" 
+                                            onclick="repeatSimulado(${simulado.id})">
+                                        <i class="fas fa-redo me-1"></i>
+                                        Repetir configuração
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Barra de progresso visual -->
+                        <div class="mt-3">
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-success" style="width: ${(simulado.acertos / (simulado.acertos + simulado.erros + simulado.puladas)) * 100}%"></div>
+                                <div class="progress-bar bg-danger" style="width: ${(simulado.erros / (simulado.acertos + simulado.erros + simulado.puladas)) * 100}%"></div>
+                                <div class="progress-bar bg-warning" style="width: ${(simulado.puladas / (simulado.acertos + simulado.erros + simulado.puladas)) * 100}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                return history;
+            } catch (error) {
+                console.error('Erro ao carregar histórico de simulados:', error);
+                return [];
+            }
+        }
+
+        function getProgressColor(percentage) {
+            if (percentage >= 80) return '#28A745';
+            if (percentage >= 60) return '#FFC107';
+            if (percentage >= 40) return '#fd7e14';
+            return '#DC3545';
+        }
+
+        function showCreateSimulado() {
+            selectedExams = [];
+            loadExamSelection();
+            new bootstrap.Modal(document.getElementById('createSimuladoModal')).show();
+        }
+
+        function showCreateSimuladoWithExam(examId) {
+            // Encontrar o nome da prova pelo ID
+            const exam = availableExams.find(e => e.id === examId);
+            if (exam) {
+                selectedExams = [exam.name];
+                loadExamSelection();
+                new bootstrap.Modal(document.getElementById('createSimuladoModal')).show();
+            }
+        }
+
+        function showExamDetails(examId) {
+            const exam = availableExams.find(e => e.id === examId);
+            if (exam) {
+                showAlert(`📚 ${exam.name}<br><br>📊 Total de questões: ${exam.question_count}<br>📅 Ano: ${exam.year || 'N/A'}`, 'info');
+            }
+        }
+        
+
+
+        function showSimuladoResults(simuladoId) {
+            // Buscar detalhes do simulado
+            fetch(`/api/simulados/history`)
+                .then(response => response.json())
+                .then(history => {
+                    const simulado = history.find(s => s.id === simuladoId);
+                    if (simulado) {
+                        const resultsHtml = `
+                            <div class="text-center mb-4">
+                                <h4>📊 Resultados Completos - Simulado #${simulado.id}</h4>
+                                <p class="text-muted">${new Date(simulado.data_criacao).toLocaleDateString('pt-BR')}</p>
+                            </div>
+                            
+                            <!-- Resumo dos Resultados -->
+                            <div class="bg-light p-4 rounded mb-4">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-trophy me-2"></i>Resumo dos Resultados
+                                </h5>
+                                <div class="row text-center mb-3">
+                                    <div class="col-md-3">
+                                        <div class="h4 text-success mb-1">${simulado.acertos}</div>
+                                        <small class="text-muted">Acertos</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="h4 text-danger mb-1">${simulado.erros}</div>
+                                        <small class="text-muted">Erros</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="h4 text-warning mb-1">${simulado.puladas}</div>
+                                        <small class="text-muted">Puladas</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="h4 text-primary mb-1">${simulado.percentual_acerto}%</div>
+                                        <small class="text-muted">Percentual</small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Barra de Progresso -->
+                                <div class="mb-3">
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width: ${(simulado.acertos / (simulado.acertos + simulado.erros + simulado.puladas)) * 100}%">
+                                            ${simulado.acertos}
+                                        </div>
+                                        <div class="progress-bar bg-danger" style="width: ${(simulado.erros / (simulado.acertos + simulado.erros + simulado.puladas)) * 100}%">
+                                            ${simulado.erros}
+                                        </div>
+                                        <div class="progress-bar bg-warning" style="width: ${(simulado.puladas / (simulado.acertos + simulado.erros + simulado.puladas)) * 100}%">
+                                            ${simulado.puladas}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row text-center">
+                                    <div class="col-md-6">
+                                        <h6><i class="fas fa-clock me-2"></i>Tempo Utilizado</h6>
+                                        <p class="h5 text-info">${simulado.tempo_total || 'N/A'}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6><i class="fas fa-calendar me-2"></i>Data</h6>
+                                        <p class="h5 text-muted">${new Date(simulado.data_criacao).toLocaleDateString('pt-BR')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Gráfico de Desempenho por Bloco -->
+                            <div class="row mb-4">
+                                <div class="col-md-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">
+                                                <i class="fas fa-chart-bar me-2"></i>Desempenho por Bloco
+                                            </h6>
+                                            <div class="chart-container">
+                                                <canvas id="accuracy-chart-${simulado.id}"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">
+                                                <i class="fas fa-info-circle me-2"></i>Informações
+                                            </h6>
+                                            <div class="mb-3">
+                                                <h6>📚 Provas Utilizadas:</h6>
+                                                <div class="mb-2">
+                                                    ${(simulado.provas_selecionadas || []).length > 0 ? 
+                                                        simulado.provas_selecionadas.map(prova => 
+                                                            `<span class="badge bg-secondary me-1">${prova}</span>`
+                                                        ).join('') : 
+                                                        '<span class="text-muted">N/A</span>'
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6>⚙️ Tipo de Simulado:</h6>
+                                                <div class="mb-2">
+                                                    ${(simulado.provas_selecionadas || []).length > 0 ? 
+                                                        '<span class="badge bg-primary">Personalizado</span>' : 
+                                                        '<span class="badge bg-info">Aleatório</span>'
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6>🎯 Taxa de Acerto:</h6>
+                                                <div class="h4 text-success">${simulado.percentual_acerto}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Lista Detalhada de Questões -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-list me-2"></i>Análise Detalhada das Questões
+                                    </h6>
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Nota:</strong> Para ver detalhes específicos de cada questão (enunciado, imagens, respostas), 
+                                        utilize a funcionalidade "Ver resultados completos" que mostra informações mais detalhadas.
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <div class="border rounded p-3 bg-success bg-opacity-10">
+                                                <h5 class="text-success">${simulado.acertos}</h5>
+                                                <p class="mb-0">Questões Acertadas</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="border rounded p-3 bg-danger bg-opacity-10">
+                                                <h5 class="text-danger">${simulado.erros}</h5>
+                                                <p class="mb-0">Questões Erradas</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="border rounded p-3 bg-warning bg-opacity-10">
+                                                <h5 class="text-warning">${simulado.puladas}</h5>
+                                                <p class="mb-0">Questões Puladas</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Exibir o modal de resultados
+                        const modal = new bootstrap.Modal(document.getElementById('simuladoResultsModal'));
+                        document.getElementById('simuladoResultsModalBody').innerHTML = resultsHtml;
+                        modal.show();
+                        
+                        // Criar o gráfico após o modal ser exibido
+                        setTimeout(() => {
+                            createAccuracyChart(simulado.id, simulado);
+                        }, 100);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar detalhes:', error);
+                    showAlert('Erro ao carregar resultados do simulado', 'danger');
+                });
+        }
+
+        function createAccuracyChart(simuladoId, simulado) {
+            const canvas = document.getElementById(`accuracy-chart-${simuladoId}`);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Definir altura fixa para evitar scroll infinito
+            canvas.style.height = '300px';
+            canvas.style.maxHeight = '300px';
+            
+            // Dados simulados para o gráfico (baseado no total de questões)
+            const totalQuestions = simulado.acertos + simulado.erros + simulado.puladas;
+            const blockStructure = [8, 6, 6, 4]; // Estrutura padrão dos blocos
+            
+            // Validar dados de entrada
+            if (!simulado.acertos || simulado.acertos < 0) {
+                console.warn('Dados de acertos inválidos:', simulado.acertos);
+                simulado.acertos = 0;
+            }
+            
+            // Calcular acertos por bloco de forma mais simples e robusta
+            const accuracies = [];
+            let remainingCorrect = Math.max(0, simulado.acertos);
+            
+            // Distribuir acertos de forma mais simples pelos blocos
+            for (let i = 0; i < blockStructure.length; i++) {
+                const blockQuestions = blockStructure[i];
+                
+                if (remainingCorrect <= 0) {
+                    accuracies.push(0);
+                    continue;
+                }
+                
+                // Calcular acertos para este bloco baseado na proporção de questões
+                const blockRatio = blockQuestions / totalQuestions;
+                let blockAccuracy = Math.floor(remainingCorrect * blockRatio);
+                
+                // Garantir que não exceda o número de questões do bloco
+                blockAccuracy = Math.min(blockAccuracy, blockQuestions);
+                
+                // Garantir que não seja negativo
+                blockAccuracy = Math.max(0, blockAccuracy);
+                
+                accuracies.push(blockAccuracy);
+                remainingCorrect -= blockAccuracy;
+            }
+            
+            // Distribuir acertos restantes de forma inteligente
+            if (remainingCorrect > 0) {
+                for (let i = 0; i < accuracies.length && remainingCorrect > 0; i++) {
+                    const spaceInBlock = blockStructure[i] - accuracies[i];
+                    if (spaceInBlock > 0) {
+                        const toAdd = Math.min(remainingCorrect, spaceInBlock);
+                        accuracies[i] += toAdd;
+                        remainingCorrect -= toAdd;
+                    }
+                }
+            }
+            
+            // Validação final: garantir que não há valores negativos
+            const finalAccuracies = accuracies.map(acc => Math.max(0, acc));
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Bloco 1', 'Bloco 2', 'Bloco 3', 'Bloco 4'],
+                    datasets: [{
+                        label: 'Questões Acertadas',
+                        data: finalAccuracies,
+                        backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    height: 300,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: Math.max(...blockStructure),
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Acertos: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadExamSelection() {
+            const container = document.getElementById('examSelectionContainer');
+            container.innerHTML = availableExams.map(exam => `
+                <div class="col-md-6 mb-3">
+                    <div class="exam-card p-3 ${selectedExams.includes(exam.name) ? 'selected' : ''}" 
+                         onclick="toggleExamSelection('${exam.name}')">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" 
+                                   id="exam_${exam.name.replace(/\s+/g, '_')}" 
+                                   ${selectedExams.includes(exam.name) ? 'checked' : ''}>
+                            <label class="form-check-label" for="exam_${exam.name.replace(/\s+/g, '_')}">
+                                <strong>${exam.name}</strong><br>
+                                <small class="text-muted">${exam.question_count} questões</small>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Carregar distribuição personalizada
+            loadDistributionConfig();
+        }
+        
+        function loadDistributionConfig() {
+            const container = document.getElementById('distributionContainer');
+            if (selectedExams.length === 0) {
+                container.innerHTML = '<p class="text-muted">Selecione provas para configurar a distribuição</p>';
+                return;
+            }
+            
+            container.innerHTML = selectedExams.map((exam, index) => `
+                <div class="row align-items-center mb-2">
+                    <div class="col-6">
+                        <label class="form-label mb-0">${exam}:</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" class="form-control form-control-sm" 
+                               id="dist_${exam.replace(/\s+/g, '_')}" 
+                               data-exam-name="${exam}"
+                               min="0" max="24" value="0" 
+                               onchange="updateDistributionTotal()"
+                               oninput="updateDistributionTotal()"
+                               placeholder="0">
+                    </div>
+                </div>
+            `).join('');
+            
+            updateDistributionTotal();
+        }
+        
+        function updateDistributionTotal() {
+            const total = selectedExams.reduce((sum, exam) => {
+                const input = document.getElementById(`dist_${exam.replace(/\s+/g, '_')}`);
+                if (input) {
+                    const value = parseInt(input.value) || 0;
+                    return sum + value;
+                }
+                return sum;
+            }, 0);
+            
+            const totalElement = document.getElementById('distributionTotal');
+            if (totalElement) {
+                totalElement.textContent = total;
+                totalElement.className = total === 24 ? 'text-success' : 'text-danger';
+            }
+        }
+        
+        // Event listeners para mudança de modo
+        document.addEventListener('DOMContentLoaded', function() {
+            const modeInputs = document.querySelectorAll('input[name="simuladoMode"]');
+            modeInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const isRandom = this.value === 'random';
+                    document.getElementById('randomConfig').style.display = isRandom ? 'block' : 'none';
+                    document.getElementById('customConfig').style.display = isRandom ? 'none' : 'block';
+                });
+            });
+        });
+
+        function toggleExamSelection(examId) {
+            const index = selectedExams.indexOf(examId);
+            if (index > -1) {
+                selectedExams.splice(index, 1);
+            } else {
+                selectedExams.push(examId);
+            }
+            loadExamSelection();
+        }
+
+        async function createSimulado() {
+            if (selectedExams.length === 0) {
+                showAlert('Selecione pelo menos uma prova', 'warning');
+                return;
+            }
+
+            // Verificar modo selecionado
+            const mode = document.querySelector('input[name="simuladoMode"]:checked').value;
+            let examDistribution = null;
+            
+            if (mode === 'custom') {
+                // Coletar distribuição personalizada
+                examDistribution = {};
+                let total = 0;
+                
+                selectedExams.forEach(exam => {
+                    const input = document.getElementById(`dist_${exam.replace(/\s+/g, '_')}`);
+                    if (input) {
+                        const value = parseInt(input.value) || 0;
+                        examDistribution[exam] = value;
+                        total += value;
+                    }
+                });
+                
+                if (total !== 24) {
+                    showAlert(`Total deve ser 24 questões. Atual: ${total}`, 'warning');
+                    return;
+                }
+                
+                // Verificar se pelo menos uma prova tem questões
+                const hasQuestions = Object.values(examDistribution).some(val => val > 0);
+                if (!hasQuestions) {
+                    showAlert('Selecione pelo menos uma questão para cada prova', 'warning');
+                    return;
+                }
+                
+                // Verificar se não há valores negativos
+                const hasNegativeValues = Object.values(examDistribution).some(val => val < 0);
+                if (hasNegativeValues) {
+                    showAlert('Não é permitido valores negativos', 'warning');
+                    return;
+                }
+            }
+
+            showLoading(true);
+            try {
+                const response = await fetch('/api/simulados/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        selected_exams: selectedExams,
+                        num_questions: 24,
+                        exam_distribution: examDistribution
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Fechar modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('createSimuladoModal'));
+                    if (modal) {
+                        modal.hide();
+                    }
+                    
+                    // Redirecionar para o simulado
+                    window.location.href = '/test';
+                } else {
+                    showAlert('Erro ao criar simulado: ' + (result.error || 'Erro desconhecido'), 'danger');
+                }
+            } catch (error) {
+                console.error('Erro ao criar simulado:', error);
+                showAlert('Erro ao criar simulado: ' + error.message, 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Função para verificar se há resultados na URL e exibir na seção de resultados
+        function checkForResults() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const results = urlParams.get('results');
+            
+            if (results) {
+                console.log('Resultados encontrados na URL:', results);
+                try {
+                    const resultsData = JSON.parse(decodeURIComponent(results));
+                    console.log('Resultados decodificados:', resultsData);
+                    
+                    // Limpar a URL imediatamente para evitar exibição automática
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    
+                    // Não exibir resultados automaticamente - apenas armazenar para uso posterior
+                    // Os resultados serão exibidos apenas quando o usuário clicar em "Ver resultados completos"
+                    console.log('Resultados armazenados para exibição sob demanda');
+                } catch (error) {
+                    console.error('Erro ao processar resultados:', error);
+                    showAlert('Erro ao processar resultados da prova', 'danger');
+                }
+            }
+        }
+
+        // Função para exibir resultados na seção de resultados
+        function showResultsInDetails(results) {
+            console.log('Exibindo resultados:', results);
+            
+            // Função para tentar exibir os resultados
+            const tryShowResults = (attempts = 0) => {
+                const historyContainer = document.getElementById('historyContainer');
+                if (historyContainer) {
+                    // Procurar pelo simulado correspondente e mostrar os detalhes
+                    const simuladoElement = historyContainer.querySelector(`[data-simulado-id="${results.simulado_id}"]`);
+                    if (simuladoElement) {
+                        // Simular clique no botão "Ver resultados completos" para mostrar os resultados
+                        const resultsBtn = simuladoElement.querySelector('.btn-results');
+                        if (resultsBtn) {
+                            // Primeiro, buscar os detalhes do simulado
+                            fetch(`/api/simulados/history`)
+                                .then(response => response.json())
+                                .then(history => {
+                                    const simulado = history.find(s => s.id === results.simulado_id);
+                                    if (simulado) {
+                                        // Criar HTML com os resultados incluídos
+                                        const resultsHtml = `
+                                            <div class="text-center mb-4">
+                                                <h4>📊 Resultados Completos - Simulado #${simulado.id}</h4>
+                                                <p class="text-muted">${new Date(simulado.data_criacao || simulado.data).toLocaleDateString('pt-BR')}</p>
+                                            </div>
+                                            
+                                            <!-- Seção de Resultados do Simulado -->
+                                            <div class="bg-light p-4 rounded mb-4">
+                                                <h5 class="text-success mb-3">
+                                                    <i class="fas fa-trophy me-2"></i>Resultados do Simulado
+                                                </h5>
+                                                <div class="row text-center mb-3">
+                                                    <div class="col-md-3">
+                                                        <div class="h4 text-success mb-1">${results.correct_answers}</div>
+                                                        <small class="text-muted">Acertos</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="h4 text-danger mb-1">${results.incorrect_answers}</div>
+                                                        <small class="text-muted">Erros</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="h4 text-warning mb-1">${results.skipped_questions}</div>
+                                                        <small class="text-muted">Puladas</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="h4 text-primary mb-1">${results.percentage}%</div>
+                                                        <small class="text-muted">Percentual</small>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Barra de Progresso -->
+                                                <div class="mb-3">
+                                                    <div class="progress" style="height: 20px;">
+                                                        <div class="progress-bar bg-success" style="width: ${(results.correct_answers / results.total_questions) * 100}%">
+                                                            ${results.correct_answers}
+                                                        </div>
+                                                        <div class="progress-bar bg-danger" style="width: ${(results.incorrect_answers / results.total_questions) * 100}%">
+                                                            ${results.incorrect_answers}
+                                                        </div>
+                                                        <div class="progress-bar bg-warning" style="width: ${(results.skipped_questions / results.total_questions) * 100}%">
+                                                            ${results.skipped_questions}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row text-center">
+                                                    <div class="col-md-6">
+                                                        <h6><i class="fas fa-clock me-2"></i>Tempo Utilizado</h6>
+                                                        <p class="h5 text-info">${results.time_used}</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6><i class="fas fa-calendar me-2"></i>Data</h6>
+                                                        <p class="h5 text-muted">${new Date().toLocaleDateString('pt-BR')}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Gráfico de Desempenho por Bloco -->
+                                            <div class="row mb-4">
+                                                <div class="col-md-8">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">
+                                                                <i class="fas fa-chart-bar me-2"></i>Desempenho por Bloco
+                                                            </h6>
+                                                            <div class="chart-container">
+                                                                <canvas id="accuracy-chart-results"></canvas>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">
+                                                                <i class="fas fa-info-circle me-2"></i>Informações
+                                                            </h6>
+                                                            <div class="mb-3">
+                                                                <h6>📚 Provas Utilizadas:</h6>
+                                                                <div class="mb-2">
+                                                                    ${(simulado.provas_selecionadas || []).map(prova => 
+                                                                        `<span class="badge bg-secondary me-1">${prova}</span>`
+                                                                    ).join('')}
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <h6>🎯 Taxa de Acerto:</h6>
+                                                                <div class="h4 text-success">${results.percentage}%</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Lista Detalhada de Questões -->
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">
+                                                        <i class="fas fa-list me-2"></i>Análise Detalhada das Questões
+                                                    </h6>
+                                                    <div class="alert alert-info">
+                                                        <i class="fas fa-info-circle me-2"></i>
+                                                        <strong>Nota:</strong> Para ver detalhes específicos de cada questão (enunciado, imagens, respostas), 
+                                        utilize a funcionalidade "Ver resultados completos" que mostra informações mais detalhadas.
+                                                    </div>
+                                                    <div class="row text-center">
+                                                        <div class="col-md-4">
+                                                            <div class="border rounded p-3 bg-success bg-opacity-10">
+                                                                <h5 class="text-success">${results.correct_answers}</h5>
+                                                                <p class="mb-0">Questões Acertadas</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="border rounded p-3 bg-danger bg-opacity-10">
+                                                                <h5 class="text-danger">${results.incorrect_answers}</h5>
+                                                                <p class="mb-0">Questões Erradas</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="border rounded p-3 bg-warning bg-opacity-10">
+                                                                <h5 class="text-warning">${results.skipped_questions}</h5>
+                                                                <p class="mb-0">Questões Puladas</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                        
+                                        // Exibir os resultados no modal de resultados
+                                        const modal = new bootstrap.Modal(document.getElementById('simuladoResultsModal'));
+                                        document.getElementById('simuladoResultsModalBody').innerHTML = resultsHtml;
+                                        modal.show();
+                                        
+                                        // Criar o gráfico após o modal ser exibido
+                                        setTimeout(() => {
+                                            createResultsChart(results);
+                                        }, 100);
+                                    } else {
+                                        // Se o simulado não foi encontrado, tentar novamente
+                                        if (attempts < 5) {
+                                            setTimeout(() => tryShowResults(attempts + 1), 2000);
+                                        } else {
+                                            console.error('Simulado não encontrado após várias tentativas');
+                                            showAlert('Erro: Simulado não encontrado. Tente recarregar a página.', 'warning');
+                                        }
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erro ao buscar detalhes:', error);
+                                    if (attempts < 5) {
+                                        setTimeout(() => tryShowResults(attempts + 1), 2000);
+                                    } else {
+                                        showAlert('Erro ao carregar detalhes do simulado', 'danger');
+                                    }
+                                });
+                        } else {
+                            // Se o botão não foi encontrado, tentar novamente
+                            if (attempts < 5) {
+                                setTimeout(() => tryShowResults(attempts + 1), 2000);
+                            }
+                        }
+                    } else {
+                        // Se o simulado não foi encontrado no histórico, recarregar o histórico e tentar novamente
+                        if (attempts < 5) {
+                            console.log('Simulado não encontrado no histórico, tentativa', attempts + 1, 'de 5');
+                            if (attempts >= 2) {
+                                // Após algumas tentativas, recarregar o histórico
+                                console.log('Recarregando histórico...');
+                                loadSimuladosHistory().then(() => {
+                                    setTimeout(() => tryShowResults(attempts + 1), 2000);
+                                });
+                            } else {
+                                setTimeout(() => tryShowResults(attempts + 1), 2000);
+                            }
+                        } else {
+                            console.error('Simulado não encontrado após várias tentativas');
+                            showAlert('Erro: Simulado não encontrado. Tente recarregar a página.', 'warning');
+                        }
+                    }
+                } else {
+                    // Se o container não foi encontrado, tentar novamente
+                    if (attempts < 5) {
+                        setTimeout(() => tryShowResults(attempts + 1), 2000);
+                    }
+                }
+            };
+            
+            // Iniciar tentativas após um pequeno delay
+            setTimeout(() => tryShowResults(), 1000);
+        }
+
+        function createResultsChart(results) {
+            const canvas = document.getElementById('accuracy-chart-results');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Definir altura fixa para evitar scroll infinito
+            canvas.style.height = '300px';
+            canvas.style.maxHeight = '300px';
+            
+            // Dados para o gráfico baseado nos resultados
+            const totalQuestions = results.total_questions;
+            const blockStructure = [8, 6, 6, 4]; // Estrutura padrão dos blocos
+            
+            // Validar dados de entrada
+            if (!results.correct_answers || results.correct_answers < 0) {
+                console.warn('Dados de acertos inválidos:', results.correct_answers);
+                results.correct_answers = 0;
+            }
+            
+            // Calcular acertos por bloco de forma mais simples e robusta
+            const accuracies = [];
+            let remainingCorrect = Math.max(0, results.correct_answers);
+            
+            // Distribuir acertos de forma mais simples pelos blocos
+            for (let i = 0; i < blockStructure.length; i++) {
+                const blockQuestions = blockStructure[i];
+                
+                if (remainingCorrect <= 0) {
+                    accuracies.push(0);
+                    continue;
+                }
+                
+                // Calcular acertos para este bloco baseado na proporção de questões
+                const blockRatio = blockQuestions / totalQuestions;
+                let blockAccuracy = Math.floor(remainingCorrect * blockRatio);
+                
+                // Garantir que não exceda o número de questões do bloco
+                blockAccuracy = Math.min(blockAccuracy, blockQuestions);
+                
+                // Garantir que não seja negativo
+                blockAccuracy = Math.max(0, blockAccuracy);
+                
+                accuracies.push(blockAccuracy);
+                remainingCorrect -= blockAccuracy;
+            }
+            
+            // Distribuir acertos restantes de forma inteligente
+            if (remainingCorrect > 0) {
+                for (let i = 0; i < accuracies.length && remainingCorrect > 0; i++) {
+                    const spaceInBlock = blockStructure[i] - accuracies[i];
+                    if (spaceInBlock > 0) {
+                        const toAdd = Math.min(remainingCorrect, spaceInBlock);
+                        accuracies[i] += toAdd;
+                        remainingCorrect -= toAdd;
+                    }
+                }
+            }
+            
+            // Validação final: garantir que não há valores negativos
+            const finalAccuracies = accuracies.map(acc => Math.max(0, acc));
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Bloco 1', 'Bloco 2', 'Bloco 3', 'Bloco 4'],
+                    datasets: [{
+                        label: 'Questões Acertadas',
+                        data: finalAccuracies,
+                        backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    height: 300,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: Math.max(...blockStructure),
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Acertos: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function repeatSimulado(simuladoId) {
+            // Buscar detalhes do simulado para repetir a configuração
+            fetch(`/api/simulados/history`)
+                .then(response => response.json())
+                .then(history => {
+                    const simulado = history.find(s => s.id === simuladoId);
+                    if (simulado) {
+                        // Configurar o modal com as mesmas provas
+                        selectedExams = simulado.provas_selecionadas || [];
+                        
+                        // Carregar seleção de provas
+                        loadExamSelection();
+                        
+                        // Mostrar modal de criação
+                        const modal = new bootstrap.Modal(document.getElementById('createSimuladoModal'));
+                        modal.show();
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar simulado:', error);
+                    showAlert('Erro ao carregar configuração do simulado', 'danger');
+                });
+        }
+
+        function repeatSimuladoFromDetailsModal() {
+            // Fechar modal de detalhes
+            const detailsModal = bootstrap.Modal.getInstance(document.getElementById('simuladoDetailsModal'));
+            if (detailsModal) {
+                detailsModal.hide();
+            }
+            
+            // Buscar o simulado atual da sessão ou usar o último do histórico
+            fetch(`/api/simulados/history`)
+                .then(response => response.json())
+                .then(history => {
+                    if (history.length > 0) {
+                        const lastSimulado = history[0]; // Último simulado
+                        repeatSimulado(lastSimulado.id);
+                    } else {
+                        showAlert('Nenhum simulado encontrado para repetir', 'warning');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar histórico:', error);
+                    showAlert('Erro ao carregar configuração do simulado', 'danger');
+                });
+        }
+
+        function repeatSimuladoFromResultsModal() {
+            // Fechar modal de resultados
+            const resultsModal = bootstrap.Modal.getInstance(document.getElementById('simuladoResultsModal'));
+            if (resultsModal) {
+                resultsModal.hide();
+            }
+            
+            // Buscar o simulado atual da sessão ou usar o último do histórico
+            fetch(`/api/simulados/history`)
+                .then(response => response.json())
+                .then(history => {
+                    if (history.length > 0) {
+                        const lastSimulado = history[0]; // Último simulado
+                        repeatSimulado(lastSimulado.id);
+                    } else {
+                        showAlert('Nenhum simulado encontrado para repetir', 'warning');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar histórico:', error);
+                    showAlert('Erro ao carregar configuração do simulado', 'danger');
+                });
+        }
+
+        // Verificar resultados ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+        });
+        
+        // Verificar resultados após o dashboard ser carregado
+        async function loadDashboardData() {
+            showLoading(true);
+            try {
+                await Promise.all([
+                    loadAvailableExams(),
+                    loadSimuladosHistory()
+                ]);
+                
+                // Verificar resultados após carregar o histórico
+                setTimeout(() => {
+                    checkForResults();
+                }, 500);
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showAlert('Erro ao carregar dados do dashboard', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        }
+    </script>
+</body>
+</html>

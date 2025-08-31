@@ -5,10 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InteliDaily</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        startup: {
+          pageReady: () => {
+            return MathJax.startup.defaultPageReady().then(() => {
+              console.log('MathJax inicializado com sucesso');
+            });
+          }
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="icon" href="icone.webp" type="image/webp">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .question-image { max-width: 100%; height: auto; margin: 10px 0; }
@@ -75,14 +98,7 @@
         .nav-disabled { pointer-events: none; opacity: 0.45; }
         button[disabled] { opacity: 0.45; cursor: not-allowed; }
 
-        /* Resultados */
-        .stats-grid { display:flex; gap:12px; margin-bottom:12px; }
-        .block-stats { flex:1; background:#fff; border:1px solid #eef2f7; padding:10px; border-radius:8px; text-align:center; }
-        .block-stats .title { font-size:0.85rem; color:#374151; font-weight:700; margin-bottom:6px; }
-        .block-stats .value { font-size:1.15rem; font-weight:800; color:#111827; }
 
-        .thumb { max-width:140px; height:auto; border-radius:6px; display:block; margin:6px 0; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
-        details summary { cursor:pointer; padding:8px; border-radius:6px; }
 
         @media (max-width:720px) {
             .header-rect { flex-direction: column; gap: 12px; }
@@ -181,7 +197,7 @@
         <!-- ===== Question content ===== -->
         <section id="question-content" class="mb-6 max-w-[900px] mx-auto bg-white rounded-md p-6 shadow-sm">
             <h2 class="text-gray-900 font-semibold text-base mb-3 select-none" id="question-title">Questão 01</h2>
-            <div class="text-gray-600 text-xs leading-relaxed mb-6 select-text"><!-- Question text will be loaded here --></div>
+            <div class="text-gray-600 text-xs leading-relaxed mb-6 select-text" id="question-text"><!-- Question text will be loaded here --></div>
             <div id="question-images" class="mb-6"><!-- Images will be displayed here --></div>
         </section>
 
@@ -210,120 +226,26 @@
         </div>
     </div>
 
-    <!-- Results Modal (atualizado: canvas para gráfico e cards por bloco + miniaturas) -->
-    <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 w-full max-w-4xl mx-4 max-h-[85vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-4">Resultados da Prova</h2>
 
-            <div id="results-content">
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div class="bg-green-50 p-4 rounded">
-                        <h3 class="font-semibold text-green-800">Acertos</h3>
-                        <p class="text-2xl font-bold text-green-600" id="correct-answers-result">0</p>
-                    </div>
-                    <div class="bg-red-50 p-4 rounded">
-                        <h3 class="font-semibold text-red-800">Erros</h3>
-                        <p class="text-2xl font-bold text-red-600" id="incorrect-answers-result">0</p>
-                    </div>
-                </div>
 
-                <!-- Estatísticas por bloco (cards) -->
-                <div class="stats-grid mb-4" id="blocks-stats">
-                    <div class="block-stats">
-                        <div class="title">Bloco 1</div>
-                        <div class="value" id="block1-acc">--%</div>
-                    </div>
-                    <div class="block-stats">
-                        <div class="title">Bloco 2</div>
-                        <div class="value" id="block2-acc">--%</div>
-                    </div>
-                    <div class="block-stats">
-                        <div class="title">Bloco 3</div>
-                        <div class="value" id="block3-acc">--%</div>
-                    </div>
-                    <div class="block-stats">
-                        <div class="title">Bloco 4</div>
-                        <div class="value" id="block4-acc">--%</div>
-                    </div>
-                </div>
-
-                <!-- Gráfico principal de acurácia por bloco -->
-                <div class="mb-4">
-                    <h4 class="font-semibold text-gray-700 mb-2">Taxa de Acerto por Bloco</h4>
-                    <canvas id="accuracy-chart" width="600" height="240"></canvas>
-                </div>
-
-                <div class="grid grid-cols-3 gap-4 mb-4">
-                    <div class="text-center">
-                        <h4 class="font-semibold text-gray-700">Total de Questões</h4>
-                        <p class="text-lg font-bold" id="total-questions-result">0</p>
-                    </div>
-                    <div class="text-center">
-                        <h4 class="font-semibold text-gray-700">Respondidas</h4>
-                        <p class="text-lg font-bold" id="answered-questions-result">0</p>
-                    </div>
-                    <div class="text-center">
-                        <h4 class="font-semibold text-gray-700">Puladas</h4>
-                        <p class="text-lg font-bold" id="skipped-questions-result">0</p>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <h4 class="font-semibold text-gray-700 mb-2">Tempo Utilizado</h4>
-                    <p class="text-lg font-bold" id="time-used-result">00:00:00</p>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold text-gray-700 mb-2">Questões (detalhado)</h4>
-                    <div id="wrong-answers-list" class="space-y-2">
-                        <!-- Wrong answers will be listed here (minimizado por padrão) -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-6 flex justify-end">
-                <button id="close-results-btn" class="bg-[#3B4151] text-white px-4 py-2 rounded font-semibold hover:bg-[#2a2e3d] transition">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts: mantemos inclusão do script principal e adicionamos Chart.js e um pequeno observer para transformar imagens em links (abrir full-size) -->
+    <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Ao carregar a página adicionamos um observer para as imagens que aparecem no resumo de resultados
-        document.addEventListener('DOMContentLoaded', () => {
-            const wrongList = document.getElementById('wrong-answers-list');
-            if (!wrongList) return;
-
-            const observer = new MutationObserver((mutations) => {
-                // Quando o script principal injetar o HTML, transformamos imagens em links para abrir em nova aba
-                wrongList.querySelectorAll('img').forEach(img => {
-                    if (img.closest('a')) return;
-                    try {
-                        const src = img.getAttribute('src');
-                        const a = document.createElement('a');
-                        a.href = src;
-                        a.target = '_blank';
-                        a.rel = 'noopener noreferrer';
-                        img.parentNode.insertBefore(a, img);
-                        a.appendChild(img);
-                    } catch (e) { /* não bloquear se falhar */ }
-                });
-
-                // Atualiza os cards de estatísticas por bloco se o script principal tiver criado os números
-                try {
-                    const b1 = document.getElementById('block1-acc');
-                    const b2 = document.getElementById('block2-acc');
-                    const b3 = document.getElementById('block3-acc');
-                    const b4 = document.getElementById('block4-acc');
-                    const totals = Array.from(document.querySelectorAll('#accuracy-chart')).length; // (apenas trigger)
-                    // nada a fazer aqui diretamente; os valores são preenchidos pelo script.js no momento de finalizar
-                } catch (e) {}
-            });
+        // Sistema de simulados - verificar se há simulado ativo (sem modificar UI)
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Verificar se há simulado ativo na sessão
+                const response = await fetch('/api/simulados/current');
+                if (!response.ok) {
+                    // Se não há simulado ativo, redirecionar para dashboard
+                    console.log('Nenhum simulado ativo, redirecionando para dashboard...');
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Erro ao verificar simulado:', error);
+                window.location.href = '/';
             }
-
-        })();
+        });
     </script>
 </body>
 </html>

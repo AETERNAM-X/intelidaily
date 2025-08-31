@@ -1,0 +1,384 @@
+QUESTÃO 1
+A) 20.
+B) 120.
+C) 625.
+D) 1 024.
+E) 15 000.
+GABARITO: C
+----------------------------------------
+QUESTÃO 2
+A) $y=x$
+B) $y=-x$
+C) $y=-\frac{3}{2} x$
+D) $y=\frac{2}{3} x$
+E) $y=\frac{3}{2} x$
+GABARITO: E
+----------------------------------------
+QUESTÃO 3
+A) 5.
+B) 6.
+C) 17.
+D) 18.
+E) 19.
+GABARITO: E
+----------------------------------------
+QUESTÃO 4
+A) 904.
+B) 909.
+C) 920.
+D) 925.
+E) 933.
+GABARITO: B
+----------------------------------------
+QUESTÃO 5
+A) $y=-2 x^2-5 x-1$
+B) $y=-3 x-1$
+C) $y=2 x^2+5 x-1$
+D) $y=-\frac{2}{3} x^2-\frac{11}{3}+3$
+E) $y=2 x^2-5 x-1$
+GABARITO: E
+----------------------------------------
+QUESTÃO 6
+A) 8.
+B) 9.
+C) 12.
+D) 13,5.
+E) 144.
+GABARITO: C
+----------------------------------------
+QUESTÃO 7
+A) 2.648 cm³
+B) 2.176 cm³
+C) 2.168 cm³
+D) 2.144 cm³
+E) 2.112 cm³
+GABARITO: E
+----------------------------------------
+QUESTÃO 8
+A) 2 equipes por segundo.
+B) 3 equipes por segundo.
+C) 12 equipes por segundo.
+D) 14 equipes por segundo.
+E) 84 equipes por segundo.
+GABARITO: D
+----------------------------------------
+QUESTÃO 9
+A) R$ 6,62.
+B) R$ 6,66.
+C) R$ 6,67.
+D) R$ 6,70.
+E) R$ 6,73.
+GABARITO: C
+----------------------------------------
+QUESTÃO 10
+A) 3 250.
+B) 3 950.
+C) 5 225.
+D) 7 450.
+E) 7 675.
+GABARITO: B
+----------------------------------------
+QUESTÃO 11
+A) $2 \sqrt{91}$.
+B) $2 \sqrt{109}$.
+C) $2 \sqrt{117}$.
+D) $2 \sqrt{181}$.
+E) $10 \sqrt{13}$.
+GABARITO: B
+----------------------------------------
+QUESTÃO 12
+A) 140.
+B) 1 400.
+C) 14 000.
+D) 140 000.
+E) 14 000 000.
+GABARITO: B
+----------------------------------------
+QUESTÃO 13
+A) 10, 11, 12, 13, 14, 15.
+B) F, 11, 12, 13, 14, 15.
+C) F, 1F, 2F, 3F, 4F, 5F.
+D) F, F1, F2, F3, F4, F5.
+E) F, 10, 11, 12, 13, 14.
+GABARITO: E
+----------------------------------------
+QUESTÃO 14
+A) em situação irregular, com área de drenagem aproximadamente igual a 13,76%.
+B) em situação irregular, com área de drenagem aproximadamente igual a 13,83%.
+C) em situação regular, com área de drenagem aproximadamente igual a 14,22%.
+D) em situação regular, com área de drenagem aproximadamente igual a 14,81%.
+E) em situação regular, com área de drenagem aproximadamente igual a 20,31%.
+GABARITO: D
+----------------------------------------
+QUESTÃO 15
+A) TIRO.
+B) FEED.
+C) DEUS.
+D) RITO.
+E) TRIO.
+GABARITO: A
+----------------------------------------
+QUESTÃO 16
+A) 189 minutos.
+B) 225 minutos.
+C) 275 minutos.
+D) 337,4 minutos.
+E) 441 minutos.
+GABARITO: B
+----------------------------------------
+QUESTÃO 17
+A) 2.
+B) 3.
+C) 4.
+D) 6.
+E) 24.
+GABARITO: B
+----------------------------------------
+QUESTÃO 18
+A) 32 Mbps.
+B) 40 Mbps.
+C) 42 Mbps.
+D) 48 Mbps.
+E) 50 Mbps.
+GABARITO: E
+----------------------------------------
+QUESTÃO 19
+A) $(0.95)^4$
+B) $1 - (0.95)^4$
+C) $(0.05)^4$
+D) $1 - (0.05)^4$
+E) $4 \cdot (0.95)$
+GABARITO: D
+----------------------------------------
+QUESTÃO 20
+A) 12 minutos.
+B) 48 minutos.
+C) 1 hora e 12 minutos.
+D) 1 hora e 15 minutos.
+E) 1 hora e 25 minutos.
+GABARITO: D
+----------------------------------------
+QUESTÃO 21
+A) $\left\{\begin{array}{l}X+Y=2 \\ 100 X+300 Y=250\end{array}\right.$
+B) $\left\{\begin{array}{l}X+Y=2 \\ 300 X+100 Y=250\end{array}\right.$
+C) $\left\{\begin{array}{l}X+Y=250 \\ 100 X+300 Y=400\end{array}\right.$
+D) $\left\{\begin{array}{l}X+Y=2 \\ 100 X+300 Y=400\end{array}\right.$
+E) $\left\{\begin{array}{l}X+Y=2 \\ \frac{X}{Y}=\frac{1}{3}\end{array}\right.$
+GABARITO: A
+----------------------------------------
+QUESTÃO 22
+A) 529.
+B) 530.
+C) 531.
+D) 540.
+E) 541.
+GABARITO: E
+----------------------------------------
+QUESTÃO 23
+A) 1 800.
+B) 2 000.
+C) 20 000.
+D) 180 000.
+E) 200 000.
+GABARITO: E
+----------------------------------------
+QUESTÃO 24
+A) Fraga.
+B) Jota.
+C) Lima.
+D) Siqueira.
+E) Não é possível determinar o culpado apenas com essas afirmações.
+GABARITO: A
+----------------------------------------
+QUESTÃO 25
+A) 4 possibilidades.
+B) 5 possibilidades.
+C) 22 possibilidades.
+D) 23 possibilidades.
+E) 41 possibilidades.
+GABARITO: B
+----------------------------------------
+QUESTÃO 26
+A) 1 segundo.
+B) 30 segundos.
+C) 60 segundos.
+D) 360 segundos.
+E) 720 segundos.
+GABARITO: C
+----------------------------------------
+QUESTÃO 27
+A) 21.
+B) 41.
+C) 50.
+D) 82.
+E) 100.
+GABARITO: E
+----------------------------------------
+QUESTÃO 28
+A) 88 ETH.
+B) 144 ETH.
+C) 158 ETH.
+D) 170 ETH.
+E) 200 ETH.
+GABARITO: D
+----------------------------------------
+QUESTÃO 29
+A) 5,2.
+B) 38.
+C) 161.
+D) 180.
+E) 232.
+GABARITO: D
+----------------------------------------
+QUESTÃO 30
+A) $y=-\frac{1}{4} x^2+\frac{5}{2} x+\frac{7}{4}$.
+B) $y=-\frac{1}{2} x^2+\frac{5}{4} x-\frac{1}{4}$.
+C) $y=-x^2+10 x+7$.
+D) $y=\frac{1}{4} x^2-\frac{5}{2} x-\frac{7}{4}$.
+E) $y = x + 3$.
+GABARITO: A
+----------------------------------------
+QUESTÃO 31
+A) 2 dias.
+B) 12 dias.
+C) 28 dias.
+D) 278 dias.
+E) 11 574 dias.
+GABARITO: B
+----------------------------------------
+QUESTÃO 32
+A)
+B) 
+C)
+D) 
+E)
+GABARITO: E
+----------------------------------------
+QUESTÃO 33
+A) 3,10.
+B) 3,30.
+C) 4,40.
+D) 6,20.
+E) 6,79
+GABARITO: C
+----------------------------------------
+QUESTÃO 34
+A) 480,42.
+B) 2 402,10.
+C) 4 804,20.
+D) 7 065,00.
+E) 14 130,00.
+GABARITO: B
+----------------------------------------
+QUESTÃO 35
+A) 71,5 kWh.
+B) 132,0 kWh.
+C) 134,8 kWh.
+D) 143,0 kWh.
+E) 260,0 kWh.
+GABARITO: B
+----------------------------------------
+QUESTÃO 36
+A) 120.
+B) 150.
+C) 200.
+D) 470.
+E) 493.
+GABARITO: D
+----------------------------------------
+QUESTÃO 37
+A) 126.
+B) 11 000.
+C) 12 685.
+D) 84 330.
+E) 654 000.
+GABARITO: B
+----------------------------------------
+QUESTÃO 38
+A) 4% da demanda energética da região Norte em 2014.
+B) 40% da demanda energética da região Norte em 2014.
+C) 400% da demanda energética da região Norte em 2014.
+D) 4 000% da demanda energética da região Norte em 2014.
+E) 40 000% da demanda energética da região Norte em 2014.
+GABARITO: C
+----------------------------------------
+QUESTÃO 39
+A) 1,8%.
+B) 2%.
+C) 2,22%.
+D) 88,2%.
+E) 92%.
+GABARITO: A
+----------------------------------------
+QUESTÃO 40
+A) $\tfrac{1}{9}$
+B) $\tfrac{2}{9}$
+C) $\tfrac{4}{9}$
+D) $\tfrac{5}{9}$
+E) $\tfrac{8}{9}$
+GABARITO: E
+----------------------------------------
+QUESTÃO 41
+A) $4^9$
+B) $3 \cdot 4^9$
+C) $4^{10}$
+D) $3 \cdot 4^{10}$
+E) $39$
+GABARITO: B
+----------------------------------------
+QUESTÃO 42
+A) 400 dispositivos.
+B) 2 000 dispositivos.
+C) 40 000 dispositivos.
+D) 200 000 dispositivos.
+E) 40 000 000 dispositivos.
+GABARITO: C
+----------------------------------------
+QUESTÃO 43
+A) 12 343.
+B) 45 000.
+C) 67 200.
+D) 84 000.
+E) 105 000.
+GABARITO: E
+----------------------------------------
+QUESTÃO 44
+A) \(\displaystyle \frac{100 \cdot N}{40}\).
+B) \(\displaystyle \frac{40 \cdot N}{100}\).
+C) \(\displaystyle \frac{N}{40}\).
+D) \(\displaystyle \frac{N}{100}\).
+E) \(\displaystyle \frac{100 \cdot (40 - N)}{40}\).
+GABARITO: A
+----------------------------------------
+QUESTÃO 45
+A) 2 365,26
+B) 12 000,00.
+C) 27 437,07.
+D) 61 800,00.
+E) 1 392 000,00.
+GABARITO: B
+----------------------------------------
+QUESTÃO 46
+A) 0,025.
+B) 2,5.
+C) 25.
+D) 250.
+E) 2500.
+GABARITO: C
+----------------------------------------
+QUESTÃO 47
+A) 4 dígitos.
+B) 6 dígitos.
+C) 7 dígitos.
+D) 8 dígitos.
+E) 40 dígitos.
+GABARITO: C
+----------------------------------------
+QUESTÃO 48
+A) \(\displaystyle \begin{cases} A = 100002 N \\ 1000 A + 80000 N = 1000000 \end{cases} \)
+B) \(\displaystyle \begin{cases} A = 2N \\ \frac{1000}{A} + \frac{80000}{N} = 1000000000 \end{cases} \)
+C) \(\displaystyle \begin{cases} A = 100000 + 2 N \\ N = 80 A \end{cases} \)
+D) \(\displaystyle \begin{cases} A = 100000 + 2 N \\ 1000 A + 80000 N = 1000000 \end{cases} \)
+E) \(\displaystyle \begin{cases} A = 100000 + 2 N \\ 1000 A + 80000 N = 1000000000 \end{cases} \)
+GABARITO: E
+----------------------------------------

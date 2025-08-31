@@ -1,0 +1,432 @@
+QUESTÃO 1
+A) 17/01
+B) 16/02
+C) 08/07
+D) 21/07
+E) 26/12
+GABARITO: B
+----------------------------------------
+QUESTÃO 2
+A) 70,5%
+B) 65%
+C) 55,5%
+D) 54,5%
+E) 35%
+GABARITO: A
+----------------------------------------
+QUESTÃO 3
+A) 200 pessoas
+B) 1.100 pessoas
+C) 2.200 pessoas
+D) 102.400 pessoas
+E) 204.800 pessoas
+GABARITO: D
+----------------------------------------
+QUESTÃO 4
+A) 110
+B) 160
+C) 180
+D) 240
+E) 360
+GABARITO: A
+----------------------------------------
+QUESTÃO 5
+A) 46,38 MB
+B) 57,40 MB
+C) 231,90 MB
+D) 407,82 MB
+E) 639,72 MB
+GABARITO: E
+----------------------------------------
+QUESTÃO 6
+A) 18 GB
+B) 42 GB
+C) 96 GB
+D) 128 GB
+E) 264 GB
+GABARITO: C
+----------------------------------------
+QUESTÃO 7
+A) 600
+B) 500
+C) 100
+D) 30
+E) 25
+GABARITO: E
+----------------------------------------
+QUESTÃO 8
+A) 1,061 m
+B) 1,125 m
+C) 1,620 m
+D) 1,800 m
+E) 3,240 m
+GABARITO: D
+----------------------------------------
+QUESTÃO 9
+A) 4 s
+B) 8 s
+C) 133 min
+D) 266 min
+E) 400 min
+GABARITO: C
+----------------------------------------
+QUESTÃO 10
+A) 1,5%
+B) 6%
+C) 9%
+D) 12%
+E) 24%
+GABARITO: A
+----------------------------------------
+QUESTÃO 11
+A) da situação I.
+B) das situações I ou III.
+C) das situações I ou IV.
+D) das situações II ou IV.
+E) de todas as situações.
+GABARITO: C
+----------------------------------------
+QUESTÃO 12
+A) 15
+B) 61
+C) 327
+D) 363
+E) 807
+GABARITO: C
+----------------------------------------
+QUESTÃO 13
+A) 14
+B) 20
+C) 25
+D) 30
+E) 50
+GABARITO: A
+----------------------------------------
+QUESTÃO 14
+A) $5,299 \times 10^{-2} \mathrm{~m}^3$ de água contaminada
+B) $5,299 \times 10^{-1} \mathrm{~m}^3$ de água contaminada
+C) $5,299 \times 10^1 \mathrm{~m}^3$ de águá contaminada
+D) $5,299 \times 10^4 \mathrm{~m}^3$ de água contaminada
+E) $5,299 \times 10^7 \mathrm{~m}^3$ de água contaminada
+GABARITO: C
+----------------------------------------
+QUESTÃO 15
+A) 20! ordens distintas, o que é inviável de ser feito em um mês.
+B) 20! ordens distintas, o que é viável de ser feito em um mês.
+C) 400 ordens distintas, o que é viável de ser feito em um mês.
+D) 2020 ordens distintas, o que é inviável de ser feito em um mês.
+E) 2020 ordens distintas, o que é viável de ser feito em um mês.
+GABARITO: A
+----------------------------------------
+QUESTÃO 16
+A) 840 kW
+B) 1.450 kW
+C) 1.480 kW
+D) 1.850 kW
+E) 1.970 kW
+GABARITO: C
+----------------------------------------
+QUESTÃO 17
+A) 3 e 15
+B) 3, 6, 15 e 4
+C) A, 3, e 15
+D) 3, 15, J e B
+E) todas
+GABARITO: D
+----------------------------------------
+QUESTÃO 18
+A) 𝑆𝐽𝑉 sendo necessárias no máximo 16 tentativas.
+B) 𝑆𝐽𝑉 sendo necessárias no máximo 22 tentativas.
+C) 𝑆𝐽𝑉 sendo necessárias no máximo 32 tentativas.
+D) 𝑀𝐽𝑉 sendo necessárias no máximo 11 tentativas.
+E) 𝑀𝐽𝑉 sendo necessárias no máximo 22 tentativas.
+GABARITO: B
+----------------------------------------
+QUESTÃO 19
+A) 1 km
+B) 2 km
+C) 12 km
+D) 15 km
+E) 35 km
+GABARITO: B
+----------------------------------------
+QUESTÃO 20
+A) 25.000 pessoas
+B) 62.500 pessoas
+C) 250.000 pessoas
+D) 500.000 pessoas
+E) 625.000 pessoas
+GABARITO: B
+----------------------------------------
+QUESTÃO 21
+A) \(\displaystyle y = -x - 6\)
+B) \(\displaystyle y = x - 1\)
+C) \(\displaystyle y = \frac{x}{2} - \frac{3}{2}\)
+D) \(\displaystyle y = \frac{5}{2}\)
+E) \(\displaystyle y = 6 - x\)
+GABARITO: E
+----------------------------------------
+QUESTÃO 22
+A) 30
+B) 58
+C) 5
+D) −3
+E) −10
+GABARITO: B
+----------------------------------------
+QUESTÃO 23
+A) 24
+B) 29
+C) 37
+D) 81
+E) 200
+GABARITO: B
+----------------------------------------
+QUESTÃO 24
+A) 6
+B) 7
+C) 8
+D) 9
+E) 10
+GABARITO: C
+----------------------------------------
+QUESTÃO 25
+A) \(\displaystyle f(x) = -\tfrac{3}{4}x^2 + 3, \quad \text{para } -\sqrt{2.4} \leq x \leq \sqrt{2.4}\)
+B) \(\displaystyle f(x) = -\tfrac{3}{4}x^2 + 3, \quad \text{para } \sqrt{2.4} \leq x \leq 2\)
+C) \(\displaystyle f(x) = -4x^2 + 3, \quad \text{para } \sqrt{0.45} \leq x \leq 2\)
+D) \(\displaystyle f(x) = -4x^2 + 3, \quad \text{para } 0 \leq x \leq 2\)
+E) \(\displaystyle f(x) = -4x^2 + 3, \quad \text{para } -\sqrt{0.45} \leq x \leq \sqrt{0.45}\)
+GABARITO: B
+----------------------------------------
+QUESTÃO 26
+A) igual a 10
+B) igual a $10^5$
+C) entre $10^4$ e $10^5$
+D) entre $10^5$ e $10^6$
+E) entre $10^6$ e $10^7$
+GABARITO: D
+----------------------------------------
+QUESTÃO 27
+A) P(6,1)
+B) P(6,2)
+C) P(7,1)
+D) P(8,0)
+E) P(8,3)
+GABARITO: C
+----------------------------------------
+QUESTÃO 28
+A) Tempo de entrega previsto: 3 dias.
+B) Tempo de entrega previsto: 10 dias.
+C) Tempo de entrega previsto: 13 dias.
+D) Tempo de entrega previsto: 16 dias.
+E) Tempo de entrega previsto: 19 dias.
+GABARITO: E
+----------------------------------------
+QUESTÃO 29
+A) 11,2 m
+B) 3,2 m
+C) 2,8 m
+D) 1,2 m
+E) 0,6 m
+GABARITO: D
+----------------------------------------
+QUESTÃO 30
+A)
+B)
+C)
+D)
+E)
+GABARITO:
+----------------------------------------
+QUESTÃO 31
+A) \(\displaystyle \tfrac{3\sqrt{85}}{2}\)
+B) \(\displaystyle \sqrt{85}\)
+C) \(\displaystyle \tfrac{\sqrt{85}}{3}\)
+D) \(\displaystyle \tfrac{\sqrt{85}}{4}\)
+E) \(\displaystyle \tfrac{2\sqrt{85}}{3}\)
+GABARITO: D
+----------------------------------------
+QUESTÃO 32
+A) 70
+B) 69
+C) 61
+D) 60
+E) 50
+GABARITO: A
+----------------------------------------
+QUESTÃO 33
+A) \(\displaystyle \tfrac{13}{21}\)
+B) \(\displaystyle \tfrac{5}{17}\)
+C) \(\displaystyle \tfrac{14}{31}\)
+D) \(\displaystyle \tfrac{8}{23}\)
+E) \(\displaystyle \tfrac{7}{8}\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 34
+A) 13 anos
+B) 14 anos
+C) 18 anos
+D) 19 anos
+E) 21 anos
+GABARITO: B
+----------------------------------------
+QUESTÃO 35
+A) \(\displaystyle \tfrac{7\sqrt{2}}{10}\)
+B) \(\displaystyle \tfrac{\sqrt{2}}{10}\)
+C) \(\displaystyle \tfrac{\sqrt{2}}{5}\)
+D) \(\displaystyle \tfrac{7\sqrt{2}}{5}\)
+E) \(\displaystyle \tfrac{\sqrt{2}}{2}\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 36
+A) \(\displaystyle \begin{pmatrix} 1 & 1 & 0 \\ 1 & 1 & 0 \\ 0 & 0 & 0 \end{pmatrix}\)
+B) \(\displaystyle \begin{pmatrix} 1 & 0 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}\)
+C) \(\displaystyle \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0 \end{pmatrix}\)
+D) \(\displaystyle \begin{pmatrix} 1 & 1 & 0 \\ 1 & 1 & 0 \\ 1 & 1 & 0 \end{pmatrix}\)
+E) \(\displaystyle \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}\)
+GABARITO: C
+----------------------------------------
+QUESTÃO 37
+A) 40
+B) 36
+C) 24
+D) 16
+E) 6
+GABARITO: A
+----------------------------------------
+QUESTÃO 38
+A) \(\displaystyle \tfrac{5}{3}\)
+B) \(\displaystyle 10^3\)
+C) \(\displaystyle 5 \cdot 10^4\)
+D) \(\displaystyle 10^6\)
+E) \(\displaystyle 2 \cdot 10^8\)
+GABARITO: D
+----------------------------------------
+QUESTÃO 39
+A) março com valor de R$ 800,00.
+B) março com valor de R$ 2.000,00.
+C) outubro com valor de R$ 200,00.
+D) novembro com valor de R$ 800,00.
+E) novembro com valor de R$ 2.000,00.
+GABARITO: E
+----------------------------------------
+QUESTÃO 40
+A) 360
+B) 240
+C) 70
+D) 60
+E) 15
+GABARITO: A
+----------------------------------------
+QUESTÃO 41
+A) 65,23%
+B) 61,15%
+C) 57,32%
+D) 52,36%
+E) 48,18%
+GABARITO: C
+----------------------------------------
+QUESTÃO 42
+A) 99.200
+B) 72.500
+C) 65.600
+D) 58.900
+E) 82.300
+GABARITO: A
+----------------------------------------
+QUESTÃO 43
+A) \(\displaystyle \tfrac{1}{5}\)
+B) \(\displaystyle \tfrac{1}{2}\)
+C) \(\displaystyle \tfrac{8}{25}\)
+D) \(\displaystyle \tfrac{12}{65}\)
+E) \(\displaystyle \tfrac{13}{85}\)
+GABARITO: E
+----------------------------------------
+QUESTÃO 44
+A) 224.640
+B) 9.360
+C) 1.560
+D) 720
+E) 6
+GABARITO: A
+----------------------------------------
+QUESTÃO 45
+A) 81,25%
+B) 78,45%
+C) 73,86%
+D) 65,58%
+E) 58,29%
+GABARITO: C
+----------------------------------------
+QUESTÃO 46
+A) 71.700
+B) 62.400
+C) 52.600
+D) 86.800
+E) 41.500
+GABARITO: B
+----------------------------------------
+QUESTÃO 47
+A) \(\displaystyle \sqrt{2},\; 2\pi \;\text{e}\; \tfrac{\pi}{4}\)
+B) \(\displaystyle \sqrt{2},\; \pi \;\text{e}\; \tfrac{\pi}{4}\)
+C) \(\displaystyle \sqrt{2},\; \pi \;\text{e}\; \tfrac{\pi}{2}\)
+D) \(\displaystyle 1,\; 2\pi \;\text{e}\; \tfrac{\pi}{4}\)
+E) \(\displaystyle 1,\; 2\pi \;\text{e}\; \tfrac{\pi}{2}\)
+GABARITO: B
+----------------------------------------
+QUESTÃO 48
+A) 1.080
+B) 720
+C) 360
+D) 45
+E) 24
+GABARITO: A
+----------------------------------------
+QUESTÃO 49
+A) 55%
+B) 47%
+C) 44%
+D) 40%
+E) 33%
+GABARITO: A
+----------------------------------------
+QUESTÃO 50
+A) 2ª semana
+B) 3ª semana
+C) 4ª semana
+D) 5ª semana
+E) 6ª semana
+GABARITO: B
+----------------------------------------
+QUESTÃO 51
+A) 1
+B) 2
+C) 3
+D) 4
+E) 5
+GABARITO: D
+----------------------------------------
+QUESTÃO 52
+A) 1.684.800
+B) 224.640
+C) 9.360
+D) 1.080
+E) 720
+GABARITO: A
+----------------------------------------
+QUESTÃO 53
+A) 50%
+B) 47,82%
+C) 45,86%
+D) 42,71%
+E) 38,23%
+GABARITO: C
+----------------------------------------
+QUESTÃO 54
+A) 2ª semana
+B) 3ª semana
+C) 4ª semana
+D) 5ª semana
+E) 6ª semana
+GABARITO: B
+----------------------------------------

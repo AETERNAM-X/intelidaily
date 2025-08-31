@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let blockCompleted = new Set();
     let timeSpent = new Map();
     let questionStartTime = Date.now();
+    
+    // Mapeamento das alternativas embaralhadas para cada questão
+    let shuffledAlternatives = new Map();
 
     // Estrutura dos blocos
     const blockStructure = [8, 6, 6, 4];
@@ -32,12 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         finalizeBlockBtn: document.getElementById('finalize-block-btn'),
         skipQuestionBtn: document.getElementById('skip-question-btn'),
         skipToggle: document.getElementById('skip-toggle'),
-        resultsModal: document.getElementById('results-modal'),
-        closeResultsBtn: document.getElementById('close-results-btn'),
+        // resultsModal removido - resultados agora são exibidos no dashboard
+        // closeResultsBtn removido - resultados agora são exibidos no dashboard
         skipChoiceModal: document.getElementById('skip-choice-modal'),
         skipChoiceList: document.getElementById('skip-choice-list'),
-        cancelSkipChoice: document.getElementById('cancel-skip-choice'),
-        confirmSkipChoice: document.getElementById('confirm-skip-choice'),
+        // cancelSkipChoice: document.getElementById('cancel-skip-choice'),
+        // confirmSkipChoice: document.getElementById('confirm-skip-choice'),
         questionTitle: document.getElementById('question-title'),
         questionText: document.getElementById('question-text'),
         questionImages: document.getElementById('question-images'),
@@ -71,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar timer
     function startTimer() {
+        let nextAlertMs = 30 * 60 * 1000; // 30 minutes
         examTimer = setInterval(() => {
             const now = new Date();
             const elapsed = now - examStartTime;
@@ -83,6 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     elements.remainingTimeElement.classList.remove('time-warning');
                 }
+            }
+
+            // Popup a cada 30 minutos (mensagem sem emoji)
+            if (elapsed >= nextAlertMs && remaining > 0) {
+                const elapsedH = formatRemainingTime(elapsed);
+                const remainingH = formatRemainingTime(remaining);
+                alert(`Tempo de prova\n\nPassados: ${elapsedH}\nRestantes: ${remainingH}`);
+                nextAlertMs += 30 * 60 * 1000;
             }
 
             if (remaining <= 0) {
@@ -107,11 +119,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getCurrentBlock(qIndex) {
+        // Validar entrada
+        if (qIndex < 0 || qIndex >= totalQuestions) {
+            console.warn(`Índice de questão inválido: ${qIndex}, retornando bloco 1`);
+            return 1;
+        }
+        
+        // Validar que qIndex é um número
+        if (typeof qIndex !== 'number' || isNaN(qIndex)) {
+            console.warn(`Índice de questão não é um número válido: ${qIndex}, retornando bloco 1`);
+            return 1;
+        }
+        
         let acc = 0;
         for (let i = 0; i < blockStructure.length; i++) {
             acc += blockStructure[i];
             if (qIndex < acc) return i + 1;
         }
+        // Garantir que sempre retorne um valor válido entre 1 e 4
         return 4;
     }
 
@@ -174,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Gerar navegação de questões
-    function generateQuestionNavigation() {
+    async function generateQuestionNavigation() {
         if (!elements.questionNavigation) return;
 
         elements.questionNavigation.innerHTML = '';
@@ -187,8 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = i + 1;
             btn.dataset.question = i;
 
-            btn.addEventListener('click', () => {
-                displayQuestion(i, currentQuestionIndex);
+            btn.addEventListener('click', async () => {
+                await displayQuestion(i, currentQuestionIndex);
             });
 
             elements.questionNavigation.appendChild(btn);
@@ -233,7 +258,7 @@ function updateQuestionNavigation() {
     }
 
     // Exibir questão
-    function displayQuestion(index, previousIndex = null) {
+    async function displayQuestion(index, previousIndex = null) {
         if (previousIndex !== null && isExamStarted) {
             const time = Date.now() - questionStartTime;
             timeSpent.set(previousIndex, (timeSpent.get(previousIndex) || 0) + time);
@@ -247,19 +272,40 @@ function updateQuestionNavigation() {
 
         if (newBlock !== currentBlock) {
             currentBlock = newBlock;
-            generateQuestionNavigation();
+            await generateQuestionNavigation();
             updateBlockIndicators();
         }
 
-        if (elements.questionTitle) elements.questionTitle.textContent = `Questão ${String(index + 1).padStart(2, '0')}`;
-        if (elements.questionText) elements.questionText.textContent = q.enunciado;
+        if (elements.questionTitle) elements.questionTitle.innerHTML = `Questão ${String(index + 1).padStart(2, '0')}`;
+        if (elements.questionText) {
+            elements.questionText.innerHTML = q.enunciado;
+        }
 
-        if (q.imagens && q.imagens !== '[]') {
+        // Buscar imagens da questão usando a API correta
+        if (q.id) {
             try {
-                const images = JSON.parse(q.imagens);
-                displayQuestionImages(images);
+                const imageResponse = await fetch(`/api/simulados/question/${q.id}`);
+                if (imageResponse.ok) {
+                    const questionData = await imageResponse.json();
+                    
+                    if (questionData.imagens && questionData.imagens !== '[]') {
+                        try {
+                            const images = JSON.parse(questionData.imagens);
+                            displayQuestionImages(images);
+                        } catch (e) {
+                            console.error('Erro ao processar imagens:', e);
+                            if (elements.questionImages) elements.questionImages.innerHTML = '';
+                        }
+                    } else {
+                        if (elements.questionImages) elements.questionImages.innerHTML = '';
+                    }
+                } else {
+                    console.error('Erro ao buscar questão:', imageResponse.status);
+                    if (elements.questionImages) elements.questionImages.innerHTML = '';
+                }
             } catch (e) {
-                elements.questionImages.innerHTML = '';
+                console.error('Erro ao buscar imagens:', e);
+                if (elements.questionImages) elements.questionImages.innerHTML = '';
             }
         } else {
             if (elements.questionImages) elements.questionImages.innerHTML = '';
@@ -268,28 +314,109 @@ function updateQuestionNavigation() {
         if (elements.answerForm) {
             const currentAnswer = answeredQuestions.get(index) || '';
             const isCurrentSkipped = skippedQuestions.has(index);
+            
+            // Obter alternativas embaralhadas
+            const shuffledData = getShuffledAlternatives(index);
+            if (!shuffledData) {
+                console.error(`Não foi possível obter alternativas embaralhadas para questão ${index}`);
+                elements.answerForm.innerHTML = '<p class="text-red-500">Erro ao carregar alternativas</p>';
+                return;
+            }
+            
+            const shuffledAlternatives = shuffledData.shuffled;
+            const mapping = shuffledData.mapping;
+            
+            // Converter resposta salva para posição embaralhada correspondente
+            let shuffledCurrentAnswer = '';
+            if (currentAnswer) {
+                // Encontrar qual posição embaralhada corresponde à resposta original
+                for (let i = 0; i < shuffledAlternatives.length; i++) {
+                    if (shuffledAlternatives[i].letter === currentAnswer) {
+                        shuffledCurrentAnswer = String.fromCharCode(97 + i); // a, b, c, d, e
+                        break;
+                    }
+                }
+            }
+
+            // Função para processar alternativas (texto ou imagem)
+            function processAlternative(alt, content) {
+                if (!content) return '';
+                
+                // Verificar se é uma imagem base64 direta (formato novo)
+                if (typeof content === 'string' && content.length > 100 && /^[A-Za-z0-9+/=]+$/.test(content)) {
+                    // Provavelmente é uma imagem base64 direta
+                    return `
+                        <img src="data:image/png;base64,${content}" 
+                             alt="Alternativa ${alt}" 
+                             class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded cursor-pointer hover:opacity-80 transition-opacity"
+                             onclick="showImageModal('${content}', 'Alternativa ${alt}')"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span class="text-red-500 text-xs" style="display:none;">Erro ao carregar imagem</span>
+                    `;
+                }
+                
+                // Verificar se é uma imagem (JSON com base64 - formato antigo)
+                if (typeof content === 'string' && content.includes('base64')) {
+                    try {
+                        const parsed = JSON.parse(content);
+                        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].base64) {
+                            const imgInfo = parsed[0];
+                            return `
+                                <img src="data:image/png;base64,${imgInfo.base64}" 
+                                     alt="Alternativa ${alt}" 
+                                     class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded cursor-pointer hover:opacity-80 transition-opacity"
+                                     onclick="showImageModal('${imgInfo.base64}', 'Alternativa ${alt}')"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                                <span class="text-red-500 text-xs" style="display:none;">Erro ao carregar imagem</span>
+                            `;
+                        }
+                    } catch (e) {
+                        console.error(`Erro ao processar alternativa ${alt}:`, e);
+                    }
+                }
+                
+                // Se não for imagem, retornar como texto com suporte ao MathJax
+                // Manter o conteúdo original para que o MathJax possa processá-lo corretamente
+                // Adicionar classe específica para processamento do MathJax
+                return `<span class="alternative-text mathjax-content">${content}</span>`;
+            }
 
             elements.answerForm.innerHTML = `
-                <label class="flex items-center space-x-2 cursor-pointer ${isCurrentSkipped ? 'opacity-50 pointer-events-none' : ''}">
-                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="a" ${currentAnswer === 'a' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span>A) ${q.a}</span>
-                </label>
-                <label class="flex items-center space-x-2 cursor-pointer ${isCurrentSkipped ? 'opacity-50 pointer-events-none' : ''}">
-                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="b" ${currentAnswer === 'b' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span>B) ${q.b}</span>
-                </label>
-                <label class="flex items-center space-x-2 cursor-pointer ${isCurrentSkipped ? 'opacity-50 pointer-events-none' : ''}">
-                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="c" ${currentAnswer === 'c' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span>C) ${q.c}</span>
-                </label>
-                <label class="flex items-center space-x-2 cursor-pointer ${isCurrentSkipped ? 'opacity-50 pointer-events-none' : ''}">
-                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="d" ${currentAnswer === 'd' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span>D) ${q.d}</span>
-                </label>
-                <label class="flex items-center space-x-2 cursor-pointer ${isCurrentSkipped ? 'opacity-50 pointer-events-none' : ''}">
-                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="e" ${currentAnswer === 'e' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span>E) ${q.e}</span>
-                </label>
+                <div class="answer-alternative">
+                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="a" ${shuffledCurrentAnswer === 'a' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
+                    <span class="alternative-label font-medium">A)</span>
+                    <div class="alternative-content">
+                        ${processAlternative('A', shuffledAlternatives[0].content)}
+                    </div>
+                </div>
+                <div class="answer-alternative">
+                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="b" ${shuffledCurrentAnswer === 'b' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
+                    <span class="alternative-label font-medium">B)</span>
+                    <div class="alternative-content">
+                        ${processAlternative('B', shuffledAlternatives[1].content)}
+                    </div>
+                </div>
+                <div class="answer-alternative">
+                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="c" ${shuffledCurrentAnswer === 'c' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
+                    <span class="alternative-label font-medium">C)</span>
+                    <div class="alternative-content">
+                        ${processAlternative('C', shuffledAlternatives[2].content)}
+                    </div>
+                </div>
+                <div class="answer-alternative">
+                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="d" ${shuffledCurrentAnswer === 'd' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
+                    <span class="alternative-label font-medium">D)</span>
+                    <div class="alternative-content">
+                        ${processAlternative('D', shuffledAlternatives[3].content)}
+                    </div>
+                </div>
+                <div class="answer-alternative">
+                    <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="e" ${shuffledCurrentAnswer === 'e' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
+                    <span class="alternative-label font-medium">E)</span>
+                    <div class="alternative-content">
+                        ${processAlternative('E', shuffledAlternatives[4].content)}
+                    </div>
+                </div>
             `;
 
             elements.answerForm.onchange = (e) => {
@@ -299,6 +426,22 @@ function updateQuestionNavigation() {
                     updateQuestionNavigation();
                 }
             };
+
+            // Adicionar eventos de clique para as alternativas
+            const alternativeDivs = elements.answerForm.querySelectorAll('.answer-alternative');
+            alternativeDivs.forEach((div, altIndex) => {
+                const radio = div.querySelector('input[type="radio"]');
+                const altValue = String.fromCharCode(97 + altIndex); // a, b, c, d, e
+                
+                div.addEventListener('click', () => {
+                    if (!isCurrentSkipped) {
+                        radio.checked = true;
+                        answeredQuestions.set(index, altValue);
+                        updateAnsweredCount();
+                        updateQuestionNavigation();
+                    }
+                });
+            });
         }
 
         const blockEnd = getBlockEndIndex(currentBlock) - 1;
@@ -332,13 +475,34 @@ function updateQuestionNavigation() {
         }
 
         questionStartTime = Date.now();
+
+        // Processar MathJax imediatamente após a renderização
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            try {
+                // Processar apenas o container das alternativas para melhor performance
+                const mathElements = elements.answerForm.querySelectorAll('.mathjax-content');
+                if (mathElements.length > 0) {
+                    MathJax.typesetPromise(mathElements).then(() => {
+                        console.log('MathJax processado com sucesso para a questão', index + 1);
+                    }).catch((error) => {
+                        console.error('Erro ao processar MathJax:', error);
+                        // Fallback: tentar processar todo o documento
+                        MathJax.typesetPromise().catch((fallbackError) => {
+                            console.error('Erro no fallback do MathJax:', fallbackError);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao tentar processar MathJax:', error);
+            }
+        }
     }
 
     // Função para próxima questão
-    function nextQuestion() {
+    async function nextQuestion() {
         const nextIndex = currentQuestionIndex + 1;
         if (nextIndex < allQuestions.length) {
-            displayQuestion(nextIndex, currentQuestionIndex);
+            await displayQuestion(nextIndex, currentQuestionIndex);
         }
     }
 
@@ -350,7 +514,7 @@ function updateQuestionNavigation() {
     }
 
     // Função para pular questão
-    function toggleSkipQuestion() {
+    async function toggleSkipQuestion() {
         const currentIndex = currentQuestionIndex;
         const isCurrentlySkipped = skippedQuestions.has(currentIndex);
         const canToggle = canSkipCurrentQuestion(currentIndex);
@@ -371,7 +535,7 @@ function updateQuestionNavigation() {
 
         updateAnsweredCount();
         updateQuestionNavigation();
-        displayQuestion(currentQuestionIndex);
+        await displayQuestion(currentQuestionIndex);
     }
 
     // Modal de escolha para pulo
@@ -410,7 +574,7 @@ function updateQuestionNavigation() {
     }
 
     // Função para finalizar bloco
-    function finalizeBlock() {
+    async function finalizeBlock() {
         if (!isExamStarted) {
             showNotification('Você deve iniciar a prova primeiro!', 'warning');
             return;
@@ -460,9 +624,9 @@ function updateQuestionNavigation() {
             currentBlock++;
             const nextBlockStartIndex = getBlockStartIndex(currentBlock);
             currentQuestionIndex = nextBlockStartIndex;
-            generateQuestionNavigation();
+            await generateQuestionNavigation();
             updateBlockIndicators();
-            displayQuestion(currentQuestionIndex);
+            await displayQuestion(currentQuestionIndex);
         } else {
             elements.finalizeBlockBtn.classList.add('hidden');
             endExam();
@@ -496,8 +660,14 @@ function updateQuestionNavigation() {
 
             allQuestions.forEach((q, i) => {
                 const userAnswer = answeredQuestions.get(i);
-                const correctAnswer = q.correta;
-                const block = getCurrentBlock(i);
+                // Converter resposta embaralhada para resposta original para comparação
+                const originalUserAnswer = convertShuffledAnswer(i, userAnswer);
+                const correctAnswer = q.gabarito; // Usar gabarito em vez de correta
+                // Usar o campo bloco que vem do sistema de simulados em vez de calcular dinamicamente
+                const block = q.bloco || getCurrentBlock(i);
+                
+                // Validar que o bloco está entre 1 e 4
+                const validBlock = Math.min(Math.max(block, 1), 4);
 
                 if (skippedQuestions.has(i)) {
                     resultsDetails.skipped.push({
@@ -506,14 +676,20 @@ function updateQuestionNavigation() {
                         imagens: q.imagens,
                         correta: correctAnswer
                     });
-                } else if (userAnswer === correctAnswer) {
+                } else if (originalUserAnswer === correctAnswer) {
                     correct++;
-                    accuracies[block - 1]++;
+                    // Garantir que o índice do array seja válido
+                    const arrayIndex = validBlock - 1;
+                    if (arrayIndex >= 0 && arrayIndex < accuracies.length) {
+                        accuracies[arrayIndex]++;
+                    } else {
+                        console.error(`Índice de array inválido: ${arrayIndex} para bloco ${validBlock}`);
+                    }
                     resultsDetails.correct.push({
                         numero: i + 1,
                         enunciado: q.enunciado,
                         imagens: q.imagens,
-                        resposta: userAnswer,
+                        resposta: originalUserAnswer,
                         correta: correctAnswer
                     });
                 } else {
@@ -522,126 +698,68 @@ function updateQuestionNavigation() {
                         numero: i + 1,
                         enunciado: q.enunciado,
                         imagens: q.imagens,
-                        respostaUsuario: userAnswer || 'Nenhuma',
+                        respostaUsuario: originalUserAnswer || 'Nenhuma',
                         correta: correctAnswer
                     });
                 }
             });
+            
+            // Validar que não há valores negativos
+            const validatedAccuracies = accuracies.map(acc => Math.max(0, acc));
+            console.log('Acertos por bloco (validados):', validatedAccuracies);
 
-            // Atualiza totais
-            document.getElementById('correct-answers-result').textContent = correct;
-            document.getElementById('incorrect-answers-result').textContent = incorrect;
-            document.getElementById('total-questions-result').textContent = totalQuestions;
-            document.getElementById('answered-questions-result').textContent = answeredQuestions.size;
-            document.getElementById('skipped-questions-result').textContent = skippedQuestions.size;
-            document.getElementById('time-used-result').textContent = formatRemainingTime(timeUsed);
-
-            // Monta lista detalhada de resultados com expandable
-            const wrongList = document.getElementById('wrong-answers-list');
-            wrongList.innerHTML = '';
-
-            resultsDetails.incorrect.forEach(item => {
-                let imagesHtml = '';
-                if (item.imagens && item.imagens !== '[]') {
-                    try {
-                        const images = JSON.parse(item.imagens);
-                        imagesHtml = images.map(image => `<img src="data:image/png;base64,${image.base64}" alt="Imagem da questão" class="max-w-full h-auto my-2">`).join('');
-                    } catch (e) {}
-                }
-
-                wrongList.innerHTML += `
-                    <details class="mb-2">
-                        <summary class="cursor-pointer bg-red-100 p-2 rounded"><strong>Questão ${item.numero} - Errada</strong></summary>
-                        <div class="p-2 bg-red-50">
-                            Enunciado: ${item.enunciado}<br>
-                            ${imagesHtml}
-                            Sua resposta: ${item.respostaUsuario}<br>
-                            Resposta correta: ${item.correta}
-                        </div>
-                    </details>`;
-            });
-
-            resultsDetails.correct.forEach(item => {
-                let imagesHtml = '';
-                if (item.imagens && item.imagens !== '[]') {
-                    try {
-                        const images = JSON.parse(item.imagens);
-                        imagesHtml = images.map(image => `<img src="data:image/png;base64,${image.base64}" alt="Imagem da questão" class="max-w-full h-auto my-2">`).join('');
-                    } catch (e) {}
-                }
-
-                wrongList.innerHTML += `
-                    <details class="mb-2">
-                        <summary class="cursor-pointer bg-green-100 p-2 rounded"><strong>Questão ${item.numero} - Acertada</strong></summary>
-                        <div class="p-2 bg-green-50">
-                            Enunciado: ${item.enunciado}<br>
-                            ${imagesHtml}
-                            Você acertou: ${item.resposta}<br>
-                            Resposta correta: ${item.correta}
-                        </div>
-                    </details>`;
-            });
-
-            resultsDetails.skipped.forEach(item => {
-                let imagesHtml = '';
-                if (item.imagens && item.imagens !== '[]') {
-                    try {
-                        const images = JSON.parse(item.imagens);
-                        imagesHtml = images.map(image => `<img src="data:image/png;base64,${image.base64}" alt="Imagem da questão" class="max-w-full h-auto my-2">`).join('');
-                    } catch (e) {}
-                }
-
-                wrongList.innerHTML += `
-                    <details class="mb-2">
-                        <summary class="cursor-pointer bg-yellow-100 p-2 rounded"><strong>Questão ${item.numero} - Pulada</strong></summary>
-                        <div class="p-2 bg-yellow-50">
-                            Enunciado: ${item.enunciado}<br>
-                            ${imagesHtml}
-                            Resposta correta: ${item.correta}
-                        </div>
-                    </details>`;
-            });
-
-            // Gráfico de acerto por bloco
-            const ctx = document.getElementById('accuracy-chart').getContext('2d');
-            const chartData = accuracies.map((acc, idx) => (acc / totals[idx]) * 100);
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Bloco 1', 'Bloco 2', 'Bloco 3', 'Bloco 4'],
-                    datasets: [{
-                        label: 'Taxa de Acerto (%)',
-                        data: chartData,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100
-                        }
-                    }
-                }
-            });
-
-            elements.resultsModal.classList.remove('hidden');
+            // Aplicar efeito de blur
             applyBlurEffect();
+            
+            // Aguardar um pouco antes de redirecionar para mostrar o efeito
+            setTimeout(() => {
+                // Enviar resultados e redirecionar para o dashboard
+                submitResults();
+            }, 1000);
         }
     }
 
-    // Função para fechar modal de resultados
-    function closeResultsModal() {
-        if (elements.resultsModal) {
-            elements.resultsModal.classList.add('hidden');
+    // Função para enviar resultados e redirecionar para o dashboard
+    async function submitResults() {
+        try {
+            const answers = {};
+            allQuestions.forEach((q, i) => {
+                const userAnswer = answeredQuestions.get(i);
+                if (userAnswer && q && q.id != null) {
+                    // Converter resposta embaralhada para resposta original
+                    const originalAnswer = convertShuffledAnswer(i, userAnswer);
+                    answers[q.id] = originalAnswer; // usar ID da questão com resposta original
+                }
+            });
+            
+            const response = await fetch('/api/simulados/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    answers: answers,
+                    skipped_questions: Array.from(skippedQuestions)
+                })
+            });
+            
+            const result = await response.json();
+            if (result.success && result.redirect_url) {
+                // Redirecionar para o dashboard com os resultados
+                window.location.href = result.redirect_url;
+            } else {
+                // Fallback: redirecionar para o dashboard
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error('Erro ao enviar resultados:', error);
+            // Fallback: redirecionar para o dashboard
+            window.location.href = '/';
         }
-        window.location.href = '/';
     }
 
     // Função para iniciar prova
-    function startExam() {
+    async function startExam() {
     // libera navegação e botão
     document.getElementById("question-nav").classList.remove("nav-disabled");
     document.getElementById("finalize-block-btn").disabled = false;
@@ -667,7 +785,7 @@ function updateQuestionNavigation() {
         startTimer();
 
         // Re-exibir questão atual
-        displayQuestion(currentQuestionIndex);
+        await displayQuestion(currentQuestionIndex);
     }
 
     // Funções para exibir imagens
@@ -687,14 +805,26 @@ function updateQuestionNavigation() {
         gallery.className = 'image-gallery';
 
         images.forEach((image, index) => {
+            
             const imageDiv = document.createElement('div');
             imageDiv.className = 'image-container';
 
             const img = document.createElement('img');
-            img.src = `data:image/png;base64,${image.base64}`;
+            
+            // Verificar se o base64 é válido - usar campo 'data' em vez de 'base64'
+            const base64Data = image.data || image.base64;
+            if (!base64Data || typeof base64Data !== 'string') {
+                console.error(`Base64 inválido para imagem ${index}:`, base64Data);
+                return;
+            }
+            
+            // Limpar o base64 (remover espaços e quebras de linha)
+            const cleanBase64 = base64Data.replace(/\s/g, '');
+            
+            img.src = `data:image/png;base64,${cleanBase64}`;
             img.alt = `Imagem ${index + 1} da questão`;
             img.className = 'question-image';
-            img.onclick = () => openImageModal(image.base64, image.filename);
+            img.onclick = () => openImageModal(cleanBase64, image.filename);
 
             imageDiv.appendChild(img);
             gallery.appendChild(imageDiv);
@@ -709,6 +839,7 @@ function updateQuestionNavigation() {
         modal.onclick = () => modal.remove();
 
         const img = document.createElement('img');
+        // Usar o base64Data que já foi limpo
         img.src = `data:image/png;base64,${base64Data}`;
         img.alt = filename;
         img.className = 'max-w-[90vw] max-h-[90vh] object-contain';
@@ -717,22 +848,116 @@ function updateQuestionNavigation() {
         document.body.appendChild(modal);
     }
 
-    // Buscar questões
+    // Função para exibir imagem em modal (para alternativas)
+    function showImageModal(base64Data, altText) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
+        modal.onclick = () => modal.remove();
+
+        const img = document.createElement('img');
+        img.src = `data:image/png;base64,${base64Data}`;
+        img.alt = altText;
+        img.className = 'max-w-[90vw] max-h-[90vh] object-contain';
+
+        modal.appendChild(img);
+        document.body.appendChild(modal);
+    }
+    // tornar acessível globalmente para onclick inline
+    window.showImageModal = showImageModal;
+
+    // Função para embaralhar alternativas de uma questão
+    function shuffleAlternatives(question) {
+        // Criar array com as alternativas e suas letras
+        const alternatives = [
+            { letter: 'a', content: question.a },
+            { letter: 'b', content: question.b },
+            { letter: 'c', content: question.c },
+            { letter: 'd', content: question.d },
+            { letter: 'e', content: question.e }
+        ];
+        
+        // Embaralhar o array
+        for (let i = alternatives.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [alternatives[i], alternatives[j]] = [alternatives[j], alternatives[i]];
+        }
+        
+        // Retornar o array embaralhado e um mapeamento das letras originais
+        return {
+            shuffled: alternatives,
+            mapping: alternatives.reduce((map, alt, index) => {
+                map[String.fromCharCode(97 + index)] = alt.letter; // a->original, b->original, etc.
+                return map;
+            }, {})
+        };
+    }
+
+    // Função para obter alternativas embaralhadas de uma questão
+    function getShuffledAlternatives(questionIndex) {
+        if (!shuffledAlternatives.has(questionIndex)) {
+            const question = allQuestions[questionIndex];
+            shuffledAlternatives.set(questionIndex, shuffleAlternatives(question));
+        }
+        return shuffledAlternatives.get(questionIndex);
+    }
+
+    // Função para converter resposta do usuário (letra embaralhada) para letra original
+    function convertShuffledAnswer(questionIndex, shuffledAnswer) {
+        try {
+            const shuffledData = shuffledAlternatives.get(questionIndex);
+            if (!shuffledData || !shuffledAnswer) return shuffledAnswer;
+            
+            // shuffledAnswer é a letra que o usuário selecionou (a, b, c, d, e)
+            // Precisamos encontrar qual alternativa original está nessa posição
+            const shuffledIndex = shuffledAnswer.charCodeAt(0) - 97; // a=0, b=1, c=2, etc.
+            
+            // Verificar se o índice é válido
+            if (shuffledIndex < 0 || shuffledIndex >= shuffledData.shuffled.length) {
+                console.warn(`Índice inválido: ${shuffledIndex} para resposta ${shuffledAnswer}`);
+                return shuffledAnswer;
+            }
+            
+            const originalLetter = shuffledData.shuffled[shuffledIndex].letter;
+            return originalLetter;
+        } catch (error) {
+            console.error(`Erro ao converter resposta ${shuffledAnswer} da questão ${questionIndex}:`, error);
+            return shuffledAnswer; // Fallback para resposta original
+        }
+    }
+
+    // Buscar questões do simulado atual
     async function fetchQuestions() {
         try {
-            const response = await fetch('/api/questions');
-            if (!response.ok) {
-                throw new Error('Falha ao buscar questões');
+            // Primeiro, verificar se há um simulado ativo
+            const simuladoResponse = await fetch('/api/simulados/current');
+            if (!simuladoResponse.ok) {
+                // Não há simulado ativo, mostrar mensagem amigável
+                if (elements.questionContent) {
+                    elements.questionContent.innerHTML = `
+                        <div class="text-center text-gray-600 py-12">
+                            <i class="fas fa-clipboard-list text-4xl mb-4 text-blue-500"></i>
+                            <h3 class="text-xl font-semibold mb-2">Nenhum Simulado Ativo</h3>
+                            <p class="text-sm mb-6">Você precisa criar um simulado primeiro para começar a estudar.</p>
+                            <button onclick="window.location.href='/'" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>
+                                Ir para o Dashboard
+                            </button>
+                        </div>
+                    `;
+                }
+                return;
             }
-            const data = await response.json();
-
-            if (!data || data.length === 0) {
-                throw new Error('Nenhuma questão encontrada');
+            
+            const simulado = await simuladoResponse.json();
+            if (!simulado.questions || simulado.questions.length === 0) {
+                throw new Error('Simulado não possui questões');
             }
 
-            allQuestions = data.slice(0, totalQuestions);
-            generateQuestionNavigation();
-            displayQuestion(0);
+            // Usar as questões do simulado (que já estão na sessão)
+            allQuestions = simulado.questions;
+            
+            await generateQuestionNavigation();
+            await displayQuestion(0);
             applyBlurEffect();
             updateBlockIndicators();
         } catch (error) {
@@ -743,6 +968,9 @@ function updateQuestionNavigation() {
                         <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
                         <p>Erro ao carregar a prova.</p>
                         <p class="text-sm mt-2">${error.message}</p>
+                        <button onclick="window.location.href='/'" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            Voltar ao Dashboard
+                        </button>
                     </div>
                 `;
             }
@@ -781,38 +1009,35 @@ function updateQuestionNavigation() {
     }
 
     if (elements.closeResultsBtn) {
-        elements.closeResultsBtn.addEventListener('click', closeResultsModal);
+        // Event listener removido - resultados agora são exibidos no dashboard
     } else {
         console.error('Elemento close-results-btn não encontrado');
     }
 
-    if (elements.cancelSkipChoice) {
-        elements.cancelSkipChoice.addEventListener('click', () => {
-            pendingFinalizeAfterSkipChoice = false;
-            closeSkipChoiceModal();
-        });
-    } else {
-        console.error('Elemento cancel-skip-choice não encontrado');
-    }
+    // Elementos de skip-choice não existem no HTML atual, removendo para evitar erros
+    // if (elements.cancelSkipChoice) {
+    //     elements.cancelSkipChoice.addEventListener('click', () => {
+    //         pendingFinalizeAfterSkipChoice = false;
+    //         closeSkipChoiceModal();
+    //     });
+    // }
 
-    if (elements.confirmSkipChoice) {
-        elements.confirmSkipChoice.addEventListener('click', () => {
-            if (chosenSkipIndex == null) {
-                showNotification('Selecione uma questão para pular.', 'warning');
-                return;
-            }
-            skippedQuestions.add(chosenSkipIndex);
-            answeredQuestions.delete(chosenSkipIndex);
-            updateAnsweredCount();
-            updateQuestionNavigation();
-            closeSkipChoiceModal();
-            if (pendingFinalizeAfterSkipChoice) {
-                finalizeBlock();
-            }
-        });
-    } else {
-        console.error('Elemento confirm-skip-choice não encontrado');
-    }
+    // if (elements.confirmSkipChoice) {
+    //     elements.confirmSkipChoice.addEventListener('click', () => {
+    //         if (chosenSkipIndex == null) {
+    //             showNotification('Selecione uma questão para pular.', 'warning');
+    //             return;
+    //         }
+    //         skippedQuestions.add(chosenSkipIndex);
+    //         answeredQuestions.delete(chosenSkipIndex);
+    //         updateAnsweredCount();
+    //         updateQuestionNavigation();
+    //         closeSkipChoiceModal();
+    //         if (pendingFinalizeAfterSkipChoice) {
+    //                 finalizeBlock();
+    //         }
+    //     });
+    // }
 
     // Inicializar
     fetchQuestions();

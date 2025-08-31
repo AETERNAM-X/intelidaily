@@ -1,0 +1,496 @@
+QUESTÃO 1
+A) 166
+B) 185
+C) 200
+D) 225
+E) 250
+GABARITO: C
+----------------------------------------
+QUESTÃO 2
+A) 400
+B) 410
+C) 420
+D) 430
+E) 440
+GABARITO: B
+----------------------------------------
+QUESTÃO 3
+A) 10
+B) 11
+C) 12
+D) 13
+E) 14
+GABARITO: C
+----------------------------------------
+QUESTÃO 4
+A) 10
+B) 15
+C) 20
+D) 25
+E) 30
+GABARITO: A
+----------------------------------------
+QUESTÃO 5
+A) 30
+B) 31
+C) 32
+D) 34
+E) 35
+GABARITO: D
+----------------------------------------
+QUESTÃO 6
+A) R$ 20
+B) R$ 21
+C) R$ 22
+D) R$ 23
+E) R$ 24
+GABARITO: B
+----------------------------------------
+QUESTÃO 7
+A) 200
+B) 300
+C) 400
+D) 500
+E) 600
+GABARITO: C
+----------------------------------------
+QUESTÃO 8
+A) R$ 6,25 milhões
+B) R$ 7 milhões
+C) R$ 7,5 milhões
+D) R$ 8,75 milhões
+E) R$ 9,5 milhões
+GABARITO: D
+----------------------------------------
+QUESTÃO 9
+A) 1,05 vezes o seu salário
+B) 1,15 vezes o seu salário
+C) 1,25 vezes o seu salário
+D) 1,35 vezes o seu salário
+E) 1,45 vezes o seu salário
+GABARITO: D
+----------------------------------------
+QUESTÃO 10
+A) \(\displaystyle y = -\frac{1}{5} x^2 + 9\).
+B) \(\displaystyle y = -\frac{1}{15} x^2 + 9\).
+C) \(\displaystyle y = -\frac{1}{25} x^2 + 9\).
+D) \(\displaystyle y = -\frac{1}{125} x^2 + 9\).
+E) \(\displaystyle y = -\frac{1}{225} x^2 + 9\).
+GABARITO: C
+----------------------------------------
+QUESTÃO 11
+A) 105
+B) 320
+C) 465
+D) 930
+E) 1205
+GABARITO: D
+----------------------------------------
+QUESTÃO 12
+A) 5
+B) 10
+C) 50
+D) 100
+E) 125
+GABARITO: C
+----------------------------------------
+QUESTÃO 13
+A) 1,5
+B) 4,17
+C) 6,25
+D) 8,33
+E) 9,25
+GABARITO: B
+----------------------------------------
+QUESTÃO 14
+A) 940 mil
+B) 900 mil
+C) 860 mil
+D) 820 mil
+E) 680 mil
+GABARITO: A
+----------------------------------------
+QUESTÃO 15
+A) R$ 500
+B) R$ 463
+C) R$ 415
+D) R$ 381
+E) R$ 327
+GABARITO: D
+----------------------------------------
+QUESTÃO 16
+A) R$ 14.325.500
+B) R$ 15.550.000
+C) R$17.640.000
+D) R$ 18.750.000
+E) R$ 19.140.000
+GABARITO: E
+----------------------------------------
+QUESTÃO 17
+A) 28%
+B) 14%
+C) 100%
+D) 12%
+E) 24%
+GABARITO: B
+----------------------------------------
+QUESTÃO 18
+A) 00111
+B) 10011
+C) 11100
+D) 10100
+E) 10101
+GABARITO: D
+----------------------------------------
+QUESTÃO 19
+A) 7
+B) 11
+C) 19
+D) 63
+E) 1679
+GABARITO: D
+----------------------------------------
+QUESTÃO 20
+A) 875
+B) 1.000
+C) 1.125
+D) 1.250
+E) 1.500
+GABARITO: C
+----------------------------------------
+QUESTÃO 21
+A) 14%
+B) 16%
+C) 18%
+D) 20%
+E) 22%
+GABARITO: B
+----------------------------------------
+QUESTÃO 22
+A) 20
+B) 19
+C) 18
+D) 15
+E) 11
+GABARITO: A
+----------------------------------------
+QUESTÃO 23
+A) 100%
+B) 8%
+C) 38%
+D) 62%
+E) 0,2%
+GABARITO: C
+----------------------------------------
+QUESTÃO 24
+A) 11111
+B) 11110
+C) 00000
+D) 00111
+E) 10101
+GABARITO: B
+----------------------------------------
+QUESTÃO 25
+A) 40
+B) 11
+C) 14
+D) 18
+E) 54
+GABARITO: A
+----------------------------------------
+QUESTÃO 26
+A) três anos
+B) três anos e meio
+C) quatro anos
+D) quatro anos e meio
+E) cinco anos
+GABARITO: B
+----------------------------------------
+QUESTÃO 27
+A) "Gosto da proposta, mas como ambos os grupos terão um aumento médio salarial, o salário médio da empresa inteira irá aumentar, o que pode ser um problema do ponto de vista financeiro."
+B) "Gosto da proposta, pois, é possível recompor o quadro de modo que o custo da empresa não aumente, mesmo com ambos os grupos tendo um aumento médio de salário."
+C) "Gosto da proposta. Entendo que o salário médio da empresa irá aumentar, aumentando o custo, porém a diversidade no quadro garantirá maior receita."
+D) "Não gosto da proposta. O aumento dos salários médios de ambos os grupos vai aumentar o custo total de funcionários e não há justificativa para realizarmos tal mudança."
+E) "Gosto da proposta. Aumentar o salário médio de cada grupo reduzirá o salário médio da empresa, o que significa redução de custos."
+GABARITO: B
+----------------------------------------
+QUESTÃO 28
+A) 210
+B) 190
+C) 180
+D) 150
+E) 110
+GABARITO: A
+----------------------------------------
+QUESTÃO 29
+A) [100 80 60]
+B) [150 80 60]
+C) [150 120 90]
+D) [150 0 0]
+E) [1,5 1 1]
+GABARITO: B
+----------------------------------------
+QUESTÃO 30
+A) (3, 8)
+B) (4, 3)
+C) (8, 5)
+D) (4, −2)
+E) (2, 3)
+GABARITO: B
+----------------------------------------
+QUESTÃO 31
+A) 0
+B) 1
+C) 2
+D) 3
+E) 4
+GABARITO: B
+----------------------------------------
+QUESTÃO 32
+A) 2
+B) 3
+C) $\frac{1}{2}$
+D) $\frac{1}{3}$
+E) 7
+GABARITO: A
+----------------------------------------
+QUESTÃO 33
+A) \(\displaystyle \frac{80}{9} \text{ m}^2\)
+B) \(\displaystyle \frac{40}{9} \text{ m}^2\)
+C) \(\displaystyle \frac{20}{9} \text{ m}^2\)
+D) \(\displaystyle 8 \text{ m}^2\)
+E) \(\displaystyle 4 \text{ m}^2\)athrm{~m}^2 \\ & 4 \mathrm{~m}^2\end{aligned}$
+GABARITO: B
+----------------------------------------
+QUESTÃO 34
+A) \(\displaystyle 26^4 \times 10^5\)
+B) \(\displaystyle 26^4 \times 10^4\)
+C) \(\displaystyle 2 \times 26^4 \times 10^4\)
+D) \(\displaystyle 2 \times 52^4 \times 10^4\)
+E) \(\displaystyle 52^4 \times 10^5\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 35
+A) \(\displaystyle \begin{bmatrix} 1,3 & 0,1 & 0,0 \\ 0,1 & 1,3 & 0,0 \\ 0,0 & 0,0 & 1,0 \end{bmatrix}\)
+B) \(\displaystyle \begin{bmatrix} 1,3 & 0,1 & 0,0 \\ 0,1 & 1,3 & 0,5 \\ 0,0 & 0,5 & 1,3 \end{bmatrix}\)
+C) \(\displaystyle \begin{bmatrix} 0,8 & 0,0 & 0,0 \\ 0,0 & 1,0 & 0,0 \\ 0,0 & 0,0 & 1,0 \end{bmatrix}\)
+D) \(\displaystyle \begin{bmatrix} 1,0 & 0,0 & 0,0 \\ 0,0 & 1,3 & 0,0 \\ 0,0 & 0,0 & 1,0 \end{bmatrix}\)
+E) \(\displaystyle \begin{bmatrix} 1,3 & 0,1 & 0,0 \\ 0,1 & 1,3 & 0,0 \\ 0,0 & 0,0 & 0,0 \end{bmatrix}\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 36
+A) (3, 8)
+B) (−1, 1)
+C) (6, 5)
+D) (4, −2)
+E) (8, 6)
+GABARITO: C
+----------------------------------------
+QUESTÃO 37
+A) 0
+B) 1
+C) 2
+D) 3
+E) 4
+GABARITO: B
+----------------------------------------
+QUESTÃO 38
+A) 2
+B) 3
+C) $\frac{1}{2}$
+D) $\frac{1}{3}$
+E) 7
+GABARITO: D
+----------------------------------------
+QUESTÃO 39
+A) 2
+B) 1,5
+C) 1
+D) 0,5
+E) 0,1
+GABARITO: C
+----------------------------------------
+QUESTÃO 40
+A) \(\displaystyle 14.700 \times 52^4\)
+B) \(\displaystyle 70 \times 52^4\)
+C) \(\displaystyle 210 \times 52^4\)
+D) \(\displaystyle 10^4 \times 52^4\)
+E) \(\displaystyle 1.440 \times 52^4\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 41
+A) preto: [0,299 −0,289 −0,100]; branco: [255 255 255]
+B) preto: [0 0 0]; branco: [1 0 0]
+C) preto: [0 0 0]; branco: [255 0 0]
+D) preto: [1 0 0]; branco: [0 0 0]
+E) preto: [0 0 0]; branco: [196 −55 122]
+GABARITO: C
+----------------------------------------
+QUESTÃO 42
+A) \(\left(5, \frac{3}{2}\right)\)
+B) \((7, 6)\)
+C) \((4, 3)\)
+D) \(\left(6, \frac{9}{2}\right)\)
+E) \(\left(\frac{3}{2}, 5\right)\)
+GABARITO: C
+----------------------------------------
+QUESTÃO 43
+A) 0
+B) 1
+C) 2
+D) 3
+E) 4
+GABARITO: C
+----------------------------------------
+QUESTÃO 44
+A) 2
+B) 3
+C) $\frac{1}{2}$
+D) $\frac{1}{3}$
+E) 7
+GABARITO: E
+----------------------------------------
+QUESTÃO 45
+A) \(\displaystyle \sqrt[6]{250} \text{ m/s}\)
+B) \(\displaystyle 2 \text{ m/s}\)
+C) \(\displaystyle \sqrt{10} \text{ m/s}\)
+D) \(\displaystyle 1 \text{ m/s}\)
+E) \(\displaystyle \sqrt[3]{5} \text{ m/s}\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 46
+A) 6.400
+B) 12.870
+C) 14.550
+D) 16.280
+E) 24.310
+GABARITO: E
+----------------------------------------
+QUESTÃO 47
+A) R$ 420
+B) R$ 1.186
+C) R$ 1.318
+D) R$ 1.562
+E) R$ 1.675
+GABARITO: C
+----------------------------------------
+QUESTÃO 48
+A) 0,080
+B) 0,091
+C) 0,100
+D) 0,111
+E) 0,201
+GABARITO: B
+----------------------------------------
+QUESTÃO 49
+A) \(\displaystyle 4 - \tfrac{\pi}{4}\)
+B) \(\displaystyle 8 - \tfrac{\pi}{2}\)
+C) \(\displaystyle 16 - \tfrac{\pi}{4}\)
+D) \(\displaystyle 16 - \pi\)
+E) \(\displaystyle 8 - \tfrac{\pi}{2}\)
+GABARITO: C
+----------------------------------------
+QUESTÃO 50
+A) Não existe solução real
+B) Existe exatamente uma solução real
+C) Existem exatamente duas soluções reais
+D) Existem exatamente 6 soluções reais
+E) Existem infinitas soluções reais
+GABARITO: A
+----------------------------------------
+QUESTÃO 51
+A) R$ 2.417
+B) R$ 2.176
+C) R$ 1.879
+D) R$ 1.675
+E) R$ 1.438
+GABARITO: A
+----------------------------------------
+QUESTÃO 52
+A) 0,29
+B) 0,33
+C) 0,37
+D) 0,41
+E) 0,45
+GABARITO: D
+----------------------------------------
+QUESTÃO 53
+A) \(\displaystyle 4 \sqrt{2}\)
+B) \(\displaystyle 2 \sqrt{2}\)
+C) \(\displaystyle 2\)
+D) \(\displaystyle 4\)
+E) \(\displaystyle 2 \sqrt{3}\)
+GABARITO: A
+----------------------------------------
+QUESTÃO 54
+A) Para 𝑥 = 1, o lado esquerdo vale 6 e para 𝑥 = 2, o lado esquerdo vale 20. Como 13 é uma média entre 6 e 20, 𝑥 = 1,5 será uma solução da equação.
+B) Toda função crescente e contínua “atinge” qualquer valor real, ou seja, é sobrejetora em ℝ. Então, independentemente do número do lado direito, e da função crescente e contínua no lado esquerdo, podemos garantir que existirá, sempre, pelo menos uma solução real.
+C) Podemos afirmar que a equação possui uma única solução real, e esta solução está entre 1 e 2. Porém, é impossível determinar se esta solução está no intervalo [1, 1.5) ou no intervalo [1.5, 2].
+D) A equação não possui nenhuma solução real, já que o lado esquerdo é par e o lado direito é ímpar.
+E) O lado esquerdo é crescente e contínuo e o lado direito é constante. Além disso, substituindo alguns valores de x, vemos que a expressão do lado esquerdo "atinge" valores menores que 13 e maiores que 13, portanto, em algum momento, e uma única vez, o lado esquerdo será igual a 13.
+GABARITO: E
+----------------------------------------
+QUESTÃO 55
+A) R$ 1.237
+B) R$ 1.113
+C) R$ 1.685
+D) R$ 1.426
+E) R$ 1.875
+GABARITO: A
+----------------------------------------
+QUESTÃO 56
+A) 0,081
+B) 0,091
+C) 0,101
+D) 0,111
+E) 0,121
+GABARITO: A
+----------------------------------------
+QUESTÃO 57
+A) \(\displaystyle 4 \sqrt{7}\)
+B) \(\displaystyle \frac{16 \sqrt{7}}{7}\)
+C) \(\displaystyle \frac{3 \sqrt{7}}{7}\)
+D) \(\displaystyle \frac{\sqrt{7}}{7}\)
+E) \(\displaystyle \sqrt{7}\)
+GABARITO: B
+----------------------------------------
+QUESTÃO 58
+A) Não existe solução real.
+B) Existe exatamente uma solução real.
+C) Existem exatamente duas soluções reais.
+D) Existem exatamente seis soluções reais.
+E) Existem infinitas soluções reais.
+GABARITO: A
+----------------------------------------
+QUESTÃO 59
+A) R$ 1.270
+B) R$ 1.370
+C) R$ 1.470
+D) R$ 1.570
+E) R$ 1.670
+GABARITO: A
+----------------------------------------
+QUESTÃO 60
+A) Negativo
+B) Há chances iguais de ser negativo ou positivo
+C) Inconclusivo
+D) Há chances iguais de ser inconclusivo
+E) Positivo
+GABARITO: E
+----------------------------------------
+QUESTÃO 61
+A) \(\displaystyle 12\sqrt{3}\)
+B) \(\displaystyle \frac{4\sqrt{3}}{3}\)
+C) \(\displaystyle 5\sqrt{3}\)
+D) \(\displaystyle 8\sqrt{3}\)
+E) \(\displaystyle \frac{16\sqrt{3}}{3}\)
+GABARITO: E
+----------------------------------------
+QUESTÃO 62
+A) 𝑥 = −2 é a única solução real. Basta substituir na equação e verificar que satisfaz!
+B) 𝑥 = −2 é a única solução real. Isso pode ser verificado analisando o comportamento das funções. O lado esquerdo da equação é decrescente e o lado direito crescente, logo se “cortam” em um único ponto.
+C) 𝑥 = −2 é uma solução real. Porém, não é única, uma vez que, elevando a sexta, teríamos um polinômio do sexto grau no lado direito, garantindo seis soluções reais.
+D) 𝑥 = −2 é a única solução real. Isso pode ser verificado “passando” o 𝑥 − 1 para o outro lado dividindo. Nesse caso, o lado esquerdo ficará crescente e o lado direito decrescente, logo se “cortam” em um único ponto.
+E) 𝑥 = −2 é uma solução real. Porém, existe exatamente uma outra solução.
+GABARITO: E
+----------------------------------------

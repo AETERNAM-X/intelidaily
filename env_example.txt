@@ -1,0 +1,20 @@
+# Configurações de Ambiente para InteliDaily
+# Copie este arquivo para .env e configure os valores
+
+# Chave secreta para sessões Flask (OBRIGATÓRIO em produção)
+SECRET_KEY=sua_chave_secreta_muito_segura_aqui
+
+# Ambiente de execução
+FLASK_ENV=development
+FLASK_DEBUG=True
+
+# Configurações do banco de dados (opcional)
+DATABASE_URL=sqlite:///questions.db
+
+# Configurações de segurança
+SESSION_COOKIE_SECURE=False
+SESSION_COOKIE_HTTPONLY=True
+PERMANENT_SESSION_LIFETIME=1800
+
+# Configurações de upload
+MAX_CONTENT_LENGTH=104857600
