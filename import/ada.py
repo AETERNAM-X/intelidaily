@@ -1,10 +1,5 @@
 import sqlite3
 import os
-try:
-    from PIL import Image
-except Exception:
-    Image = None
-
 
 def get_available_databases():
     """Retorna lista de bancos de dados disponíveis"""
@@ -47,27 +42,14 @@ def get_questions_by_exam(db_path, exam_name):
     return questions
 
 
-def ensure_images_dir():
-    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '2025_questions_imgs')
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir, exist_ok=True)
-    return out_dir
-
-
-def save_as_webp(image_path, out_basename):
-    out_dir = ensure_images_dir()
-    out_name = f"{out_basename}.webp" if not out_basename.lower().endswith('.webp') else out_basename
-    out_path = os.path.join(out_dir, out_name)
-
-    if Image is None:
-        with open(image_path, 'rb') as src, open(out_path, 'wb') as dst:
-            dst.write(src.read())
-        return f"2025_questions_imgs/{out_name}"
-
-    with Image.open(image_path) as im:
-        im = im.convert('RGBA') if im.mode in ('P', 'LA') else im.convert('RGB')
-        im.save(out_path, format='WEBP', quality=90, method=6)
-    return f"2025_questions_imgs/{out_name}"
+def save_as_original(image_path, base_folder):
+    """
+    Retorna caminho relativo ao servidor Flask, com prefixo da pasta base.
+    Exemplo: questions_alts/2024_30/A.webp
+    """
+    parent_folder = os.path.basename(base_folder.rstrip("/\\"))
+    file_name = os.path.basename(image_path)
+    return f"questions_alts/{parent_folder}/{file_name}"
 
 
 def import_images_for_question(db_path, exam_name, question_id, folder_path, shared=False):
@@ -92,11 +74,10 @@ def import_images_for_question(db_path, exam_name, question_id, folder_path, sha
                     found = candidate
                     break
             if found:
-                # se for pasta compartilhada, só gerar nome único
-                rel_path = save_as_webp(found, f"alternativa_{alt.lower()}_questao_{question_id}")
+                rel_path = save_as_original(found, folder_path).replace("\\", "/")
                 images[alt.lower()] = rel_path
                 if not shared:
-                    print(f"✅ Alternativa {alt} salva em {rel_path}")
+                    print(f"✅ Alternativa {alt} salva como {rel_path}")
             else:
                 if not shared:
                     print(f"⚠️ {alt} não encontrada em {folder_path}, ignorado.")
@@ -198,10 +179,8 @@ def main():
     if mode == "1":
         questions = get_questions_by_exam(selected_db, selected_exam)
         print(f"\n📝 Questões disponíveis na prova {selected_exam}:")
-        for q_id, enunciado in questions[:10]:
+        for q_id, enunciado in questions:
             print(f"ID {q_id}: {enunciado[:50]}...")
-        if len(questions) > 10:
-            print(f"... e mais {len(questions) - 10} questões")
 
         while True:
             try:

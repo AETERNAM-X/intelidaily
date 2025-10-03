@@ -73,6 +73,10 @@ def serve_2022_asset(filename):
 def serve_gabaritos(filename):
     return _serve_from('simulados', filename)
 
+@app.route('/questions_alts/<path:filename>')
+def serve_questions_alts(filename):
+    return _serve_from('questions_alts', filename)
+
 # ----------------------
 # Páginas
 # ----------------------
