@@ -4,6 +4,7 @@ import sqlite3
 import json
 import os
 from datetime import datetime
+import uuid
 from simulados_system_v2_improved import SimuladosSystemV2Improved
 
 # Instanciar o sistema de simulados
@@ -35,6 +36,12 @@ def get_db_connection():
     conn = sqlite3.connect('questions.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+# Gera um identificador de usuário anônimo por sessão, se não existir
+@app.before_request
+def ensure_user_id():
+    if 'user_id' not in session:
+        session['user_id'] = uuid.uuid4().hex
 
 # ----------------------
 # Static serving for question images stored on disk
@@ -462,7 +469,8 @@ def submit_simulado():
         details={
             'questions': question_details,
             'accuracies': accuracies
-        }
+        },
+        user_id=session.get('user_id')
     )
 
     session.pop('current_simulado', None)
@@ -487,11 +495,11 @@ def submit_simulado():
 
 @app.route('/api/simulados/history')
 def get_simulados_history():
-    return jsonify(simulados_system_v2.get_simulados_history())
+    return jsonify(simulados_system_v2.get_simulados_history(user_id=session.get('user_id')))
 
 @app.route('/api/simulados/history/<int:simulado_id>')
 def get_simulado_by_id(simulado_id):
-    simulado = simulados_system_v2.get_simulado_by_id(simulado_id)
+    simulado = simulados_system_v2.get_simulado_by_id(simulado_id, user_id=session.get('user_id'))
     if simulado:
         return jsonify(simulado)
     else:

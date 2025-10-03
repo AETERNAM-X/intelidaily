@@ -16,6 +16,7 @@ class SimuladosSystemV2Improved:
             CREATE TABLE IF NOT EXISTS simulados (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                user_id TEXT,
                 provas_selecionadas TEXT,
                 num_questoes INTEGER,
                 questoes_ids TEXT,
@@ -27,9 +28,13 @@ class SimuladosSystemV2Improved:
                 details TEXT
             )
         ''')
-        # Adicionar coluna details se não existir (migração leve)
+        # Migrações leves: garantir colunas novas
         try:
             cursor.execute('ALTER TABLE simulados ADD COLUMN details TEXT')
+        except Exception:
+            pass
+        try:
+            cursor.execute('ALTER TABLE simulados ADD COLUMN user_id TEXT')
         except Exception:
             pass
         conn.commit()
@@ -246,7 +251,7 @@ class SimuladosSystemV2Improved:
         return len(valid_alternatives) >= 3
     
     def save_simulado_result(self, provas_selecionadas, num_questoes, questoes_ids, 
-                           tempo_total, acertos, erros, puladas, details=None):
+                           tempo_total, acertos, erros, puladas, details=None, user_id=None):
         """Salva resultado de um simulado realizado"""
         percentual = (acertos / num_questoes) * 100 if num_questoes > 0 else 0
         
@@ -254,11 +259,12 @@ class SimuladosSystemV2Improved:
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO simulados 
-            (data_criacao, provas_selecionadas, num_questoes, questoes_ids, tempo_total, 
+            (data_criacao, user_id, provas_selecionadas, num_questoes, questoes_ids, tempo_total, 
              acertos, erros, puladas, percentual_acerto, details)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             datetime.now().isoformat(),
+            user_id,
             json.dumps(provas_selecionadas),
             num_questoes,
             json.dumps(questoes_ids),
@@ -276,44 +282,77 @@ class SimuladosSystemV2Improved:
         
         return simulado_id
     
-    def get_simulados_history(self):
+    def get_simulados_history(self, user_id=None):
         """Retorna histórico de simulados realizados"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('''
-            SELECT * FROM simulados 
-            ORDER BY data_criacao DESC 
-            LIMIT 50
-        ''')
+        base_select = '''
+            SELECT 
+                id,
+                data_criacao,
+                user_id,
+                provas_selecionadas,
+                num_questoes,
+                questoes_ids,
+                tempo_total,
+                acertos,
+                erros,
+                puladas,
+                percentual_acerto,
+                details
+            FROM simulados
+        '''
+        if user_id:
+            cursor.execute(base_select + ' WHERE user_id = ? ORDER BY data_criacao DESC LIMIT 50', (user_id,))
+        else:
+            cursor.execute(base_select + ' ORDER BY data_criacao DESC LIMIT 50')
         
         simulados = []
         for row in cursor.fetchall():
             simulado = {
                 'id': row[0],
                 'data_criacao': row[1],
-                'provas_selecionadas': json.loads(row[2]) if row[2] else [],
-                'num_questoes': row[3],
-                'questoes_ids': json.loads(row[4]) if row[4] else [],
-                'tempo_total': row[5],
-                'acertos': row[6],
-                'erros': row[7],
-                'puladas': row[8],
-                'percentual_acerto': row[9],
-                'details': json.loads(row[10]) if len(row) > 10 and row[10] else None
+                'user_id': row[2],
+                'provas_selecionadas': json.loads(row[3]) if row[3] else [],
+                'num_questoes': row[4],
+                'questoes_ids': json.loads(row[5]) if row[5] else [],
+                'tempo_total': row[6],
+                'acertos': row[7],
+                'erros': row[8],
+                'puladas': row[9],
+                'percentual_acerto': row[10],
+                'details': json.loads(row[11]) if row[11] else None
             }
             simulados.append(simulado)
         
         conn.close()
         return simulados
     
-    def get_simulado_by_id(self, simulado_id):
-        """Retorna um simulado específico por ID"""
+    def get_simulado_by_id(self, simulado_id, user_id=None):
+        """Retorna um simulado específico por ID (opcionalmente filtrando por user_id)"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('''
-            SELECT * FROM simulados 
+        base_select = '''
+            SELECT 
+                id,
+                data_criacao,
+                user_id,
+                provas_selecionadas,
+                num_questoes,
+                questoes_ids,
+                tempo_total,
+                acertos,
+                erros,
+                puladas,
+                percentual_acerto,
+                details
+            FROM simulados
             WHERE id = ?
-        ''', (simulado_id,))
+        '''
+        if user_id:
+            cursor.execute(base_select + ' AND user_id = ?', (simulado_id, user_id))
+        else:
+            cursor.execute(base_select, (simulado_id,))
         
         row = cursor.fetchone()
         conn.close()
@@ -322,15 +361,16 @@ class SimuladosSystemV2Improved:
             return {
                 'id': row[0],
                 'data_criacao': row[1],
-                'provas_selecionadas': json.loads(row[2]) if row[2] else [],
-                'num_questoes': row[3],
-                'questoes_ids': json.loads(row[4]) if row[4] else [],
-                'tempo_total': row[5],
-                'acertos': row[6],
-                'erros': row[7],
-                'puladas': row[8],
-                'percentual_acerto': row[9],
-                'details': json.loads(row[10]) if len(row) > 10 and row[10] else None
+                'user_id': row[2],
+                'provas_selecionadas': json.loads(row[3]) if row[3] else [],
+                'num_questoes': row[4],
+                'questoes_ids': json.loads(row[5]) if row[5] else [],
+                'tempo_total': row[6],
+                'acertos': row[7],
+                'erros': row[8],
+                'puladas': row[9],
+                'percentual_acerto': row[10],
+                'details': json.loads(row[11]) if row[11] else None
             }
         return None
     
