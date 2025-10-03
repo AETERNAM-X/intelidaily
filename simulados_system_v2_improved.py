@@ -23,9 +23,15 @@ class SimuladosSystemV2Improved:
                 acertos INTEGER,
                 erros INTEGER,
                 puladas INTEGER,
-                percentual_acerto REAL
+                percentual_acerto REAL,
+                details TEXT
             )
         ''')
+        # Adicionar coluna details se não existir (migração leve)
+        try:
+            cursor.execute('ALTER TABLE simulados ADD COLUMN details TEXT')
+        except Exception:
+            pass
         conn.commit()
         conn.close()
     
@@ -240,7 +246,7 @@ class SimuladosSystemV2Improved:
         return len(valid_alternatives) >= 3
     
     def save_simulado_result(self, provas_selecionadas, num_questoes, questoes_ids, 
-                           tempo_total, acertos, erros, puladas):
+                           tempo_total, acertos, erros, puladas, details=None):
         """Salva resultado de um simulado realizado"""
         percentual = (acertos / num_questoes) * 100 if num_questoes > 0 else 0
         
@@ -249,8 +255,8 @@ class SimuladosSystemV2Improved:
         cursor.execute('''
             INSERT INTO simulados 
             (data_criacao, provas_selecionadas, num_questoes, questoes_ids, tempo_total, 
-             acertos, erros, puladas, percentual_acerto)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+             acertos, erros, puladas, percentual_acerto, details)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             datetime.now().isoformat(),
             json.dumps(provas_selecionadas),
@@ -260,7 +266,8 @@ class SimuladosSystemV2Improved:
             acertos,
             erros,
             puladas,
-            percentual
+            percentual,
+            json.dumps(details) if details is not None else None
         ))
         
         simulado_id = cursor.lastrowid
@@ -291,7 +298,8 @@ class SimuladosSystemV2Improved:
                 'acertos': row[6],
                 'erros': row[7],
                 'puladas': row[8],
-                'percentual_acerto': row[9]
+                'percentual_acerto': row[9],
+                'details': json.loads(row[10]) if len(row) > 10 and row[10] else None
             }
             simulados.append(simulado)
         
@@ -321,7 +329,8 @@ class SimuladosSystemV2Improved:
                 'acertos': row[6],
                 'erros': row[7],
                 'puladas': row[8],
-                'percentual_acerto': row[9]
+                'percentual_acerto': row[9],
+                'details': json.loads(row[10]) if len(row) > 10 and row[10] else None
             }
         return None
     

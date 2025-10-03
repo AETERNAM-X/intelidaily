@@ -50,10 +50,75 @@ document.addEventListener('DOMContentLoaded', () => {
     // Estado de escolha de pulo
     let pendingFinalizeAfterSkipChoice = false;
     let chosenSkipIndex = null;
+    
+    // Controle de saída da tela
+    let exitWarningShown = false;
+    let exitWarningCount = 0;
 
     // Funções auxiliares
     function formatTime(d) {
         return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    // Função para detectar saída da tela
+    function handleVisibilityChange() {
+        if (document.hidden && isExamStarted) {
+            if (!exitWarningShown) {
+                exitWarningShown = true;
+                exitWarningCount++;
+                showExitWarning();
+            }
+        } else if (!document.hidden) {
+            exitWarningShown = false;
+        }
+    }
+
+    // Função para mostrar aviso de saída
+    function showExitWarning() {
+        const modal = document.getElementById('exit-warning-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            
+            // Adicionar evento para fechar modal
+            const continueBtn = document.getElementById('continue-exam-btn');
+            
+            if (continueBtn) {
+                continueBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    exitWarningShown = false;
+                };
+            }
+        }
+    }
+
+    // Função para mostrar modal de confirmação
+    function showConfirmationModal(title, message, onConfirm, onCancel = null) {
+        const modal = document.getElementById('confirmation-modal');
+        const titleElement = document.getElementById('confirmation-title');
+        const messageElement = document.getElementById('confirmation-message');
+        const confirmBtn = document.getElementById('confirmation-confirm-btn');
+        const cancelBtn = document.getElementById('confirmation-cancel-btn');
+        
+        if (modal && titleElement && messageElement && confirmBtn && cancelBtn) {
+            titleElement.textContent = title;
+            messageElement.textContent = message;
+            modal.classList.remove('hidden');
+            
+            // Limpar eventos anteriores
+            confirmBtn.onclick = null;
+            cancelBtn.onclick = null;
+            
+            // Adicionar novos eventos
+            confirmBtn.onclick = () => {
+                modal.classList.add('hidden');
+                if (onConfirm) onConfirm();
+            };
+            
+            cancelBtn.onclick = () => {
+                modal.classList.add('hidden');
+                if (onCancel) onCancel();
+            };
+        }
     }
 
     function formatRemainingTime(ms) {
@@ -342,14 +407,30 @@ function updateQuestionNavigation() {
             function processAlternative(alt, content) {
                 if (!content) return '';
                 
+                // Novo: caminho de arquivo/URL relativo
+                if (typeof content === 'string' && (content.endsWith('.webp') || content.includes('2025_questions_imgs'))) {
+                    const normalized = content.replace(/\\/g, '/');
+                    const src = normalized.startsWith('/') ? normalized : `/${normalized}`;
+                    return `
+                        <img src="${src}"
+                             alt="Alternativa ${alt}"
+                             class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded"
+                             loading="lazy"
+                             decoding="async"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span class="text-red-500 text-xs" style="display:none;">Erro ao carregar imagem</span>
+                    `;
+                }
+
                 // Verificar se é uma imagem base64 direta (formato novo)
                 if (typeof content === 'string' && content.length > 100 && /^[A-Za-z0-9+/=]+$/.test(content)) {
                     // Provavelmente é uma imagem base64 direta
                     return `
                         <img src="data:image/png;base64,${content}" 
                              alt="Alternativa ${alt}" 
-                             class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded cursor-pointer hover:opacity-80 transition-opacity"
-                             onclick="showImageModal('${content}', 'Alternativa ${alt}')"
+                             class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded"
+                             loading="lazy"
+                             decoding="async"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
                         <span class="text-red-500 text-xs" style="display:none;">Erro ao carregar imagem</span>
                     `;
@@ -364,8 +445,9 @@ function updateQuestionNavigation() {
                             return `
                                 <img src="data:image/png;base64,${imgInfo.base64}" 
                                      alt="Alternativa ${alt}" 
-                                     class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded cursor-pointer hover:opacity-80 transition-opacity"
-                                     onclick="showImageModal('${imgInfo.base64}', 'Alternativa ${alt}')"
+                                     class="max-w-[200px] max-h-[150px] object-contain border border-gray-300 rounded"
+                                     loading="lazy"
+                                     decoding="async"
                                      onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
                                 <span class="text-red-500 text-xs" style="display:none;">Erro ao carregar imagem</span>
                             `;
@@ -384,35 +466,35 @@ function updateQuestionNavigation() {
             elements.answerForm.innerHTML = `
                 <div class="answer-alternative">
                     <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="a" ${shuffledCurrentAnswer === 'a' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span class="alternative-label font-medium">A)</span>
+                    <span class="alternative-label">A)</span>
                     <div class="alternative-content">
                         ${processAlternative('A', shuffledAlternatives[0].content)}
                     </div>
                 </div>
                 <div class="answer-alternative">
                     <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="b" ${shuffledCurrentAnswer === 'b' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span class="alternative-label font-medium">B)</span>
+                    <span class="alternative-label">B)</span>
                     <div class="alternative-content">
                         ${processAlternative('B', shuffledAlternatives[1].content)}
                     </div>
                 </div>
                 <div class="answer-alternative">
                     <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="c" ${shuffledCurrentAnswer === 'c' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span class="alternative-label font-medium">C)</span>
+                    <span class="alternative-label">C)</span>
                     <div class="alternative-content">
                         ${processAlternative('C', shuffledAlternatives[2].content)}
                     </div>
                 </div>
                 <div class="answer-alternative">
                     <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="d" ${shuffledCurrentAnswer === 'd' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span class="alternative-label font-medium">D)</span>
+                    <span class="alternative-label">D)</span>
                     <div class="alternative-content">
                         ${processAlternative('D', shuffledAlternatives[3].content)}
                     </div>
                 </div>
                 <div class="answer-alternative">
                     <input class="form-radio text-[#3B4151]" name="answer-${index}" type="radio" value="e" ${shuffledCurrentAnswer === 'e' && !isCurrentSkipped ? 'checked' : ''} ${isCurrentSkipped ? 'disabled' : ''}>
-                    <span class="alternative-label font-medium">E)</span>
+                    <span class="alternative-label">E)</span>
                     <div class="alternative-content">
                         ${processAlternative('E', shuffledAlternatives[4].content)}
                     </div>
@@ -476,6 +558,9 @@ function updateQuestionNavigation() {
 
         questionStartTime = Date.now();
 
+        // Aplicar efeito visual nas alternativas
+        updateAlternativeVisualState();
+
         // Processar MathJax imediatamente após a renderização
         if (window.MathJax && window.MathJax.typesetPromise) {
             try {
@@ -536,6 +621,23 @@ function updateQuestionNavigation() {
         updateAnsweredCount();
         updateQuestionNavigation();
         await displayQuestion(currentQuestionIndex);
+        
+        // Aplicar efeito visual nas alternativas
+        updateAlternativeVisualState();
+    }
+
+    // Função para atualizar o estado visual das alternativas
+    function updateAlternativeVisualState() {
+        const alternativeDivs = elements.answerForm?.querySelectorAll('.answer-alternative') || [];
+        const isCurrentSkipped = skippedQuestions.has(currentQuestionIndex);
+        
+        alternativeDivs.forEach(div => {
+            if (isCurrentSkipped) {
+                div.classList.add('disabled');
+            } else {
+                div.classList.remove('disabled');
+            }
+        });
     }
 
     // Modal de escolha para pulo
@@ -580,64 +682,103 @@ function updateQuestionNavigation() {
             return;
         }
 
-        if (!confirm('Você revisou todas as respostas deste bloco?')) {
-            return;
-        }
+        // Primeira confirmação
+        showConfirmationModal(
+            'Revisão do Bloco',
+            'Você revisou todas as respostas deste bloco?',
+            () => {
+                const s = getBlockStartIndex(currentBlock);
+                const e = getBlockEndIndex(currentBlock);
+                const blockQuestions = Array.from({ length: e - s }, (_, k) => s + k);
+                const answeredInBlock = blockQuestions.filter((q) => answeredQuestions.has(q));
+                const skippedInBlock = blockQuestions.filter((q) => skippedQuestions.has(q));
+                const totalInBlock = blockQuestions.length;
+                const completedInBlock = answeredInBlock.length + skippedInBlock.length;
 
-        const s = getBlockStartIndex(currentBlock);
-        const e = getBlockEndIndex(currentBlock);
-        const blockQuestions = Array.from({ length: e - s }, (_, k) => s + k);
-        const answeredInBlock = blockQuestions.filter((q) => answeredQuestions.has(q));
-        const skippedInBlock = blockQuestions.filter((q) => skippedQuestions.has(q));
-        const totalInBlock = blockQuestions.length;
-        const completedInBlock = answeredInBlock.length + skippedInBlock.length;
+                // Se nenhuma questão foi pulada, abre o modal de escolha.
+                if (skippedInBlock.length === 0) {
+                    showNotification('Você deve escolher uma questão para pular antes de finalizar este bloco!', 'warning');
+                    pendingFinalizeAfterSkipChoice = true;
+                    openSkipChoiceModal();
+                    return;
+                }
 
-        // Se nenhuma questão foi pulada, abre o modal de escolha.
-        if (skippedInBlock.length === 0) {
-            showNotification('Você deve escolher uma questão para pular antes de finalizar este bloco!', 'warning');
-            pendingFinalizeAfterSkipChoice = true;
-            openSkipChoiceModal();
-            return;
-        }
+                if (completedInBlock < totalInBlock) {
+                    const unanswered = totalInBlock - completedInBlock;
+                    showConfirmationModal(
+                        'Questões Não Respondidas',
+                        `Você tem ${unanswered} questão(ões) não respondida(s) no Bloco ${currentBlock}. Deseja finalizar mesmo assim?`,
+                        () => {
+                            // Confirmação final
+                            let confirmMessage = `Tem certeza que deseja finalizar o Bloco ${currentBlock}?`;
+                            if (currentBlock === 4) {
+                                confirmMessage = 'Você está prestes a encerrar o bloco 4 e finalizar a prova, deseja continuar?';
+                            }
+                            
+                            showConfirmationModal(
+                                'Confirmação Final',
+                                confirmMessage,
+                                () => {
+                                    blockCompleted.add(currentBlock);
+                                    showNotification(`Bloco ${currentBlock} finalizado!`, 'success');
 
-        if (completedInBlock < totalInBlock) {
-            const unanswered = totalInBlock - completedInBlock;
-            if (!confirm(`Você tem ${unanswered} questão(ões) não respondida(s) no Bloco ${currentBlock}. Deseja finalizar mesmo assim?`)) {
-                return;
+                                    if (currentBlock < 4) {
+                                        elements.finalizeBlockBtn.textContent = `Finalizar Bloco ${currentBlock + 1}`;
+                                        currentBlock++;
+                                        const nextBlockStartIndex = getBlockStartIndex(currentBlock);
+                                        currentQuestionIndex = nextBlockStartIndex;
+                                        generateQuestionNavigation();
+                                        updateBlockIndicators();
+                                        displayQuestion(currentQuestionIndex);
+                                    } else {
+                                        elements.finalizeBlockBtn.classList.add('hidden');
+                                        endExam();
+                                    }
+                                }
+                            );
+                        }
+                    );
+                } else {
+                    // Confirmação final
+                    let confirmMessage = `Tem certeza que deseja finalizar o Bloco ${currentBlock}?`;
+                    if (currentBlock === 4) {
+                        confirmMessage = 'Você está prestes a encerrar o bloco 4 e finalizar a prova, deseja continuar?';
+                    }
+                    
+                    showConfirmationModal(
+                        'Confirmação Final',
+                        confirmMessage,
+                        () => {
+                            blockCompleted.add(currentBlock);
+                            showNotification(`Bloco ${currentBlock} finalizado!`, 'success');
+
+                            if (currentBlock < 4) {
+                                elements.finalizeBlockBtn.textContent = `Finalizar Bloco ${currentBlock + 1}`;
+                                currentBlock++;
+                                const nextBlockStartIndex = getBlockStartIndex(currentBlock);
+                                currentQuestionIndex = nextBlockStartIndex;
+                                generateQuestionNavigation();
+                                updateBlockIndicators();
+                                displayQuestion(currentQuestionIndex);
+                            } else {
+                                elements.finalizeBlockBtn.classList.add('hidden');
+                                endExam();
+                            }
+                        }
+                    );
+                }
             }
-        }
-        
-        // Confirmação final antes de finalizar o bloco/prova
-        let confirmMessage = `Tem certeza que deseja finalizar o Bloco ${currentBlock}?`;
-        if (currentBlock === 4) {
-            confirmMessage = 'Você está prestes a encerrar o bloco 4 e finalizar a prova, deseja continuar?';
-        }
-        if (!confirm(confirmMessage)) {
-            return;
-        }
-
-        blockCompleted.add(currentBlock);
-        showNotification(`Bloco ${currentBlock} finalizado!`, 'success');
-
-        if (currentBlock < 4) {
-            elements.finalizeBlockBtn.textContent = `Finalizar Bloco ${currentBlock + 1}`;
-            currentBlock++;
-            const nextBlockStartIndex = getBlockStartIndex(currentBlock);
-            currentQuestionIndex = nextBlockStartIndex;
-            await generateQuestionNavigation();
-            updateBlockIndicators();
-            await displayQuestion(currentQuestionIndex);
-        } else {
-            elements.finalizeBlockBtn.classList.add('hidden');
-            endExam();
-        }
+        );
     }
 
     // Função para encerrar prova
     function endExam() {
         if (!isExamStarted) return;
 
-        if (confirm('Tem certeza que deseja encerrar a prova?')) {
+        showConfirmationModal(
+            'Encerrar Prova',
+            'Tem certeza que deseja encerrar a prova?',
+            () => {
             clearInterval(examTimer);
             isExamStarted = false;
 
@@ -716,7 +857,8 @@ function updateQuestionNavigation() {
                 // Enviar resultados e redirecionar para o dashboard
                 submitResults();
             }, 1000);
-        }
+            }
+        );
     }
 
     // Função para enviar resultados e redirecionar para o dashboard
@@ -810,21 +952,32 @@ function updateQuestionNavigation() {
             imageDiv.className = 'image-container';
 
             const img = document.createElement('img');
-            
-            // Verificar se o base64 é válido - usar campo 'data' em vez de 'base64'
-            const base64Data = image.data || image.base64;
-            if (!base64Data || typeof base64Data !== 'string') {
-                console.error(`Base64 inválido para imagem ${index}:`, base64Data);
-                return;
+
+            // Suporta novo formato por path/url e legado base64
+            if (typeof image === 'string') {
+                const normalized = image.replace(/\\/g, '/');
+                img.src = normalized.startsWith('/') ? normalized : `/${normalized}`;
+            } else if (image && (image.path || image.url)) {
+                const p = (image.path || image.url).replace(/\\/g, '/');
+                img.src = p.startsWith('/') ? p : `/${p}`;
+            } else {
+                const base64Data = image?.data || image?.base64;
+                if (!base64Data || typeof base64Data !== 'string') {
+                    console.error(`Dados de imagem inválidos para imagem ${index}:`, image);
+                    return;
+                }
+                const cleanBase64 = base64Data.replace(/\s/g, '');
+                img.src = `data:image/png;base64,${cleanBase64}`;
             }
-            
-            // Limpar o base64 (remover espaços e quebras de linha)
-            const cleanBase64 = base64Data.replace(/\s/g, '');
-            
-            img.src = `data:image/png;base64,${cleanBase64}`;
             img.alt = `Imagem ${index + 1} da questão`;
             img.className = 'question-image';
-            img.onclick = () => openImageModal(cleanBase64, image.filename);
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            
+            // Adicionar classe quando carregar
+            img.onload = () => {
+                img.classList.add('loaded');
+            };
 
             imageDiv.appendChild(img);
             gallery.appendChild(imageDiv);
@@ -833,37 +986,6 @@ function updateQuestionNavigation() {
         elements.questionImages.appendChild(gallery);
     }
 
-    function openImageModal(base64Data, filename) {
-        const modal = document.createElement('div');
-        modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
-        modal.onclick = () => modal.remove();
-
-        const img = document.createElement('img');
-        // Usar o base64Data que já foi limpo
-        img.src = `data:image/png;base64,${base64Data}`;
-        img.alt = filename;
-        img.className = 'max-w-[90vw] max-h-[90vh] object-contain';
-
-        modal.appendChild(img);
-        document.body.appendChild(modal);
-    }
-
-    // Função para exibir imagem em modal (para alternativas)
-    function showImageModal(base64Data, altText) {
-        const modal = document.createElement('div');
-        modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
-        modal.onclick = () => modal.remove();
-
-        const img = document.createElement('img');
-        img.src = `data:image/png;base64,${base64Data}`;
-        img.alt = altText;
-        img.className = 'max-w-[90vw] max-h-[90vh] object-contain';
-
-        modal.appendChild(img);
-        document.body.appendChild(modal);
-    }
-    // tornar acessível globalmente para onclick inline
-    window.showImageModal = showImageModal;
 
     // Função para embaralhar alternativas de uma questão
     function shuffleAlternatives(question) {
@@ -1038,6 +1160,22 @@ function updateQuestionNavigation() {
     //         }
     //     });
     // }
+
+    // Event listener para detectar saída da tela
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // Event listener para detectar mudança de foco da janela
+    window.addEventListener('blur', () => {
+        if (isExamStarted && !exitWarningShown) {
+            exitWarningShown = true;
+            exitWarningCount++;
+            showExitWarning();
+        }
+    });
+    
+    window.addEventListener('focus', () => {
+        exitWarningShown = false;
+    });
 
     // Inicializar
     fetchQuestions();

@@ -544,6 +544,143 @@ body {
         padding: 1rem;
         margin: 0 0.5rem 1.5rem 0.5rem;
     }
+    
+    /* Melhorar responsividade do header */
+    .header-rect {
+        padding: 0.5rem 1rem;
+    }
+    
+    .header-rect .flex {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .header-rect .text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    .header-rect .text-xl {
+        font-size: 1rem;
+    }
+    
+    /* Melhorar responsividade da barra de progresso */
+    .progress-row {
+        padding: 0.5rem;
+    }
+    
+    .progress-node {
+        width: 20%;
+    }
+    
+    .progress-node .dot {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+    
+    .progress-node .label {
+        font-size: 10px;
+    }
+    
+    /* Melhorar responsividade dos botões */
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Melhorar responsividade das alternativas */
+    .answer-alternative {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .answer-alternative .alternative-label {
+        margin-right: 0;
+        margin-bottom: 0.25rem;
+    }
+    
+    .answer-alternative .alternative-content {
+        width: 100%;
+    }
+    
+    /* Melhorar responsividade das imagens */
+    .question-image {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .image-container {
+        min-width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Responsividade para tablets */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .header-rect .flex {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .progress-node {
+        width: 22%;
+    }
+    
+    .answer-alternative {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+    .header-rect {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .header-rect .text-3xl {
+        font-size: 1.25rem;
+    }
+    
+    .header-rect .text-xl {
+        font-size: 0.875rem;
+    }
+    
+    .progress-node {
+        width: 18%;
+    }
+    
+    .progress-node .dot {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+    }
+    
+    .progress-node .label {
+        font-size: 9px;
+    }
+    
+    .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    #question-content,
+    #answer-section {
+        padding: 0.75rem;
+        margin: 0 0.25rem 1rem 0.25rem;
+    }
+    
+    .answer-alternative {
+        padding: 0.5rem 0;
+    }
+    
+    .answer-alternative .alternative-content {
+        font-size: 0.875rem;
+    }
 }
 
 /* Estilo para o container principal */

@@ -343,11 +343,11 @@ E) 105 000.
 GABARITO: E
 ----------------------------------------
 QUESTÃO 44
-A) \(\displaystyle \frac{100 \cdot N}{40}\).
-B) \(\displaystyle \frac{40 \cdot N}{100}\).
-C) \(\displaystyle \frac{N}{40}\).
-D) \(\displaystyle \frac{N}{100}\).
-E) \(\displaystyle \frac{100 \cdot (40 - N)}{40}\).
+A) \(\displaystyle \frac{100 \cdot N}{40}\)
+B) \(\displaystyle \frac{40 \cdot N}{100}\)
+C) \(\displaystyle \frac{N}{40}\)
+D) \(\displaystyle \frac{N}{100}\)
+E) \(\displaystyle \frac{100 \cdot (40 - N)}{40}\)
 GABARITO: A
 ----------------------------------------
 QUESTÃO 45

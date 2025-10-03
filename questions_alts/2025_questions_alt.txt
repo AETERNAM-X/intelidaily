@@ -71,11 +71,11 @@ E) 1,45 vezes o seu salário
 GABARITO: D
 ----------------------------------------
 QUESTÃO 10
-A) \(\displaystyle y = -\frac{1}{5} x^2 + 9\).
-B) \(\displaystyle y = -\frac{1}{15} x^2 + 9\).
-C) \(\displaystyle y = -\frac{1}{25} x^2 + 9\).
-D) \(\displaystyle y = -\frac{1}{125} x^2 + 9\).
-E) \(\displaystyle y = -\frac{1}{225} x^2 + 9\).
+A) \(\displaystyle y = -\frac{1}{5} x^2 + 9\)
+B) \(\displaystyle y = -\frac{1}{15} x^2 + 9\)
+C) \(\displaystyle y = -\frac{1}{25} x^2 + 9\)
+D) \(\displaystyle y = -\frac{1}{125} x^2 + 9\)
+E) \(\displaystyle y = -\frac{1}{225} x^2 + 9\)
 GABARITO: C
 ----------------------------------------
 QUESTÃO 11
@@ -259,7 +259,7 @@ A) \(\displaystyle \frac{80}{9} \text{ m}^2\)
 B) \(\displaystyle \frac{40}{9} \text{ m}^2\)
 C) \(\displaystyle \frac{20}{9} \text{ m}^2\)
 D) \(\displaystyle 8 \text{ m}^2\)
-E) \(\displaystyle 4 \text{ m}^2\)athrm{~m}^2 \\ & 4 \mathrm{~m}^2\end{aligned}$
+E) \(\displaystyle 4 \text{ m}^2\)
 GABARITO: B
 ----------------------------------------
 QUESTÃO 34

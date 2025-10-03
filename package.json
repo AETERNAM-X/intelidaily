@@ -1,0 +1,21 @@
+{
+  "name": "intelidaily",
+  "version": "1.0.0",
+  "description": "Sistema de simulados para o processo seletivo da Inteli",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "lightningcss --minify --bundle static/css/style.css -o static/css/style.min.css",
+    "build:js": "terser static/js/script.js -o static/js/script.min.js -c -m",
+    "watch:css": "lightningcss --watch --bundle static/css/style.css -o static/css/style.min.css",
+    "watch:js": "terser --watch static/js/script.js -o static/js/script.min.js -c -m",
+    "dev": "npm run watch:css & npm run watch:js",
+    "install-deps": "npm install lightningcss terser"
+  },
+  "devDependencies": {
+    "lightningcss": "^1.21.0",
+    "terser": "^5.24.0"
+  },
+  "keywords": ["inteli", "simulados", "vestibular", "educacao"],
+  "author": "InteliDaily Team",
+  "license": "MIT"
+}

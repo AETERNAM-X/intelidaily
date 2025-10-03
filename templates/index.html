@@ -98,6 +98,78 @@
         .nav-disabled { pointer-events: none; opacity: 0.45; }
         button[disabled] { opacity: 0.45; cursor: not-allowed; }
 
+        /* Layout das alternativas */
+        .answer-alternative {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .answer-alternative:hover {
+            background-color: #f8f9fa;
+        }
+
+        .form-radio {
+            margin: 0;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .alternative-label {
+            flex-shrink: 0;
+            min-width: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-right: 2px;
+        }
+
+        .alternative-content {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        /* Estilo para alternativas desabilitadas */
+        .answer-alternative.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            background-color: #f3f4f6;
+        }
+
+        .answer-alternative.disabled .form-radio {
+            opacity: 0.5;
+        }
+
+        .answer-alternative.disabled .alternative-label {
+            color: #9ca3af;
+        }
+
+        .answer-alternative.disabled .alternative-content {
+            color: #9ca3af;
+        }
+
+        /* Otimizações de imagem */
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            object-fit: contain;
+            will-change: transform;
+        }
+
+        .question-image[loading="lazy"] {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .question-image[loading="lazy"].loaded {
+            opacity: 1;
+        }
+
 
 
         @media (max-width:720px) {
@@ -118,7 +190,7 @@
 
             <div class="flex flex-col items-center space-y-1">
                 <div class="bg-[#3B4151] text-white text-xs font-semibold rounded px-2 py-[2px] select-none">
-                    Início da prova remota: <span class="font-mono" id="start-time">--:--:--</span>
+                    Início da prova: <span class="font-mono" id="start-time">--:--:--</span>
                 </div>
                 <div class="text-xs text-gray-600 select-none">Tempo para encerrar a prova:</div>
                 <div class="font-mono font-semibold text-xl text-gray-900 select-none" id="timer">02:00:00</div>
@@ -202,8 +274,8 @@
         </section>
 
         <!-- Answers -->
-        <section id="answer-section" class="max-w-[900px] mx-auto bg-white rounded-md p-6 shadow-sm mb-6">
-            <h3 class="text-gray-900 font-semibold text-sm mb-4 select-none">Resposta</h3>
+        <section id="answer-section" class="max-w-[900px] mx-auto bg-white rounded-md p-6 shadow-sm mb-6" style="min-height: 300px;">
+            <h3 class="text-gray-900 font-semibold text-base mb-3 select-none" style="height: 24px;">Resposta</h3>
             <form class="space-y-4 text-xs text-gray-700 select-none" id="answer-form"><!-- Answer options will be generated here --></form>
 
 <div class="mt-6">
@@ -219,14 +291,55 @@
 
         <!-- Next button -->
         <div class="flex justify-end max-w-[900px] mx-auto">
-            <button id="next-btn" class="bg-[#3B4151] text-white text-xs font-semibold rounded px-4 py-2 flex items-center space-x-1 select-none hover:bg-[#2a2e3d] transition" type="button" disabled>
+            <button id="next-btn" class="bg-[#3B4153] text-white text-xs font-semibold rounded px-4 py-2 flex items-center space-x-1 select-none hover:bg-[#2a2e3d] transition" type="button" disabled>
                 <span>Próximo</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
 
+    <!-- Modal de Aviso de Saída -->
+    <div id="exit-warning-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Atenção!</h3>
+                <p class="text-sm text-gray-600 mb-4">
+                    Você saiu da tela da prova. Isso pode ser considerado como tentativa de cola.
+                </p>
+                <div class="flex justify-center">
+                    <button id="continue-exam-btn" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">
+                        Continuar Prova
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal Genérico de Confirmação -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+                    <i class="fas fa-question-circle text-blue-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2" id="confirmation-title">Confirmação</h3>
+                <p class="text-sm text-gray-600 mb-4" id="confirmation-message">
+                    Tem certeza que deseja continuar?
+                </p>
+                <div class="flex space-x-3">
+                    <button id="confirmation-cancel-btn" class="flex-1 bg-gray-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-600 transition">
+                        Cancelar
+                    </button>
+                    <button id="confirmation-confirm-btn" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

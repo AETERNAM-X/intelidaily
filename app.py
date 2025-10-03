@@ -1,4 +1,5 @@
-from flask import Flask, render_template, jsonify, request, session
+from flask import Flask, render_template, jsonify, request, session, send_from_directory
+from flask_cors import CORS
 import sqlite3
 import json
 import os
@@ -10,6 +11,9 @@ simulados_system_v2 = SimuladosSystemV2Improved()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'inteli_simulados_2024_dev')  # Chave secreta para sessões
+
+# Configurar CORS para permitir requisições do frontend
+CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://127.0.0.1:5000'])
 
 # Configurações para lidar com respostas grandes
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB
@@ -31,6 +35,36 @@ def get_db_connection():
     conn = sqlite3.connect('questions.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+# ----------------------
+# Static serving for question images stored on disk
+# ----------------------
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def _serve_from(subdir, filename):
+    safe_filename = filename.replace('\\', '/').lstrip('/')
+    return send_from_directory(os.path.join(BASE_DIR, subdir), safe_filename)
+
+@app.route('/2025_questions_imgs/<path:filename>')
+def serve_2025_asset(filename):
+    return _serve_from('2025_questions_imgs', filename)
+
+@app.route('/2024_questions_imgs/<path:filename>')
+def serve_2024_asset(filename):
+    return _serve_from('2024_questions_imgs', filename)
+
+@app.route('/2023_questions_imgs/<path:filename>')
+def serve_2023_asset(filename):
+    return _serve_from('2023_questions_imgs', filename)
+
+@app.route('/2022_questions_imgs/<path:filename>')
+def serve_2022_asset(filename):
+    return _serve_from('2022_questions_imgs', filename)
+
+@app.route('/simulados/<path:filename>')
+def serve_gabaritos(filename):
+    return _serve_from('simulados', filename)
 
 # ----------------------
 # Páginas
@@ -151,30 +185,40 @@ def get_exam_statistics():
 
 @app.route('/api/simulados/create', methods=['POST'])
 def create_simulado():
-    data = request.get_json() or {}
-    selected_exams = data.get('selected_exams', [])
-    exam_distribution = data.get('exam_distribution', None)  # Nova funcionalidade
-    num_questions = data.get('num_questions', 24)  # Total de questões
-    
-    if not selected_exams:
-        return jsonify({'error': 'Nenhuma prova selecionada'}), 400
-
-    # Validar distribuição personalizada se fornecida
-    if exam_distribution:
-        total_distributed = sum(exam_distribution.values())
-        if total_distributed != num_questions:
-            return jsonify({
-                'error': f'Distribuição inválida. Total: {total_distributed}, esperado: {num_questions}'
-            }), 400
-        
-        # Verificar se todas as provas na distribuição estão selecionadas
-        for exam_name in exam_distribution.keys():
-            if exam_name not in selected_exams:
-                return jsonify({
-                    'error': f'Prova {exam_name} não está selecionada'
-                }), 400
-
     try:
+        # Verificar se a requisição tem JSON válido
+        if not request.is_json:
+            return jsonify({'error': 'Content-Type deve ser application/json'}), 400
+            
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Dados JSON inválidos ou vazios'}), 400
+            
+        selected_exams = data.get('selected_exams', [])
+        exam_distribution = data.get('exam_distribution', None)
+        num_questions = data.get('num_questions', 24)
+        
+        # Log para debug
+        print(f"Criando simulado com: {len(selected_exams)} provas, {num_questions} questões")
+        
+        if not selected_exams:
+            return jsonify({'error': 'Nenhuma prova selecionada'}), 400
+
+        # Validar distribuição personalizada se fornecida
+        if exam_distribution:
+            total_distributed = sum(exam_distribution.values())
+            if total_distributed != num_questions:
+                return jsonify({
+                    'error': f'Distribuição inválida. Total: {total_distributed}, esperado: {num_questions}'
+                }), 400
+            
+            # Verificar se todas as provas na distribuição estão selecionadas
+            for exam_name in exam_distribution.keys():
+                if exam_name not in selected_exams:
+                    return jsonify({
+                        'error': f'Prova {exam_name} não está selecionada'
+                    }), 400
+
         # Gera questões com distribuição personalizada ou aleatória
         questions = simulados_system_v2.create_randomized_exam(
             selected_exams, 
@@ -208,94 +252,113 @@ def create_simulado():
                 'bloco': q.get('bloco', 1)
             })
             
+        # Salvar apenas dados essenciais na sessão
+        session['current_simulado'] = {
+            'questions': simplified,
+            'selected_exams': selected_exams,
+            'num_questoes': len(questions),
+            'start_time': datetime.now().isoformat(),
+        }
+        
+        # Retornar resposta mínima
+        return jsonify({
+            'success': True, 
+            'num_questions': len(questions),
+            'message': 'Simulado criado com sucesso'
+        })
+        
     except Exception as e:
         print(f"Erro ao criar simulado: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({
             'error': f'Erro interno ao criar simulado: {str(e)}'
         }), 500
 
-    # Salvar apenas dados essenciais na sessão
-    session['current_simulado'] = {
-        'questions': simplified,
-        'selected_exams': selected_exams,
-        'num_questoes': len(questions),
-        'start_time': datetime.now().isoformat(),
-    }
-    
-    # Retornar resposta mínima
-    return jsonify({
-        'success': True, 
-        'num_questions': len(questions),
-        'message': 'Simulado criado com sucesso'
-    })
-
 @app.route('/api/simulados/current')
 def get_current_simulado():
-    current = session.get('current_simulado')
-    if not current:
-        return jsonify({'error': 'Nenhum simulado ativo'}), 404
+    try:
+        current = session.get('current_simulado')
+        if not current:
+            return jsonify({'error': 'Nenhum simulado ativo'}), 404
 
-    # Completa com dados do banco (inclui imagens)
-    conn = sqlite3.connect('questions.db')
-    cursor = conn.cursor()
-    cursor.execute('PRAGMA table_info(questoes)')
-    cols = [c[1] for c in cursor.fetchall()]
+        # Verifica se há questões na sessão
+        if not current.get('questions') or len(current.get('questions', [])) == 0:
+            return jsonify({'error': 'Simulado sem questões'}), 404
 
-    filled = []
-    for q in current.get('questions', []):
-        qid = q.get('id')
-        if not qid:
-            continue
-        if 'enunciado' in cols:
-            if 'tipo' in cols:
-                cursor.execute('''
-                    SELECT id, enunciado, a, b, c, d, e, gabarito, fonte, imagens, tipo
-                    FROM questoes WHERE id = ?
-                ''', (qid,))
-            else:
-                cursor.execute('''
-                    SELECT id, enunciado, a, b, c, d, e, gabarito, fonte, imagens
-                    FROM questoes WHERE id = ?
-                ''', (qid,))
-        else:
-            cursor.execute('''
-                SELECT id, a, b, c, d, e, gabarito, fonte, imagens
-                FROM questoes WHERE id = ?
-            ''', (qid,))
-        row = cursor.fetchone()
-        if not row:
-            continue
-        # Monta objeto homogêneo
-        if 'enunciado' in cols:
-            if 'tipo' in cols and len(row) > 10:
-                filled.append({
-                    'id': row[0], 'enunciado': row[1] or '',
-                    'a': row[2] or '', 'b': row[3] or '', 'c': row[4] or '', 'd': row[5] or '', 'e': row[6] or '',
-                    'gabarito': row[7] or '', 'fonte': row[8] or '', 'imagens': row[9] or '[]',
-                    'tipo': row[10] or 'completa', 'bloco': q.get('bloco', 1)
-                })
-            else:
-                filled.append({
-                    'id': row[0], 'enunciado': row[1] or '',
-                    'a': row[2] or '', 'b': row[3] or '', 'c': row[4] or '', 'd': row[5] or '', 'e': row[6] or '',
-                    'gabarito': row[7] or '', 'fonte': row[8] or '', 'imagens': row[9] or '[]',
-                    'tipo': 'completa', 'bloco': q.get('bloco', 1)
-                })
-        else:
-            filled.append({
-                'id': row[0], 'enunciado': row[1] or '',
-                'a': row[2] or '', 'b': row[3] or '', 'c': row[4] or '', 'd': row[5] or '', 'e': row[6] or '',
-                'gabarito': row[7] or '', 'fonte': row[8] or '', 'imagens': row[9] or '[]',
-                'tipo': 'completa', 'bloco': q.get('bloco', 1)
-            })
-    conn.close()
+        # Completa com dados do banco (inclui imagens)
+        conn = sqlite3.connect('questions.db')
+        cursor = conn.cursor()
+        cursor.execute('PRAGMA table_info(questoes)')
+        cols = [c[1] for c in cursor.fetchall()]
 
-    return jsonify({
-        'num_questoes': current.get('num_questoes', len(filled)),
-        'questions': filled,
-        'selected_exams': current.get('selected_exams', []),
-        'start_time': current.get('start_time')
-    })
+        filled = []
+        for q in current.get('questions', []):
+            qid = q.get('id')
+            if not qid:
+                continue
+            try:
+                if 'enunciado' in cols:
+                    if 'tipo' in cols:
+                        cursor.execute('''
+                            SELECT id, enunciado, a, b, c, d, e, gabarito, fonte, imagens, tipo
+                            FROM questoes WHERE id = ?
+                        ''', (qid,))
+                    else:
+                        cursor.execute('''
+                            SELECT id, enunciado, a, b, c, d, e, gabarito, fonte, imagens
+                            FROM questoes WHERE id = ?
+                        ''', (qid,))
+                else:
+                    cursor.execute('''
+                        SELECT id, a, b, c, d, e, gabarito, fonte, imagens
+                        FROM questoes WHERE id = ?
+                    ''', (qid,))
+                row = cursor.fetchone()
+                if not row:
+                    print(f"Questão {qid} não encontrada no banco")
+                    continue
+                # Monta objeto homogêneo
+                if 'enunciado' in cols:
+                    if 'tipo' in cols and len(row) > 10:
+                        filled.append({
+                            'id': row[0], 'enunciado': row[1] or '',
+                            'a': row[2] or '', 'b': row[3] or '', 'c': row[4] or '', 'd': row[5] or '', 'e': row[6] or '',
+                            'gabarito': row[7] or '', 'fonte': row[8] or '', 'imagens': row[9] or '[]',
+                            'tipo': row[10] or 'completa', 'bloco': q.get('bloco', 1)
+                        })
+                    else:
+                        filled.append({
+                            'id': row[0], 'enunciado': row[1] or '',
+                            'a': row[2] or '', 'b': row[3] or '', 'c': row[4] or '', 'd': row[5] or '', 'e': row[6] or '',
+                            'gabarito': row[7] or '', 'fonte': row[8] or '', 'imagens': row[9] or '[]',
+                            'tipo': 'completa', 'bloco': q.get('bloco', 1)
+                        })
+                else:
+                    filled.append({
+                        'id': row[0], 'enunciado': row[1] or '',
+                        'a': row[2] or '', 'b': row[3] or '', 'c': row[4] or '', 'd': row[5] or '', 'e': row[6] or '',
+                        'gabarito': row[7] or '', 'fonte': row[8] or '', 'imagens': row[9] or '[]',
+                        'tipo': 'completa', 'bloco': q.get('bloco', 1)
+                    })
+            except Exception as e:
+                print(f"Erro ao processar questão {qid}: {e}")
+                continue
+        conn.close()
+
+        # Verifica se conseguiu carregar pelo menos uma questão
+        if len(filled) == 0:
+            return jsonify({'error': 'Nenhuma questão válida encontrada'}), 404
+
+        return jsonify({
+            'num_questoes': current.get('num_questoes', len(filled)),
+            'questions': filled,
+            'selected_exams': current.get('selected_exams', []),
+            'start_time': current.get('start_time')
+        })
+    except Exception as e:
+        print(f"Erro em get_current_simulado: {e}")
+        return jsonify({'error': 'Erro interno do servidor'}), 500
 
 @app.route('/api/simulados/question/<int:question_id>')
 def get_simulado_question(question_id):
@@ -374,9 +437,32 @@ def submit_simulado():
     start_time = datetime.fromisoformat(current['start_time'])
     time_used = str(datetime.now() - start_time).split('.')[0]
 
+    # Montar detalhes por questão e acertos por bloco
+    question_details = []
+    accuracies = [0, 0, 0, 0]
+    for i, q in enumerate(current['questions']):
+        original_answer = answers.get(str(q['id'])) or answers.get(q['id'])
+        is_correct = (original_answer or '').lower() == (q['gabarito'] or '').lower()
+        bloco = q.get('bloco', 1)
+        if is_correct and isinstance(bloco, int) and 1 <= bloco <= 4:
+            accuracies[bloco - 1] += 1
+        question_details.append({
+            'id': q['id'],
+            'bloco': bloco,
+            'numero': i + 1,
+            'gabarito': q['gabarito'],
+            'resposta': original_answer or None,
+            'correta': is_correct,
+            'pulada': i in skipped
+        })
+
     simulado_id = simulados_system_v2.save_simulado_result(
         current['selected_exams'], total, [q['id'] for q in current['questions']],
-        time_used, correct, wrong, len(skipped)
+        time_used, correct, wrong, len(skipped),
+        details={
+            'questions': question_details,
+            'accuracies': accuracies
+        }
     )
 
     session.pop('current_simulado', None)
